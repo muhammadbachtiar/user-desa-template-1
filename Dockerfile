@@ -1,42 +1,24 @@
-# ======================
-# 1. Build Stage
-# ======================
+# === Stage 1: Build the React app ===
 FROM node:22-alpine AS builder
 
-# Set working directory
 WORKDIR /app
-
-# Copy dependencies file
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy all source code
 COPY . .
-
-# Build the Next.js app
 RUN npm run build
 
-# ============================
-# 2. Production Stage
-# ============================
-FROM node:22-alpine AS runner
+# === Stage 2: Serve with Nginx ===
+FROM nginx:alpine AS runner
 
-WORKDIR /app
+# Hapus default config
+RUN rm -rf /usr/share/nginx/html/*
 
-# Set environment variable
-ENV NODE_ENV=production
+# Copy build output ke nginx folder
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy only the necessary files from builder
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/next.config.ts ./next.config.ts
+# (opsional) Custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port
-EXPOSE 3000
-
-# Start the app
-CMD ["npm", "start"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
