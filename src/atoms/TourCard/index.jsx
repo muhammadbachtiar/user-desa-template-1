@@ -2,21 +2,11 @@ import PropTypes from "prop-types";
 import { BiGlobe } from "react-icons/bi";
 import { CgMail } from "react-icons/cg";
 import { CiMap } from "react-icons/ci";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
-import { FaLinkedin, FaThreads, FaTiktok, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import sosmed from "../../atoms/icons/sosmed.js";
 
 const TourCard = ({ slug, thumbnail, title, address, map, website, email, socmed }) => {
 
-    const iconMapping = {
-        Facebook : FaFacebookF,
-        Instagram: FaInstagram,
-        YouTube: FaYoutube,
-        TikTok: FaTiktok,
-        Linkedln: FaLinkedin,
-        Threads: FaThreads,
-        X: FaXTwitter
-    };
 
   return (
     <>
@@ -41,7 +31,6 @@ const TourCard = ({ slug, thumbnail, title, address, map, website, email, socmed
                     <a href={email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{email}</a>
                 </div>
             </div>
-            {/* <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">Rasakan keseruan petualangan yang penuh warna! Jelajahi tempat-tempat indah, kuliner khas, dan budaya yang memikat. Dari perjalanan santai hingga ekspedisi penuh tantangan, temukan berbagai destinasi wisata.</p> */}
         </div>
         <div className="col-span-6 flex flex-col gap-y-3 justify-center items-center dark:bg-gray-800">                  
             <img
@@ -51,7 +40,7 @@ const TourCard = ({ slug, thumbnail, title, address, map, website, email, socmed
             />
             <div className="w-full flex flex-wrap gap-6 justify-center justify-items-center items-center">
                 {socmed ? socmed.map(({ key, value }) => {
-                    const Icon = iconMapping[key]; 
+                    const Icon = sosmed[key]; 
                     return (
                         <a 
                             key={key} 

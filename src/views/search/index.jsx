@@ -1,16 +1,25 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-
+import useArticle from "../../hooks/contens/article/useList";
+import useTour from "../../hooks/contens/tour/useList";
+import useInfografis from "../../hooks/contens/infografis/useInfografis";
+import Refetch from "../../atoms/refetch";
+import LightboxImage from "../../atoms/Lightbox";
 const SearchPage = () => {
     const { search } = useParams();
     const [searchValue, setSearchValue] = useState(search);
-    console.log(searchValue, search)
+    const [isOpen, setIsOpen] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const { data: articles, isLoading: IsArticleLoading, isFetching:IsArticleFetching, refetch:refetchArticle, isError:isArticleError} = useArticle({"search": searchValue});
+    const { data: tours, isLoading: isTourLoading, isFetching: isTourFetching, refetch: refetchTour, isError: isTourError } = useTour({"search": searchValue});
+    const { data: infografies, isLoading: isInfografisLoading, isFetching: isInfografisFetching, refetch: refetchInfografis, isError: isInfografisError } = useInfografis({"search": searchValue});
 
     const handleChange = (e) => {
         setSearchValue(e.target.value);
     };
+
+    
 
   return (
     <>  
@@ -55,26 +64,43 @@ const SearchPage = () => {
                         </div>
                          <div className="col-span-6">  
                             <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                                <div className="flex flex-col pb-3 bg-gray-50 hover:bg-gray-300">
-                                    <dd className="text-lg font-semibold">
-                                        yourname@flowbite.com
-                                    </dd>
-                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                        Email address
-                                    </dt>
-                                </div>
-                                <div className="flex flex-col py-3  hover:bg-gray-300">
-                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                        Home address
-                                    </dt>
-                                    <dd className="text-lg font-semibold">
-                                        92 Miles Drive, Newark, NJ 07103, California, USA
-                                    </dd>
-                                </div>
-                                <div className="flex flex-col pb-3 bg-gray-50 hover:bg-gray-300">
-                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
-                                    <dd className="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
-                                </div>
+                                {
+                                    IsArticleLoading || (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) && IsArticleFetching  ? (
+                                    Array.from({ length: 4 }).map((_, index) => (
+                                        <div
+                                        key={index}
+                                        className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-100"
+                                        >
+                                        <dd className="h-6 bg-gray-200 rounded w-3/4 mb-2"></dd>
+                                        <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
+                                        </div>
+                                    ))
+                                    ) : !isArticleError && !IsArticleFetching && (!articles || !articles.pages[0] || articles.pages[0]?.length === 0)  ? (
+                                    <div className="flex flex-col items-center justify-center py-12">
+                                        <p className="text-black text-2xl dark:text-gray-400">Artikel tidak tersedia</p>
+                                    </div>
+                                    ) : isArticleError && !IsArticleFetching ? (
+                                    <div className="flex flex-col items-center justify-center py-12">
+                                        <Refetch refetch={refetchArticle} />
+                                    </div>
+                                    ) : (
+                                    articles?.pages[0].data.map((article, index) => (
+                                        <Link  key={article.id} to={`/article/${article.slug}`} tabIndex={1} className="col-span-6 md:col-span-3 px-3 md:px-0 lg:col-span-2 w-full">
+                                                    <div
+                                                    className={`flex flex-col py-3 ${
+                                                        index % 2 === 0 ? 'bg-gray-50' : ''
+                                                    } hover:bg-gray-100 transition-colors duration-200`}
+                                                    >
+                                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                                                        <span className="block">{article.title}</span>
+                                                    </dt>
+                                                    <dd className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                        {article.description}
+                                                    </dd>
+                                                </div>
+                                        </Link>
+                                    ))
+                                )}
                             </dl>
                         </div>
                     </div>
@@ -87,19 +113,48 @@ const SearchPage = () => {
                         </div>
                          <div className="col-span-6">  
                             <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                                <div className="flex flex-col pb-3 bg-gray-50 hover:bg-gray-300">
-                                    <dd className="text-lg font-semibold">
-                                        yourname@flowbite.com
-                                    </dd>
-                                </div>
-                                <div className="flex flex-col py-3  hover:bg-gray-300">
-                                    <dd className="text-lg font-semibold">
-                                        92 Miles Drive, Newark, NJ 07103, California, USA
-                                    </dd>
-                                </div>
-                                <div className="flex flex-col pb-3 bg-gray-50 hover:bg-gray-300">
-                                    <dd className="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
-                                </div>
+                                {
+                                    isInfografisLoading || (!infografies || infografies.length === 0) && isInfografisFetching ? (
+                                        Array.from({ length: 4 }).map((_, index) => (
+                                            <div
+                                            key={index}
+                                            className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-100"
+                                            >
+                                                <dd className="h-6 bg-gray-200 rounded w-3/4 mb-2"></dd>
+                                                <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
+                                            </div>
+                                    ))
+                                    ) : !isInfografisError && !isInfografisFetching && (!infografies || infografies.length === 0) ? (
+                                    <div className="flex flex-col items-center justify-center py-12">
+                                        <p className="text-black text-2xl dark:text-gray-400">Infografis tidak tersedia</p>
+                                    </div>
+                                    ) : isInfografisError && !isInfografisFetching ? (
+                                    <div className="flex flex-col items-center justify-center py-12">
+                                        <Refetch refetch={refetchInfografis} />
+                                    </div>
+                                    ) : (
+                                    <>
+                                        {
+                                            infografies.map((infografis , index) => (
+                                                <div 
+                                                key={infografis.id}
+                                                onClick={()=> {setIsOpen(true); setCurrentIndex(index)}}
+                                                className={`flex flex-col py-3 ${
+                                                    index % 2 === 0 ? 'bg-gray-50' : ''
+                                                } hover:bg-gray-100 transition-colors duration-200`}
+                                                >
+                                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                                                        <span className="block">{infografis.title}</span>
+                                                    </dt>
+                                                    <dd className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                        {infografis.description}
+                                                    </dd>
+                                                </div>
+                                            ))
+                                        }
+                                        <LightboxImage data={infografies} isOpen={isOpen} currentIndex={currentIndex} setIsOpen={setIsOpen} />
+                                    </>
+                                )}
                             </dl>
                         </div>
                     </div>
@@ -112,26 +167,42 @@ const SearchPage = () => {
                         </div>
                          <div className="col-span-6">  
                             <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                                <div className="flex flex-col pb-3 bg-gray-50 hover:bg-gray-300">
-                                    <dd className="text-lg font-semibold">
-                                        yourname@flowbite.com
-                                    </dd>
-                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                        Email address
-                                    </dt>
-                                </div>
-                                <div className="flex flex-col py-3  hover:bg-gray-300">
-                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                                        Home address
-                                    </dt>
-                                    <dd className="text-lg font-semibold">
-                                        92 Miles Drive, Newark, NJ 07103, California, USA
-                                    </dd>
-                                </div>
-                                <div className="flex flex-col pb-3 bg-gray-50 hover:bg-gray-300">
-                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
-                                    <dd className="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
-                                </div>
+                                {isTourLoading || (!tours || !tours.pages[0] || tours.pages[0]?.length === 0) && isTourFetching  ? (
+                                    Array.from({ length: 4 }).map((_, index) => (
+                                        <div
+                                        key={index}
+                                        className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-100"
+                                        >
+                                        <dd className="h-6 bg-gray-200 rounded w-3/4 mb-2"></dd>
+                                        <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
+                                        </div>
+                                    ))
+                                    ) : !isTourError && !isTourFetching && (!tours || !tours.pages[0] || tours.pages[0]?.length === 0) ? (
+                                    <div className="flex flex-col items-center justify-center py-12">
+                                        <p className="text-black text-2xl dark:text-gray-400">Wisata tidak tersedia</p>
+                                    </div>
+                                    ) : isTourError && !isTourFetching ? (
+                                    <div className="flex flex-col items-center justify-center py-12">
+                                        <Refetch refetch={refetchTour} />
+                                    </div>
+                                    ) : (
+                                    tours?.pages[0].data.map((tour, index) => (
+                                        <Link  key={tour.id} to={`/tour/${tour.slug}`} tabIndex={1} className="col-span-6 md:col-span-3 px-3 md:px-0 lg:col-span-2 w-full">
+                                            <div
+                                            className={`flex flex-col py-3 ${
+                                                index % 2 === 0 ? 'bg-gray-50' : ''
+                                            } hover:bg-gray-100 transition-colors duration-200`}
+                                            >
+                                                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                                                    <span className="block">{tour.title}</span>
+                                                </dt>
+                                                <dd className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {tour.description}
+                                                </dd>
+                                            </div>
+                                        </Link>
+                                    ))
+                                )}
                             </dl>
                         </div>
                     </div>

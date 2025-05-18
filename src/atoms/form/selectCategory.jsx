@@ -1,66 +1,54 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import Select from "react-select";
-import CategoryService from "../../services/controllers/category/category.service";
 import PropTypes from "prop-types";
+import useCategory from "../../hooks/contens/article/useCategory";
 
 const SelectCategory = ({setCategoryId}) => {
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState('');
-
+  
   const {
     data: categories,
     isLoading,
-  } = useQuery({
-    queryKey: ["categories", search],
-    queryFn: async () => {
-      return await CategoryService.getAll(
-        { 
-          search, 
-          page_size: 10,
-          only: "id,name"
-        }
-      );
-    },
-  });
+  } =  useCategory({'search': search})
 
-    const customStyles = {
-        placeholder: (base) => ({
-            ...base,
-            color: 'white', 
-          }),
-        control: (base, state) => ({
-          ...base,
-          color: 'white', 
-          backgroundColor: '#1a56db',
-          borderColor: state.isFocused ? 'gray' : '#ccc'
-        }),
-        input: (base) => ({
-            ...base,
-            color: 'white',
-          }),
-        singleValue: (base) => ({
+  const customStyles = {
+      placeholder: (base) => ({
           ...base,
           color: 'white', 
         }),
-      };
-
-    const handleChange = (selectedOption) => {
-        setCategoryId(selectedOption ? selectedOption.value : 0);
+      control: (base, state) => ({
+        ...base,
+        color: 'white', 
+        backgroundColor: '#1a56db',
+        borderColor: state.isFocused ? 'gray' : '#ccc'
+      }),
+      input: (base) => ({
+          ...base,
+          color: 'white',
+        }),
+      singleValue: (base) => ({
+        ...base,
+        color: 'white', 
+      }),
     };
 
-    const handleInputChange = (inputValue) => {
-        setSearch(inputValue);
-    };
+  const handleChange = (selectedOption) => {
+      setCategoryId(selectedOption ? selectedOption.value : 0);
+  };
 
-    useEffect(() => {
-        if (categories?.data && Array.isArray(categories.data)) {
-            setOptions(categories.data.map(item => ({
-                value: item.id,
-                label: item.name
-            })));
-        }
-    }, [categories]);
+  const handleInputChange = (inputValue) => {
+      setSearch(inputValue);
+  };
+
+  useEffect(() => {
+      if (categories && Array.isArray(categories)) {
+          setOptions(categories.map(item => ({
+              value: item.id,
+              label: item.name
+          })));
+      }
+  }, [categories]);
 
   return (
     <>

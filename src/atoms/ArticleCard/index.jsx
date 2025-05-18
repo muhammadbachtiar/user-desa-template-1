@@ -5,7 +5,7 @@ const ArticleCard = ({ thumbnail, title, description, category, published_at }) 
 
   return (
     <>
-         <div className="px-0 md:px-3 group hover:scale-100 focus:scale-100 transition duration-300 ease-in-out">
+         <div className="px-0 sm:px-3 group hover:scale-100 focus:scale-100 transition duration-300 ease-in-out">
             <div className="relative overflow-hidden rounded-sm w-full h-60 group">
                 <img 
                     className="w-full h-full object-cover transform group-hover:scale-110 group-focus:scale-110 transition duration-300 ease-in-out" 

@@ -1,110 +1,133 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import ArticleDetailSkeleton from "../../atoms/loadingComponent/article/detailSekeleton";
-import { Button } from "flowbite-react";
-import { LuRefreshCcw } from "react-icons/lu";
-import TourService from "../../services/controllers/tour/tour.service";
 import ThumbnailBanner from "../../atoms/ThumbnailBanner";
 import { CiMap } from "react-icons/ci";
 import { BiGlobe } from "react-icons/bi";
 import { CgMail } from "react-icons/cg";
-import { FaFacebook, FaInstagram, FaLinkedin, FaThreads, FaTiktok, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import sosmedIcons from "../../atoms/icons/sosmed";
+import useTourDetail from "../../hooks/contens/tour/useDetail";
+import Refetch from "../../atoms/refetch";
+import StreetViewChecker from "../../services/utils/checkStreetView";
 
 const TourDetail = () => {
     const { slug } = useParams();
-    const {
-        data: tour,
-        isLoading: isLoadingArticle,
-        isError: isErrorArticle,
-        isFetching: isFetchingArticle,
-        refetch: refetchArticle,
-      } = useQuery({
-        queryKey: ["tour", slug],
-        enabled: !!slug,
-        queryFn: async () => {
-          return await TourService.getOne(slug);
-        },
-      });
-      
-       const iconMapping = {
-              Facebook : FaFacebook,
-              Instagram: FaInstagram,
-              YouTube: FaYoutube,
-              TikTok: FaTiktok,
-              Linkedln: FaLinkedin,
-              Threads: FaThreads,
-              X: FaXTwitter
-          };
-      
+    const gmapsApiKey = import.meta.env.VITE_GMAPS_API_KEY
+    const { data: tour, isLoading, isError, isFetching, refetch } = useTourDetail({}, String(slug))
+    const isStreetAvailable = StreetViewChecker({lat: Number(tour?.latitude), lng: Number(tour?.longitude)});
+    let mapsUrl = `https://www.google.com/maps/embed/v1/place?key=${gmapsApiKey}&q=${tour?.latitude},${tour?.longitude}`;
+    if(isStreetAvailable){
+        mapsUrl = `https://www.google.com/maps/embed/v1/streetview?key=${gmapsApiKey}&location=${tour?.latitude},${tour?.longitude}&heading=0&pitch=0`
+    }
+     console.log(slug, tour)
+
   return (
     <>  
         <div className="min-h-screen w-full">
-            {isLoadingArticle ? (
-                <ArticleDetailSkeleton/>
-            ) : isErrorArticle && !isFetchingArticle && !tour || Object.keys(tour.data || {}).length === 0 ? (
+            {isLoading || (!tour || Object.keys(tour || {}).length === 0) && isFetching ? (
+                <div className="pt-12 px-4 md:px-32 w-full min-h-screen bg-[#F3F9FB]">
+                    <div className="h-72 w-full bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                    <h5 className="my-2 text-4xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
+                    <div className="h-2.5 w-full bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                    </h5>
+                    <hr className="h-px my-3 bg-gray-200 border-1 dark:bg-gray-700"></hr>
+                    <div className="flex flex-row w-full my-2 gap-1 justify-items-start justify-center">
+                    <div className="flex flex-row">
+                        <span className="self-center align-baseline text-base font-semibold uppercase text-[#DDA853]">
+                        <div className="h-2.5 w-20 bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                        </span>
+                        <div className="self-center w-px h-4 mx-2 bg-gray-400"></div>
+                        <span className="self-center align-baseline text-xs font-medium text-black">
+                        <div className="h-2.5 w-20 bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                        </span>
+                        <div className="self-center w-px h-4 mx-2 bg-gray-400"></div>
+                        <span className="self-center align-baseline text-xs font-medium text-black">
+                        <div className="h-2.5 w-20 bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                        </span>
+                    </div>
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                        <div key={index} className="h-2.5 w-full bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                    ))}
+                    </div>
+                    <div className="flex flex-row w-full my-3 gap-1 justify-items-start justify-end">
+                    <div className="flex flex-row">
+                        <div className="h-2.5 w-48 bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
+                    </div>
+                    </div>
+                </div>
+            ) : !isError && !isFetching && (!tour || Object.keys(tour || {}).length === 0) ? (
                 <div className="flex w-full h-full justify-center">
                     <div className="flex min-h-screen flex-col items-center justify-center gap-2">
                         <p className="text-black text-2xl dark:text-gray-400">Data tidak tersedia</p>
                     </div>
                 </div>
-            ) : isErrorArticle && !isFetchingArticle  ? (
+            ) : isError && !isFetching  ? (
                 <div className="w-full h-full flex justify-center">
                     <div className="flex min-h-screen flex-col items-center justify-center gap-2">
-                        <p className="text-black text-2xl dark:text-gray-400">Terjadi kesalahan, silakan ulangi</p>
-                        <Button
-                            size="sm"
-                            onClick={() => {
-                                refetchArticle();
-                            }}
-                        >
-                            <LuRefreshCcw size={24} />
-                        </Button>
+                       <Refetch refetch={refetch}/>
                     </div>
                 </div>
             ) : (
                 <>
-                    <ThumbnailBanner bgUrl={`${tour.data.thumbnail}`}/>
+                    <ThumbnailBanner bgUrl={`${tour.thumbnail}`}/>
                     <div className="pt-12 px-4 md:px-32">
-                        <div className="flex items-center">
-                            <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{tour.data.address}</p>
+                        <div className="relative flex justify-center items-start w-full h-full min-h-[300px] lg:min-h-[500px] rounded-xl overflow-hidden">
+                            {
+                                !tour?.latitude && !tour?.longitude && !gmapsApiKey ? (
+                                    <p className="text-gray-500 dark:text-gray-400">Map location not available</p>
+                                ) : (
+                                    <iframe
+                                        src={mapsUrl}
+                                        width="100%"
+                                        height="100%"
+                                        style={{ border: 0 }}
+                                        allowFullScreen
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        title={`Map of ${tour?.title}`}
+                                        className="absolute inset-0"
+                                    />
+                                )  
+                            }
+                        </div>
+                        <div className="flex my-3 items-center">
+                            <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{tour.address}</p>
                         </div>
                         <div className="col-span-2 lg:col-span-1 text-start">
                             <div className="flex justify-start items-center gap-x-2">
                                 <CiMap className="w-4 h-4 rounded-sm text-[#113F67]"></CiMap>
-                                <a href={tour.data.link.gmap} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold ">Lokasi</a>
+                                <a href={tour.link.gmap} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold ">Lokasi</a>
                             </div>
                             <div className="flex justify-start items-center gap-x-2">
                                 <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]"></BiGlobe>
-                                <a href={tour.data.link.website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{tour.data.link.website}</a>
+                                <a href={tour.link.website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{tour.link.website}</a>
                             </div>
                             <div className="flex justify-start items-center gap-x-2">
                                 <CgMail className="w-4 h-4 rounded-sm text-[#113F67]"></CgMail>
-                                <a href={tour.data.link.email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{tour.data.link.email}</a>
+                                <a href={tour.link.email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{tour.link.email}</a>
                             </div>
                         </div>
-                        <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{tour.data.description}</p>
+                        <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{tour.description}</p>
                         <div className="w-full flex flex-wrap gap-2 md:gap-6 justify-center justify-items-center items-center my-4">
-                        {tour.data.link.sosmed ? tour.data.link.sosmed.map(({ key, value }) => {
-                            const Icon = iconMapping[key]; 
-                            return (
-                                <a 
-                                    key={key} 
-                                    href={`https://${value}`} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="flex justify-items-center w-fit items-center rounded-md bg-[#113F67] p-3 hover:bg-[#F3F9FB] group focus:ring-2 focus:ring-gray-400 transition-all transform hover:scale-105 hover:-translate-y-1 duration-300 ease-in-out"
-                                >
-                                    {Icon ? (
-                                        <Icon className="w-6 h-6 lg:w-4 lg:h-4 rounded-sm text-white group-hover:text-[#113F67]" />
-                                    ) : (
-                                        <span className="text-white">{key}</span>
-                                    )}
-                                </a>
-                            );
-                        }) : <></>}
-                    </div>
+                            {tour.link.sosmed ? tour.link.sosmed.map(({ key, value }) => {
+                                const Icon = sosmedIcons[key]; 
+                                return (
+                                    <a 
+                                        key={key} 
+                                        href={`https://${value}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="flex justify-items-center w-fit items-center rounded-md bg-[#113F67] p-3 hover:bg-[#F3F9FB] group focus:ring-2 focus:ring-gray-400 transition-all transform hover:scale-105 hover:-translate-y-1 duration-300 ease-in-out"
+                                    >
+                                        {Icon ? (
+                                            <Icon className="w-6 h-6 lg:w-4 lg:h-4 rounded-sm text-white group-hover:text-[#113F67]" />
+                                        ) : (
+                                            <span className="text-white">{key}</span>
+                                        )}
+                                    </a>
+                                );
+                            }) : <></>}
+                        </div>
                     </div>
                 </>
             )}

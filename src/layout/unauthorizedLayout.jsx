@@ -1,8 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import AppMenu from '../components/headerApp';
-import FooterApp from '../components/footerApp';
+import AppHeader from '../components/app-layout/headerApp';
+import FooterApp from '../components/app-layout/footerApp';
 import MainPage from '../views/mainPage';
-import Login from '../views/login';
 import ArticleList from '../views/article/list';
 import ArticleDetail from '../views/article/detail';
 import TourList from '../views/tour/list';
@@ -31,20 +30,16 @@ const UnautorizedLayout = () => {
     case pathname.includes("/tour/"):     
       contentComponent = <TourDetail />;
       break;
-    case pathname.includes("/profile/"):     
-      contentComponent = <Container />;
-      break;
     case pathname ===  "/tour":
       contentComponent = <TourList />;
       break;
-    case pathname ===  "/login":
-        contentComponent = <Login />;
-        break;
+    default:
+        contentComponent = <Container />;
   };
   
   return (
         <div className="min-h-screen bg-white  justify-center pb-16 md:pb-0">
-            <AppMenu />
+            <AppHeader />
             <div className="w-full h-full overflow-hidden bg-slate-100 flex flex-col items-center content-center gap-6">
                 {contentComponent}
             </div>

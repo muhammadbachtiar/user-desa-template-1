@@ -1,40 +1,36 @@
 import { Link } from "react-router-dom";
 import SliderCard from "../../atoms/slider/sliderCard";
-import { useQuery } from "react-query";
-import ArticleService from "../../services/controllers/article/article.service";
-import PropTypes from "prop-types";
-import { LuRefreshCcw } from "react-icons/lu";
-import { Button } from "flowbite-react";
-import ArticleCardSkeleton from "../../atoms/loadingComponent/article/cardSekeleton";
-const ArticleBanner = ({bgClass, title}) => {
+import Refetch from "../../atoms/refetch";
+import useArticle from "../../hooks/contens/article/useList";
+import useSetting from "../../hooks/settings/useSettings";
 
-    const {
-        data: articles,
-        isLoading,
-        isError,
-        isFetching,
-        refetch,
-      } = useQuery({
-        queryKey: ["articles"],
-        queryFn: async () => {
-         
-          return await ArticleService.getAll(
-                { 
-                    with:"category",
-                    page_size: 10,
-                }
-            );
-        }
-      });
-  
+const ArticleBanner = () => {
+    
+    const { data: articles, isLoading, isFetching, refetch, isError } = useArticle({"page_size": 6});
+    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting("article", {});
+
+    const backgroundStyle = setting 
+    ? { backgroundImage: `bg-[url(${setting.value.imageUrl})]` }
+    : { backgroundImage: `bg-[url(/unavailablei-image.png)]` };
+    
   return (
        <>
-        <div className={`relative lg:${bgClass} lg:bg-cover lg:bg-bottom bg-transparent rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-6 lg:ps-12 grid grid-cols-6`}>    
+        <div className={`relative min-h-[24rem] lg:${backgroundStyle.backgroundImage} lg:bg-cover lg:bg-bottom bg-transparent rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-6 lg:ps-12 grid grid-cols-6`}>    
             <div className="absolute inset-0 bg-transparent lg:bg-white/80 rounded-s-md"></div>
             <div className="relative z-10 col-span-6 grid grid-cols-6 gap-x-8 gap-y-4">
                 <div className="col-span-6 grid grid-cols-6  gap-8 justify-between">
                     <div className="col-span-3">
-                        <span className="self-center align-baseline text-2xl leading-3 tracking-tighter font-semibold uppercase text-black">{title}</span>
+                        {
+                            isSettingLoading ? (
+                                <div className="flex animate-pulse space-x-3 w-full min-h-min ">
+                                    <div className="h-5 w-full flex-1 bg-gray-300"></div>
+                                </div>
+                            ) : isSettingError && !isSettingFetching  ? (
+                                <Refetch refetch={refetchSetting} />
+                            ) : (
+                                <span className="self-center align-baseline text-2xl leading-3 tracking-tighter font-semibold uppercase text-black">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Judul artikel belum diatur]" : setting.value.title }</span>
+                            )
+                        }
                     </div>
                     <div className="col-span-3 text-end">
                         <Link to={"/article"} className="inline-flex font-medium items-center text-center text-[#DDA853] hover:text-[#b48943] hover:underline focus:text-[#b48943] focus:underline">
@@ -46,51 +42,43 @@ const ArticleBanner = ({bgClass, title}) => {
                     </div>
                 </div>
                 <div className="col-span-6 justify-items-center">
-                    {isLoading ? (
+                    {   
+                        isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) && isFetching ? (
                             <div className="h-auto w-full grid grid-cols-6 gap-4 px-2 md:px-8">
-                                <div className="col-span-6 md:col-span-3 lg:col-span-2 px-6 md:px-3 w-full">
-                                <ArticleCardSkeleton/>
-                                </div>
-                                <div className="hidden md:block md:col-span-3 lg:col-span-2 px-6 md:px-3 w-full">
-                                <ArticleCardSkeleton/>
-                                </div>
-                                <div className="hidden lg:block md:col-span-3 lg:col-span-2  px-6 md:px-3 w-full">
-                                <ArticleCardSkeleton/>
-                                </div>
-                          </div>
-                        ) : isError && !isFetching && !articles || articles.data?.length === 0 ? (
+                                {Array.from({ length: window.innerWidth > 1024 ? 3 : window.innerWidth > 640 ? 2 : 1 }).map((_, index) => (
+                                    <div key={index} className="col-span-6 md:col-span-3 lg:col-span-2 px-6 md:px-3 w-full">
+                                        <div className="flex flex-col gap-2 p-4 rounded-md animate-pulse">
+                                            <div className="h-24 w-full bg-gray-400 rounded"></div>
+                                            <div className="h-4 w-3/4 bg-gray-400 rounded"></div>
+                                            <div className="h-3 w-2/4 bg-gray-400 rounded"></div>
+                                            <div className="h-3 w-2/4 bg-gray-400 rounded"></div>
+                                            <div className="h-3 w-1/3 bg-gray-400 rounded"></div>
+                                            <div className="h-3 w-1/3 bg-gray-400 rounded"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : !isFetching && isError ? (
+                            <div className="flex flex-col items-center justify-center gap-2">
+                               <Refetch refetch={refetch}/>
+                            </div>
+                        ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) ? (
                             <div className="flex col-span-6 w-full h-full justify-center">
                                 <div className="flex flex-col items-center justify-top gap-2">
-                                    <p className="text-black text-2xl dark:text-gray-400">Data tidak tersedia</p>
+                                    <p className="text-black text-2xl dark:text-gray-400">Artikel tidak tersedia</p>
                                 </div>
-                            </div>
-                        ) : isError && !isFetching  ? (
-                            <div className="flex flex-col items-center justify-center gap-2">
-                                <p className="text-black text-2xl dark:text-gray-400">Terjadi kesalahan, silakan ulangi</p>
-                                <Button
-                                    size="sm"
-                                    onClick={() => {
-                                        refetch();
-                                    }}
-                                >
-                                    <LuRefreshCcw size={24} />
-                                </Button>
                             </div>
                         ) : (
                             <>
-                               <div className="max-w-sm sm:max-w-full w-full overflow-hidden dark:bg-gray-800 dark:border-gray-700"> <SliderCard data={articles.data} isIncludeModal={true}/></div>
+                               <div className="max-w-sm sm:max-w-full w-full overflow-hidden dark:bg-gray-800 dark:border-gray-700"> <SliderCard data={articles.pages[0].data} /></div>
                             </>
-                        )}
+                        )
+                    }
                 </div>
             </div>
         </div>
        </>
   );
-};
-
-ArticleBanner.propTypes = {
-    bgClass: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
 };
 
 export default ArticleBanner;

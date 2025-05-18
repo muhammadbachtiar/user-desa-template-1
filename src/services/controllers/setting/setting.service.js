@@ -1,4 +1,4 @@
-import axiosConfig from "../../config/api";
+import axiosConfig, { axiosConfigPrivate } from "../../config/api";
 
 const SettingsService = {
     getOneSetting: async (name, params ={}) => {
@@ -9,7 +9,7 @@ const SettingsService = {
         return response.data;
     },
     getOneStaticPage: async (page, params ={}) => {
-        const response = await axiosConfig.get(`/statis-page/${page}`, {
+        const response = await axiosConfigPrivate.get(`/statis-page/${page}`, {
             params,
         });
         

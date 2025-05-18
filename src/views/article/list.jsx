@@ -1,66 +1,48 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import ArticleCard from "../../atoms/ArticleCard";
 import SelectCategory from "../../atoms/form/selectCategory";
 import { Link } from "react-router-dom";
-import { useInfiniteQuery } from "react-query";
 import { useState } from "react";
-import ArticleService from "../../services/controllers/article/article.service";
-import { Button } from "flowbite-react";
-import { LuRefreshCcw } from "react-icons/lu";
-import ArticleListSkeleton from "../../atoms/loadingComponent/article/listSekeleton";
 import { BiPlus } from "react-icons/bi";
+import useArticle from "../../hooks/contens/article/useList";
+import Refetch from "../../atoms/refetch";
+import useSetting from "../../hooks/settings/useSettings";
 
 const ArticleList = () => {
 
     const [categoryId, setCategoryId] = useState(0);
     const [search, setSearch] = useState('');
 
-     const {
-            data: articles,
-            isLoading,
-            isError,
-            fetchNextPage,
-            hasNextPage,
-            isFetching,
-            refetch,
-          } = useInfiniteQuery({
-            queryKey: ["articles", categoryId, search],
-            queryFn: async ({ pageParam = null }) => {
-             
-              return await ArticleService.getAll(
-                    { 
-                        with:"category", 
-                        ...(categoryId !== 0 && { category: categoryId }),
-                        search, 
-                        page_size: 6,
-                        cursor: pageParam
-                    }
-                );
-            },
-            getNextPageParam: (lastPage) => {
-                if (!lastPage.meta.next_page_url) {
-                    return undefined;
-                }
-                const url = new URL(lastPage.meta.next_page_url);
-                const cursor = url.searchParams.get("cursor");
-                return cursor ?? undefined;
-            }
-          });
+    const { data: articles, isLoading, isError, fetchNextPage, hasNextPage, isFetching, refetch } = useArticle({"search": search, "page_size": 6}, categoryId);
+    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting("article", {});
 
-        const handleChange = (e) => {
-            setSearch(e.target.value);
-        };
-        
-        const allArticles = articles?.pages.flatMap(page => page.data) || [];
+    const backgroundStyle = setting 
+        ? { backgroundImage: `bg-[url(${setting.value.imageUrl})]` }
+        : { backgroundImage: `bg-[url(/unavailablei-image.png)]` };
+
+    const handleChange = (e) => {
+        setSearch(e.target.value);
+    };
+    
+   const allArticles = articles?.pages.filter(page => page?.data).flatMap(page => page.data) || [];
+
   return (
     <>  
-        <section className="relative bg-[url(/muara-enim-skyline.jpg)] p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end">
-            <div className="absolute inset-0 bg-black/50 rounded-s-md"></div>
-            <div className="relative z-10 px-8 text-start">
-                <h2 className="mb-4 text-5xl font-bold text-white lg:text-6xl">Artikel</h2>
-            </div>
-        </section>
+        {
+            isSettingLoading ? (
+                <div className="flex animate-pulse space-x-3 w-full min-h-min ">
+                    <div className="h-44 md:h-60 lg:h-80 w-full flex-1 bg-gray-300"></div>
+                </div>
+            ) : isSettingError && !isSettingFetching  ? (
+                <Refetch refetch={refetchSetting} />
+            ) : (
+                 <section className={`relative ${backgroundStyle.backgroundImage} p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end`}>
+                    <div className="absolute inset-0 bg-black/50 rounded-s-md"></div>
+                    <div className="relative px-8 text-start">
+                        <h2 className="mb-4 text-5xl font-bold text-white lg:text-6xl">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Judul artikel belum diatur]" : setting.value.title }</h2>
+                    </div>
+                </section>
+            )
+        }
         <div className="grid w-full grid-cols-3 lg:grid-cols-4 gap-y-6 bg-gradient-to-b from-slate-100 via-blue-[#F3F9FB] to-blue-[#F3F9FB]">
             <div className="bg-transparent rounded-s-md col-span-4 lg:py-6 md:px-12 grid grid-cols-6">    
                 <div className="col-span-6 grid grid-cols-6 gap-8">
@@ -80,9 +62,22 @@ const ArticleList = () => {
                         </div>
                     </div>
                     <div className="col-span-6 grid grid-cols-6 md:gap-x-4 gap-y-6 justify-items-center">
-                        {isLoading ? (
-                            <ArticleListSkeleton/>
-                        ) : isError && !isFetching && !articles || articles.data?.length === 0 ? (
+                        {isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) && isFetching ? (
+                            <div className="col-span-6 w-full grid grid-cols-6 px-8 md:px-0 gap-6 justify-items-center">
+                                {Array.from({ length: 6 }).map((_, index) => (
+                                    <div  key={index} className="col-span-6 px-0 md:px-3 md:col-span-3 lg:col-span-2 w-full">
+                                        <div className=" w-full bg-gray-400 dark:bg-gray-600 rounded animate-pulse">
+                                            <div className="h-24 w-full bg-gray-400 dark:bg-gray-600 rounded"></div>
+                                            <div className="h-10 w-3/4 bg-gray-400 dark:bg-gray-600 rounded"></div>
+                                            <div className="h-5 w-2/4 bg-gray-400 dark:bg-gray-600 rounded"></div>
+                                            <div className="h-5 w-2/4 bg-gray-400 dark:bg-gray-600 rounded"></div>
+                                            <div className="h-5 w-1/3 bg-gray-400 dark:bg-gray-600 rounded"></div>
+                                            <div className="h-5 w-1/3 bg-gray-400 dark:bg-gray-600 rounded"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) ? (
                             <div className="flex col-span-6 w-full h-full justify-center">
                                 <div className="flex min-h-screen flex-col items-center justify-center gap-2">
                                     <p className="text-black text-2xl dark:text-gray-400">Data tidak tersedia</p>
@@ -91,15 +86,7 @@ const ArticleList = () => {
                         ) : isError && !isFetching  ? (
                             <div className="w-full col-span-6 h-full flex justify-center">
                                 <div className="flex min-h-screen flex-col items-center justify-center gap-2">
-                                    <p className="text-black text-2xl dark:text-gray-400">Terjadi kesalahan, silakan ulangi</p>
-                                    <Button
-                                        size="sm"
-                                        onClick={() => {
-                                            refetch();
-                                        }}
-                                    >
-                                        <LuRefreshCcw size={24} />
-                                    </Button>
+                                    <Refetch refetch={refetch}/>
                                 </div>
                             </div>
                         ) : (
