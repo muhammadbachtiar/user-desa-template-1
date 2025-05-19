@@ -22,7 +22,7 @@ const FooterApp = () => {
                                     <div className="h-10 w-10 bg-gray-300 rounded"></div>
                                 </div>
                             </div>
-                        ) : !isSettingError && !isSettingFetching && (!setting || !setting.value) ? (
+                        ) : !isSettingError && !isSettingFetching && (!setting?.value?.socialMedia) ? (
                             <div className="flex mb-4 justify-center col-span-8 w-full">
                             <p className="text-black text-center text-md dark:text-gray-400">[Sosial Media belum di atur]</p>
                             </div>
