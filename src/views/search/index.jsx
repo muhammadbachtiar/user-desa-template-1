@@ -65,7 +65,7 @@ const SearchPage = () => {
                          <div className="col-span-6">  
                             <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                                 {
-                                    IsArticleLoading || (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) && IsArticleFetching  ? (
+                                    IsArticleLoading || (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0) && IsArticleFetching  ? (
                                     Array.from({ length: 4 }).map((_, index) => (
                                         <div
                                         key={index}
@@ -75,7 +75,7 @@ const SearchPage = () => {
                                         <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
                                         </div>
                                     ))
-                                    ) : !isArticleError && !IsArticleFetching && (!articles || !articles.pages[0] || articles.pages[0]?.length === 0)  ? (
+                                    ) : !isArticleError && !IsArticleFetching && (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0)  ? (
                                     <div className="flex flex-col items-center justify-center py-12">
                                         <p className="text-black text-2xl dark:text-gray-400">Artikel tidak tersedia</p>
                                     </div>
@@ -167,7 +167,7 @@ const SearchPage = () => {
                         </div>
                          <div className="col-span-6">  
                             <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                                {isTourLoading || (!tours || !tours.pages[0] || tours.pages[0]?.length === 0) && isTourFetching  ? (
+                                {isTourLoading || (!tours || !tours.pages[0] || tours.pages[0]?.data.length === 0) && isTourFetching  ? (
                                     Array.from({ length: 4 }).map((_, index) => (
                                         <div
                                         key={index}
@@ -177,7 +177,7 @@ const SearchPage = () => {
                                         <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
                                         </div>
                                     ))
-                                    ) : !isTourError && !isTourFetching && (!tours || !tours.pages[0] || tours.pages[0]?.length === 0) ? (
+                                    ) : !isTourError && !isTourFetching && (!tours || !tours.pages[0] || tours.pages[0]?.data.length === 0) ? (
                                     <div className="flex flex-col items-center justify-center py-12">
                                         <p className="text-black text-2xl dark:text-gray-400">Wisata tidak tersedia</p>
                                     </div>

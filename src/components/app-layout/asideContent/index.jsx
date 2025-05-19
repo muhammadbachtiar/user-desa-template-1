@@ -23,7 +23,7 @@ export default function AsideContent({ children }) {
             <h2 className="text-xl font-bold text-[#DDA853] mb-4 pb-2 border-gray-300 border-b">Artikel Populer</h2>
             <ul className="space-y-4">
               {
-                isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) && isFetching ? (
+                isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0) && isFetching ? (
                   Array.from({ length: 4 }).map((_, index) => (
                     <li key={index} className="flex animate-pulse">
                       <div className="mr-3 min-w-32 relative group mb-3">
@@ -36,7 +36,7 @@ export default function AsideContent({ children }) {
                       </div>
                     </li>
                 ))
-                ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) ? (
+                ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0) ? (
                     <div className="flex min-h-52 mb-4 justify-center items-center col-span-8 w-full">
                       <p className="text-black text-center text-md dark:text-gray-400">Artikel tidak tersedia</p>
                     </div>
@@ -50,13 +50,11 @@ export default function AsideContent({ children }) {
                       <li className="flex">
                         <div className="mr-3 min-w-32 relative group mb-3">
                             <img
-                                className="w-40 md:w-30 rounded-sm shadow-lg object-cover"
+                                className="max-w-40 md:max-w-32 rounded-sm shadow-lg object-cover"
                                 src={article.thumbnail || ""}
                                 alt="Article Thumbnail"
-                                width="1200"
-                                height="720"
                                 />
-                            <div className="absolute w-40 md:w-30 inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
+                            <div className="absolute w-40 md:w-32 inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
                         </div>
                         <h5 className="text-md font-semibold hover:text-[#DDA853] ">
                           {article.title}

@@ -30,11 +30,11 @@ const TourBanner = () => {
                     ) : (
                       <>
                        <div className="col-span-6 md:col-span-3 xl:col-span-4 w-full rounded-lg dark:bg-gray-800 py-4 lg:py-12 pe-12">                  
-                            <h5 className="text-4xl font-bold mb-5 tracking-tighter text-gray-900 dark:text-white">{(!data || Object.keys(data.value || {}).length === 0) ? "[Judul wisata belum diatur]" : data.value.title }</h5>
+                            <h5 className="text-4xl font-bold mb-5 tracking-tighter text-gray-900 dark:text-white">{ data?.value?.title ?? "[Judul wisata belum diatur]" }</h5>
                             <div className="flex items-center mt-2">
-                                <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{(!data || Object.keys(data.value || {}).length === 0) ? "[Sub judul wisata belum diatur]" : data.value.subTitle }</p>
+                                <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{ data?.value?.subTitle ?? "[Sub judul wisata belum diatur]"}</p>
                             </div>
-                            <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{(!data || Object.keys(data.value || {}).length === 0) ? "[Deskripsi wisata belum diatur]" : data.value.description }</p>
+                            <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{data?.value?.description ?? "[Deskripsi wisata belum diatur]" }</p>
                             <Link to={'/tour'} className="inline-flex justify-center mt-8 lg:mt-12 hover:text-black items-center py-5 px-8 text-base font-medium text-center bg-[#113F67] text-white rounded-md hover:bg-white focus:ring-2 focus:ring-gray-400 transition transform duration-300 ease-in-out">
                                 Lihat Selengkapnya
                             </Link>
@@ -42,7 +42,7 @@ const TourBanner = () => {
                         <div className="col-span-6 md:col-span-3 xl:col-span-2 flex justify-center items-center dark:bg-gray-800">                  
                             <img
                                 className="h-full w-full shadow-2xl backdrop-blur-2xl"
-                                src={(!data || Object.keys(data.value || {}).length === 0) ? "/unavailablei-image.png" : data.value.imageUrl }
+                                src={data?.value?.imageUrl ?? "/unavailablei-image.png" }
                                 alt="image description"
                             />
                         </div>

@@ -17,7 +17,6 @@ const TourDetail = () => {
     if(isStreetAvailable){
         mapsUrl = `https://www.google.com/maps/embed/v1/streetview?key=${gmapsApiKey}&location=${tour?.latitude},${tour?.longitude}&heading=0&pitch=0`
     }
-     console.log(slug, tour)
 
   return (
     <>  

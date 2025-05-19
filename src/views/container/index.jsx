@@ -11,7 +11,7 @@ const Container = () => {
   const pathSegments = location.pathname.split('/').filter(segment => segment);
   const { data: menu } = useSettings('menu', {});
   const path = pathSegments || [];
-  const menuItem = menu?.value ? findMenuItemByPath(menu.value, path) : null;
+  const menuItem = Array.isArray(menu?.value) ? findMenuItemByPath(menu.value, path) : null;
 
   const { data: staticPage, isLoading, isError, isFetching, refetch } = useStaticPage({}, menuItem?.staticPage || "");
 
@@ -46,7 +46,7 @@ const Container = () => {
                     </div>
                 </div>
             ) : (
-                <RichTextContent content={staticPage.content} className="px-4" />
+                <RichTextContent content={staticPage.content} className="px-4 md:px-8" />
             )}
         </AsideContent> 
     </div>

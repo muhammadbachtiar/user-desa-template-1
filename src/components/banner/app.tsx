@@ -1,4 +1,3 @@
-'use client'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import useApp from '../../hooks/contens/useApp';
 import Icons from '../../atoms/icons/icon';
@@ -26,8 +25,8 @@ export default function App() {
                         <Refetch refetch={refetchSetting} />
                     ) : (
                     <>
-                        <span className="self-center align-baseline text-2xl leading-3 tracking-tighter font-semibold uppercase text-black">{(!appSetting || Object.keys(appSetting.value || {}).length === 0) ? "[Judul layanan belum diatur]" : appSetting.value.title }</span>
-                        <span className="self-center align-baseline text-md font-normal italic text-[#DDA853]">{(!appSetting || Object.keys(appSetting.value || {}).length === 0) ? "[Sub judul layanan belum diatur]" : appSetting.value.subTitle }</span>
+                        <span className="self-center align-baseline text-2xl leading-3 tracking-tighter font-semibold uppercase text-black">{ appSetting?.value?.title ?? "[Judul layanan belum diatur]"}</span>
+                        <span className="self-center align-baseline text-md font-normal italic text-[#DDA853]">{appSetting?.value?.subTitle  ?? "[Sub judul layanan belum diatur]"}</span>
                     </>
                     )
                 }

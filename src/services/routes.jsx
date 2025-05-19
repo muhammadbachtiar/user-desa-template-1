@@ -15,7 +15,7 @@ const Routers = () => {
           <Route path="/tour" element={<UnautorizedLayout />} />
           <Route path="/tour/:slug" element={<UnautorizedLayout />} />
           <Route path="/search/:search" element={<UnautorizedLayout />} />
-          {generateRoutes(menu?.value || [])}
+          {generateRoutes(Array.isArray(menu?.value) ? menu.value : [])}
           <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </Router>

@@ -8,16 +8,16 @@ import useTour from "../../hooks/contens/tour/useList";
 const TourList = () => {
 
     const [search, setSearch] = useState('');
-    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting('tour', {});
+    const {data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting('tour', {});
     const {data: tours, isLoading, isError, fetchNextPage, hasNextPage, isFetching, refetch } =  useTour({"search": search, 'page_size': 6});
 
     const handleChange = (e) => {
         setSearch(e.target.value);
     };
 
-    const backgroundStyle = setting 
-        ? { backgroundImage: `bg-[url(${setting.value.imageUrl})]` }
-        : { backgroundImage: `bg-[url(/unavailablei-image.png)]` };
+   const backgroundStyle = setting?.value?.imageUrl
+    ? { backgroundImage: `url(${setting.value.imageUrl})` }
+    : { backgroundImage: `url(/unavailable-image.png)` }
 
     const allTours = tours?.pages.filter(page => page?.data).flatMap(page => page.data) || [];
    return (
@@ -30,10 +30,10 @@ const TourList = () => {
             ) : isSettingError && !isSettingFetching  ? (
                 <Refetch refetch={refetchSetting} />
             ) : (
-                <section className={`relative ${backgroundStyle.backgroundImage} p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end`}>
+                <section style={backgroundStyle} className={`relative p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end`}>
                     <div className="absolute inset-0 bg-black/50 rounded-s-md"></div>
                     <div className="relative px-8 text-start">
-                        <h2 className="mb-4 text-5xl font-bold text-white lg:text-6xl">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Judul wisata belum diatur]" : setting.value.title }</h2>
+                        <h2 className="mb-4 text-5xl font-bold text-white lg:text-6xl">{setting?.value?.title  ?? "[Judul wisata belum diatur]"}</h2>
                     </div>
                 </section>
             )
@@ -54,7 +54,7 @@ const TourList = () => {
                         </div>
                     </div>
                     <div className="col-span-6 grid grid-cols-6 md:gap-x-4 gap-y-2 md:gap-y-8 justify-items-center">
-                        { isLoading || (!tours || !tours.pages[0] || tours.pages[0]?.length === 0) && isFetching ? (
+                        { isLoading || (!tours || !tours.pages[0] || tours.pages[0]?.data.length === 0) && isFetching ? (
                            <div className="col-span-6 w-full grid grid-cols-6 px-8 md:px-0 gap-6 justify-items-center">
                                 {Array.from({ length: 6 }).map((_, index) => (
                                     <div  key={index} className="col-span-6 px-0 md:px-3 md:col-span-3 lg:col-span-2 w-full">
@@ -69,10 +69,10 @@ const TourList = () => {
                                     </div>
                                 ))}
                             </div>
-                        ) : !isError && !isFetching && (!tours || !tours.pages[0] || tours.pages[0]?.length === 0) ? (
+                        ) : !isError && !isFetching && (!tours || !tours.pages[0] || tours.pages[0]?.data.length === 0) ? (
                             <div className="flex col-span-6 w-full h-full justify-center">
                                 <div className="flex min-h-screen flex-col items-center justify-center gap-2">
-                                    <p className="text-black text-2xl dark:text-gray-400">Data tidak tersedia</p>
+                                    <p className="text-black text-2xl dark:text-gray-400">Wisata tidak tersedia</p>
                                 </div>
                             </div>
                         ) : isError && !isFetching  ? (

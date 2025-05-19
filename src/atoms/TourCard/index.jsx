@@ -77,5 +77,5 @@ TourCard.propTypes = {
     map: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    socmed: PropTypes.string.isRequired
+    socmed: PropTypes.array
 };

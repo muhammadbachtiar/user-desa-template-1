@@ -28,7 +28,7 @@ function SamplePrevArrow(props) {
 }  
     
 const settings = {
-    dots: true,
+    dots: false,
     infinite: data.length > 1,
     speed: 500,
     slidesToShow: 3,
@@ -41,7 +41,7 @@ const settings = {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
+          dots: false
         }
       },
       {

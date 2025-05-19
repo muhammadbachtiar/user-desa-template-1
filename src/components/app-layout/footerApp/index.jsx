@@ -39,10 +39,10 @@ const FooterApp = () => {
                                         href={`https://${value.profileUrl}`} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="flex justify-items-center w-fit items-center rounded-md bg-white p-3 hover:bg-black border-0 hover:border-2 hover:border-white group focus:ring-2 focus:ring-white transition-all transform duration-300 ease-in-out"
+                                        className="flex justify-items-center w-fit items-center rounded-md bg-white p-3 hover:bg-[#113F67] border-0 hover:border-2 hover:border-white group focus:ring-2 focus:ring-white transition-all transform duration-300 ease-in-out"
                                     >
                                         {Icon ? (
-                                            <Icon className="w-6 h-6 lg:w-4 lg:h-4 rounded-sm text-black group-hover:text-white" />
+                                            <Icon className="w-6 h-6 lg:w-4 lg:h-4 rounded-sm text-[#113F67] group-hover:text-white" />
                                         ) : (
                                             <span className="text-white">{key}</span>
                                         )}
@@ -78,15 +78,15 @@ const FooterApp = () => {
                                 <>
                                     <div className="flex justify-start items-center gap-x-2">
                                         <FaLocationDot className="w-4 h-4 rounded-sm text-[#113F67]"></FaLocationDot>
-                                        <p className="text-md font-normal mb-0 text-gray-900 dark:text-white">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Alamat belum diatur]" : setting.value.contactUs.address }</p>
+                                        <p className="text-md font-normal mb-0 text-gray-900 dark:text-white">{setting?.value?.contactUs?.address ?? "[Alamat belum diatur]"  }</p>
                                     </div>
                                     <div className="flex justify-start items-center gap-x-2">
                                         <FaPhone className="w-4 h-4 rounded-sm text-[#113F67]"></FaPhone>
-                                        <p className="text-md font-normal mb-0 text-gray-900 dark:text-white">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Nomor handphone belum diatur]" : setting.value.contactUs.phone }</p>
+                                        <p className="text-md font-normal mb-0 text-gray-900 dark:text-white">{setting?.value?.contactUs?.phone ?? "[Nomor handphone belum diatur]" }</p>
                                     </div>
                                     <div className="flex justify-start items-center gap-x-2">
                                         <MdEmail className="w-4 h-4 rounded-sm text-[#113F67]"></MdEmail>
-                                        <p className="text-md font-normal mb-0 text-gray-900 dark:text-white">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Email belum diatur]" : setting.value.contactUs.email }</p>
+                                        <p className="text-md font-normal mb-0 text-gray-900 dark:text-white">{setting?.value?.contactUs?.email ?? "[Email belum diatur]"  }</p>
                                     </div>
                                 </>      
                         }

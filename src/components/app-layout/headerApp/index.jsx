@@ -29,8 +29,8 @@ const AppMenu = () => {
                         <Refetch refetch={refetch} />
                     ) : (
                         <MainNav 
-                            menuData={(!menu || menu?.value?.length === 0) ?
-                            [
+                            menuData={(menu?.value?.length > 0) ? menu.value
+                            :  [
                                 {
                                     "order": 1,
                                     "title": "Home",
@@ -52,7 +52,7 @@ const AppMenu = () => {
                                     "staticPage": null,
                                     "child": null
                                 }
-                            ] : menu.value} 
+                            ]} 
                         />
                     )
                 }

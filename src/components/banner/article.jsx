@@ -8,15 +8,15 @@ const ArticleBanner = () => {
     
     const { data: articles, isLoading, isFetching, refetch, isError } = useArticle({"page_size": 6});
     const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting("article", {});
-
-    const backgroundStyle = setting 
-    ? { backgroundImage: `bg-[url(${setting.value.imageUrl})]` }
-    : { backgroundImage: `bg-[url(/unavailablei-image.png)]` };
+    
+ const backgroundStyle = setting?.value?.imageUrl
+  ? { backgroundImage: `url(${setting.value.imageUrl})` }
+  : { backgroundImage: `url(/unavailable-image.png)` };
     
   return (
        <>
-        <div className={`relative min-h-[24rem] lg:${backgroundStyle.backgroundImage} lg:bg-cover lg:bg-bottom bg-transparent rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-6 lg:ps-12 grid grid-cols-6`}>    
-            <div className="absolute inset-0 bg-transparent lg:bg-white/80 rounded-s-md"></div>
+        <div style={backgroundStyle} className={`relative min-h-[24rem] bg-none lg:bg-cover lg:bg-bottom rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-6 lg:ps-12 grid grid-cols-6`}>    
+            <div className="absolute inset-0 bg-slate-100 lg:bg-white/80 rounded-s-md"></div>
             <div className="relative z-10 col-span-6 grid grid-cols-6 gap-x-8 gap-y-4">
                 <div className="col-span-6 grid grid-cols-6  gap-8 justify-between">
                     <div className="col-span-3">
@@ -28,7 +28,7 @@ const ArticleBanner = () => {
                             ) : isSettingError && !isSettingFetching  ? (
                                 <Refetch refetch={refetchSetting} />
                             ) : (
-                                <span className="self-center align-baseline text-2xl leading-3 tracking-tighter font-semibold uppercase text-black">{(!setting || Object.keys(setting.value || {}).length === 0) ? "[Judul artikel belum diatur]" : setting.value.title }</span>
+                                <span className="self-center align-baseline text-2xl leading-3 tracking-tighter font-semibold uppercase text-black">{setting?.value?.title ?? "[Judul artikel belum diatur]"}</span>
                             )
                         }
                     </div>
@@ -43,7 +43,7 @@ const ArticleBanner = () => {
                 </div>
                 <div className="col-span-6 justify-items-center">
                     {   
-                        isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) && isFetching ? (
+                        isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0) && isFetching ? (
                             <div className="h-auto w-full grid grid-cols-6 gap-4 px-2 md:px-8">
                                 {Array.from({ length: window.innerWidth > 1024 ? 3 : window.innerWidth > 640 ? 2 : 1 }).map((_, index) => (
                                     <div key={index} className="col-span-6 md:col-span-3 lg:col-span-2 px-6 md:px-3 w-full">
@@ -58,15 +58,15 @@ const ArticleBanner = () => {
                                     </div>
                                 ))}
                             </div>
-                        ) : !isFetching && isError ? (
-                            <div className="flex flex-col items-center justify-center gap-2">
-                               <Refetch refetch={refetch}/>
-                            </div>
-                        ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.length === 0) ? (
+                        ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.data?.length === 0) ? (
                             <div className="flex col-span-6 w-full h-full justify-center">
                                 <div className="flex flex-col items-center justify-top gap-2">
                                     <p className="text-black text-2xl dark:text-gray-400">Artikel tidak tersedia</p>
                                 </div>
+                            </div>
+                        ) : !isFetching && isError ? (
+                            <div className="flex flex-col items-center justify-center gap-2">
+                               <Refetch refetch={refetch}/>
                             </div>
                         ) : (
                             <>
