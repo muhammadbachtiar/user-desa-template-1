@@ -84,7 +84,7 @@ const Chatbot = () => {
                     },
                     footer: {
                         textColor: '#303235',
-                        text: 'Aruna - Asisten Virtual',
+                        text: 'Aruna MEMBARA - Asisten Virtual',
                         company: 'Muara Enim',
                         companyLink: 'https://muaraenimkab.go.id/'
                     }
