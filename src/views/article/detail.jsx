@@ -66,7 +66,7 @@ const ArticleDetail = () => {
                 ) : (
                     <>
                         <ThumbnailBanner bgUrl={`${article.thumbnail}`}/>
-                        <div className="pt-12 px-4 md:px-32 min-h-screen bg-[#F3F9FB]">
+                        <div className="pt-12 px-4 md:px-32 min-h-screen">
                             <h5 className="my-2 text-4xl text-center font-bold tracking-tight text-gray-900  dark:text-white">{article.title}</h5>
                             <hr className="h-px my-3 bg-gray-200 border-1 dark:bg-gray-700"></hr>
                             <div className='flex flex-row w-full my-2 gap-1 justify-items-start justify-center'>

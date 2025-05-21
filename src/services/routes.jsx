@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UnautorizedLayout from "../layout/unauthorizedLayout";
 import useSetting from "../hooks/settings/useSettings";
 import { generateRoutes } from "../services/utils/generateRoutes";
+import NotFound from "../views/notfound";
 
 const Routers = () => {
   const { data: menu } = useSetting('menu', {});
@@ -16,7 +17,7 @@ const Routers = () => {
           <Route path="/tour/:slug" element={<UnautorizedLayout />} />
           <Route path="/search/:search" element={<UnautorizedLayout />} />
           {generateRoutes(Array.isArray(menu?.value) ? menu.value : [])}
-          <Route path="*" element={<div>404 Not Found</div>} />
+          <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

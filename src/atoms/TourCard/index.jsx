@@ -24,11 +24,11 @@ const TourCard = ({ slug, thumbnail, title, address, map, website, email, socmed
                 </div>
                 <div className="flex justify-start items-center gap-x-2">
                     <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]"></BiGlobe>
-                    <a href={website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{website}</a>
+                    <a href={website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{website}</a>
                 </div>
                 <div className="flex justify-start items-center gap-x-2">
                     <CgMail className="w-4 h-4 rounded-sm text-[#113F67]"></CgMail>
-                    <a href={email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{email}</a>
+                    <a href={email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{email}</a>
                 </div>
             </div>
         </div>

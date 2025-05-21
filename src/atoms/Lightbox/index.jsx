@@ -17,8 +17,11 @@ const LightboxImage = ({ data = [], isOpen, setIsOpen, currentIndex }) => {
             isOpen={isOpen}
             images={transformedInfografisData}
             currentIndex={currentIndex}
-            renderHeader={() => (
-                <div className="flex w-full bg-black bg-opacity-35 justify-end px-3 py-1 items-center">
+             renderHeader={() => (
+                <div className="flex w-full bg-black/20 justify-between px-3 py-1 items-center">
+                    <h1 className="text-lg font-semibold text-center leading-none tracking-tight">
+                        {transformedInfografisData[currentIndex]?.title || "Title Not Available"}
+                    </h1>
                     <button 
                     className="bg-transparent text-white text-md p-3 rounded-md transition duration-200 ease-in-out 
                                 hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400" 
@@ -29,9 +32,13 @@ const LightboxImage = ({ data = [], isOpen, setIsOpen, currentIndex }) => {
 
                 </div>
             )}
-            renderFooter={() => (
-                <div className="flex w-full text-white bg-black bg-opacity-35 justify-center px-3 py-1 items-center">
-                    <h1 className="text-base p-3 font-normal leading-none tracking-tight md:text-lg lg:text-xl dark:text-white">{transformedInfografisData[currentIndex]?.title || "Title Not Available"}</h1>
+             renderFooter={() => (
+                <div className="flex w-full bg-black/20 text-white px-3 py-2 items-center flex-col">
+                    <div className="mt-2 w-full max-h-32 overflow-y-auto px-2 py-1 rounded-md">
+                        <p className="text-md text-center leading-relaxed">
+                            {transformedInfografisData[currentIndex]?.description || "No description available"}
+                        </p>
+                    </div>
                 </div>
             )}
             className="bg-black bg-opacity-65 text-white z-50"

@@ -63,13 +63,13 @@ const SearchPage = () => {
                             <hr className="h-px my-3 bg-gray-200 border-1 dark:bg-gray-700"></hr>
                         </div>
                          <div className="col-span-6">  
-                            <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+                            <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700 ">
                                 {
                                     IsArticleLoading || (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0) && IsArticleFetching  ? (
                                     Array.from({ length: 4 }).map((_, index) => (
                                         <div
                                         key={index}
-                                        className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-100"
+                                        className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-200"
                                         >
                                         <dd className="h-6 bg-gray-200 rounded w-3/4 mb-2"></dd>
                                         <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
@@ -77,7 +77,7 @@ const SearchPage = () => {
                                     ))
                                     ) : !isArticleError && !IsArticleFetching && (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0)  ? (
                                     <div className="flex flex-col items-center justify-center py-12">
-                                        <p className="text-black text-2xl dark:text-gray-400">Artikel tidak tersedia</p>
+                                        <p className="text-black text-2xl dark:text-gray-400">Artikel tidak ditemukan</p>
                                     </div>
                                     ) : isArticleError && !IsArticleFetching ? (
                                     <div className="flex flex-col items-center justify-center py-12">
@@ -89,12 +89,12 @@ const SearchPage = () => {
                                                     <div
                                                     className={`flex flex-col py-3 ${
                                                         index % 2 === 0 ? 'bg-gray-50' : ''
-                                                    } hover:bg-gray-100 transition-colors duration-200`}
+                                                    } hover:bg-gray-200 transition-colors duration-200`}
                                                     >
-                                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                                                    <dt className="mb-1 font-semibold text-gray-900 md:text-lg dark:text-gray-400">
                                                         <span className="block">{article.title}</span>
                                                     </dt>
-                                                    <dd className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    <dd className="text-md line-clamp-3 text-gray-500 dark:text-white">
                                                         {article.description}
                                                     </dd>
                                                 </div>
@@ -118,7 +118,7 @@ const SearchPage = () => {
                                         Array.from({ length: 4 }).map((_, index) => (
                                             <div
                                             key={index}
-                                            className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-100"
+                                            className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-200"
                                             >
                                                 <dd className="h-6 bg-gray-200 rounded w-3/4 mb-2"></dd>
                                                 <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
@@ -126,7 +126,7 @@ const SearchPage = () => {
                                     ))
                                     ) : !isInfografisError && !isInfografisFetching && (!infografies || infografies.length === 0) ? (
                                     <div className="flex flex-col items-center justify-center py-12">
-                                        <p className="text-black text-2xl dark:text-gray-400">Infografis tidak tersedia</p>
+                                        <p className="text-black text-2xl dark:text-gray-400">Infografis tidak ditemukan</p>
                                     </div>
                                     ) : isInfografisError && !isInfografisFetching ? (
                                     <div className="flex flex-col items-center justify-center py-12">
@@ -141,12 +141,12 @@ const SearchPage = () => {
                                                 onClick={()=> {setIsOpen(true); setCurrentIndex(index)}}
                                                 className={`flex flex-col py-3 ${
                                                     index % 2 === 0 ? 'bg-gray-50' : ''
-                                                } hover:bg-gray-100 transition-colors duration-200`}
+                                                } hover:bg-gray-200 transition-colors duration-200`}
                                                 >
-                                                    <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                                                    <dt className="mb-1 font-semibold text-gray-900 md:text-lg dark:text-gray-400">
                                                         <span className="block">{infografis.title}</span>
                                                     </dt>
-                                                    <dd className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    <dd className="text-md line-clamp-3 text-gray-500 dark:text-white">
                                                         {infografis.description}
                                                     </dd>
                                                 </div>
@@ -171,7 +171,7 @@ const SearchPage = () => {
                                     Array.from({ length: 4 }).map((_, index) => (
                                         <div
                                         key={index}
-                                        className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-100"
+                                        className="flex flex-col py-3 animate-pulse bg-gray-50 hover:bg-gray-200"
                                         >
                                         <dd className="h-6 bg-gray-200 rounded w-3/4 mb-2"></dd>
                                         <dt className="h-4 bg-gray-200 rounded w-1/2"></dt>
@@ -179,7 +179,7 @@ const SearchPage = () => {
                                     ))
                                     ) : !isTourError && !isTourFetching && (!tours || !tours.pages[0] || tours.pages[0]?.data.length === 0) ? (
                                     <div className="flex flex-col items-center justify-center py-12">
-                                        <p className="text-black text-2xl dark:text-gray-400">Wisata tidak tersedia</p>
+                                        <p className="text-black text-2xl dark:text-gray-400">Wisata tidak ditemukan</p>
                                     </div>
                                     ) : isTourError && !isTourFetching ? (
                                     <div className="flex flex-col items-center justify-center py-12">
@@ -191,12 +191,12 @@ const SearchPage = () => {
                                             <div
                                             className={`flex flex-col py-3 ${
                                                 index % 2 === 0 ? 'bg-gray-50' : ''
-                                            } hover:bg-gray-100 transition-colors duration-200`}
+                                            } hover:bg-gray-200 transition-colors duration-200`}
                                             >
-                                                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+                                                <dt className="mb-1 font-semibold text-gray-900 md:text-lg dark:text-gray-400">
                                                     <span className="block">{tour.title}</span>
                                                 </dt>
-                                                <dd className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                <dd className="text-md line-clamp-3 text-gray-500 dark:text-white">
                                                     {tour.description}
                                                 </dd>
                                             </div>

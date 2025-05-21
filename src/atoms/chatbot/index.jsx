@@ -1,7 +1,6 @@
 import { BubbleChat } from 'flowise-embed-react'
 
 const Chatbot = () => {
-  console.log(import.meta.env.VITE_CHATBOT_ID, import.meta.env.VITE_CHATBOT_BASE_URL, import.meta.env.VITE_CHATBOT_TOKEN)
     return (
         <BubbleChat
             chatflowid={import.meta.env.VITE_CHATBOT_ID}
@@ -22,10 +21,10 @@ const Chatbot = () => {
                 },
                 disclaimer: {
                     title: 'Disclaimer',
-                    message: "By using this chatbot, you agree to the <a target=\"_blank\" href=\"https://flowiseai.com/terms\">Terms & Condition</a>",
+                    message: "Dengan menggunaknan chatbot ini, kamu menyetujui<a target=\"_blank\" href=\"https://flowiseai.com/terms\">syarat dan ketentuan</a>",
                     textColor: 'black',
                     buttonColor: '#3b82f6',
-                    buttonText: 'Start Chatting',
+                    buttonText: 'Mulai percakapan',
                     buttonTextColor: 'white',
                     blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
                     backgroundColor: 'white'

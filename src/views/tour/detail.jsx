@@ -99,11 +99,11 @@ const TourDetail = () => {
                             </div>
                             <div className="flex justify-start items-center gap-x-2">
                                 <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]"></BiGlobe>
-                                <a href={tour.link.website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{tour.link.website}</a>
+                                <a href={tour.link.website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{tour.link.website}</a>
                             </div>
                             <div className="flex justify-start items-center gap-x-2">
                                 <CgMail className="w-4 h-4 rounded-sm text-[#113F67]"></CgMail>
-                                <a href={tour.link.email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white">{tour.link.email}</a>
+                                <a href={tour.link.email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{tour.link.email}</a>
                             </div>
                         </div>
                         <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{tour.description}</p>
