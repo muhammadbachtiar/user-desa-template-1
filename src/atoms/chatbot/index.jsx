@@ -84,9 +84,9 @@ const Chatbot = () => {
                     },
                     footer: {
                         textColor: '#303235',
-                        text: 'Powered by',
-                        company: 'Flowise',
-                        companyLink: 'https://flowiseai.com'
+                        text: 'Aruna - Asisten Virtual',
+                        company: 'Muara Enim',
+                        companyLink: 'https://muaraenimkab.go.id/'
                     }
                 }
             }}
