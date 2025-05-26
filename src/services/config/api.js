@@ -8,6 +8,7 @@ const axiosConfig = axios.create({
     baseURL: API_URL + API_PUBLIC_VERSION,
     headers: {
       Accept: "application/json",
+     "x-village-id": import.meta.env.VITE_VILLAGE_ID,
     },
     timeout: 15000
   });
@@ -32,12 +33,11 @@ axiosConfig.interceptors.response.use(
     }
 );
 
-
-
 export const axiosConfigPrivate = axios.create({
   baseURL: API_URL + API_PRIVATE_VERSION,
   headers: {
     Accept: "application/json",
+     'x-village-id': import.meta.env.VITE_VILLAGE_ID,
   },
 });
 

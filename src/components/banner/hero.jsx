@@ -30,9 +30,9 @@ const Hero = () => {
                         <source src={ data?.value?.videoUrl ?? '/unavailablei-image.png'} type="video/mp4" />
                     </video>
                     <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-20"></div>
-                    <div className="relative w-full px-8 md:px-24 xl:px-64 text-center py-16 lg:py-32">
-                        <h1 className="mb-4 text-5xl font-bold text-white lg:text-6xl">{data?.value?.title ?? '[Judul hero belum diatur]'}</h1>
-                        <p className="mb-7 text-base font-normal tracking-tight leading-5 text-white lg:text-xl sm:px-16 xl:px-48">{data?.value?.description ?? '[Deskripsi hero belum diatur]'}</p>
+                    <div className="relative w-full px-8 md:px-24 xl:px-64 text-center sm:py-16 lg:py-32">
+                        <h1 className="mb-4 text-3xl sm:text-5xl font-bold text-white lg:text-6xl">{data?.value?.title ?? '[Judul hero belum diatur]'}</h1>
+                        <p className="mb-7 text-sm sm:text-base font-normal tracking-tight leading-5 text-white lg:text-xl sm:px-16 xl:px-24">{data?.value?.description ?? '[Deskripsi hero belum diatur]'}</p>
                         <div className="flex flex-col justify-center items-center px-6 sm:gap-2 space-y-4 sm:justify-center sm:space-y-0 lg:px-36 md:gap-6">
                             <div className="flex w-full">
                                 <div className="relative w-full">

@@ -18,8 +18,8 @@ const LightboxImage = ({ data = [], isOpen, setIsOpen, currentIndex }) => {
             images={transformedInfografisData}
             currentIndex={currentIndex}
              renderHeader={() => (
-                <div className="flex w-full bg-black/20 justify-between px-3 py-1 items-center">
-                    <h1 className="text-lg font-semibold text-center leading-none tracking-tight">
+                <div className="text-md sm:text-lg font-semibold flex w-full bg-black/20 justify-between px-3 py-1 items-center">
+                    <h1 className="text-center leading-none tracking-tight">
                         {transformedInfografisData[currentIndex]?.title || "Title Not Available"}
                     </h1>
                     <button 

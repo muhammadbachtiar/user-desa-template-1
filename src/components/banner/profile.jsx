@@ -5,8 +5,8 @@ import TabGroupCard from '../../atoms/TabGroup';
 
 export default function Profile() {
 
-  const { data: welcomeMessage, isLoading: isWellcomeMessageLoading, isFetching: isWellcomeMessageFetching, refetch: refetchWelcomeMessage, isError: isWellcomeMessageError } = useStaticPage({}, "wellcome-message");
-  const { data: villageProgram, isLoading: isvillageProgramLoading, isFetching: isvillageProgramFetching, refetch: refetchVillageProgram, isError: isvillageProgramError } = useStaticPage({}, "village-program");
+  const { data: welcomeMessage, isLoading: isWellcomeMessageLoading, isFetching: isWellcomeMessageFetching, refetch: refetchWelcomeMessage, isError: isWellcomeMessageError } = useStaticPage({}, `wellcome-message-${import.meta.env.VITE_VILLAGE_ID}`);
+  const { data: villageProgram, isLoading: isvillageProgramLoading, isFetching: isvillageProgramFetching, refetch: refetchVillageProgram, isError: isvillageProgramError } = useStaticPage({}, `village-program-${import.meta.env.VITE_VILLAGE_ID}`);
 
   const TabListName = [
     {
@@ -33,7 +33,7 @@ export default function Profile() {
                         </div>
                     ) : (
                       <RichTextContent 
-                        content={welcomeMessage.content} 
+                        content={welcomeMessage?.content ?? 'Kata sambutan tidak tersedia'} 
                         className="px-4 py-4 md:px-16" 
                       />
                     )}
@@ -63,7 +63,7 @@ export default function Profile() {
                         </div>
                     ) : (
                       <RichTextContent 
-                        content={villageProgram.content} 
+                        content={villageProgram?.content ?? 'Program desa tidak tersedia'} 
                         className="px-4 py-4 md:px-16" 
                        />
                     )}

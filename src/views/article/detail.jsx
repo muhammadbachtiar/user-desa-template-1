@@ -3,6 +3,7 @@ import ThumbnailBanner from "../../atoms/ThumbnailBanner";
 import useArticleDetail from "../../hooks/contens/article/useDetail";
 import Refetch from "../../atoms/refetch";
 import AsideContent from "../../components/app-layout/asideContent";
+import RichTextContent from "../../atoms/RichTextContent";
 
 const ArticleDetail = () => {
     const { slug } = useParams();
@@ -66,7 +67,7 @@ const ArticleDetail = () => {
                 ) : (
                     <>
                         <ThumbnailBanner bgUrl={`${article.thumbnail}`}/>
-                        <div className="pt-12 px-4 md:px-32 min-h-screen">
+                        <div className="pt-12 px-4 lg:px-16 xl:px-32 min-h-screen">
                             <h5 className="my-2 text-4xl text-center font-bold tracking-tight text-gray-900  dark:text-white">{article.title}</h5>
                             <hr className="h-px my-3 bg-gray-200 border-1 dark:bg-gray-700"></hr>
                             <div className='flex flex-row w-full my-2 gap-1 justify-items-start justify-center'>
@@ -78,7 +79,7 @@ const ArticleDetail = () => {
                                     <span className="self-center align-baseline text-xs font-medium text-black">{article.published_at}</span>
                                 </div>
                             </div>
-                            <div className="px-4 md:px-12 mt-20" dangerouslySetInnerHTML={{ __html: article.content }} />
+                            <RichTextContent className="px-4 md:px-12 mt-14"  content={article.content} />
                             <div className='flex flex-row w-full my-3 px-8 gap-1 justify-items-start justify-end'>
                                 <div className="flex flex-row">
                                     <p className="text-gray-500 dark:text-gray-400">Dilihat <strong className="font-semibold text-gray-900 dark:text-white">{article.views}</strong> kali</p>

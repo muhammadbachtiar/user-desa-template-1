@@ -1,5 +1,3 @@
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-import useApp from '../../hooks/contens/useApp';
 import Icons from '../../atoms/icons/icon';
 import { Link } from 'react-router-dom';
 import useSetting from '../../hooks/settings/useSettings';
@@ -33,13 +31,13 @@ export default function App() {
             </div>
             <div className="flex col-span-8 flex-row justify-center items-center h-full w-full font-medium md:gap-x-4">
                  {
-                    isLoading || (!data || !(Array.isArray(data?.value))) && isFetching ? (
+                    isLoading || (!data || !(Array.isArray(data?.value) && data?.value.length > 0)) && isFetching ? (
                         <div className="flex w-full col-span-4 animate-pulse space-x-3">
                             {Array.from({length:4}).map((_, index) => (
                                 <div key={index} className="flex flex-col mx-2 bg-gray-200 rounded-md w-full h-14 md:h-56 md:w-56"></div>
                             ))}
                         </div>
-                    ) : !isError && !isFetching && (!data || !(Array.isArray(data?.value))) ? (
+                    ) : !isError && !isFetching && (!data || !(Array.isArray(data?.value) && data?.value.length > 0)) ? (
                        <div className="flex justify-center w-full col-span-4 space-x-3">
                             <p className="text-black flex text-center items-center text-md dark:text-gray-400">Layanan tidak tersedia</p>
                         </div>
@@ -49,21 +47,21 @@ export default function App() {
                         ((Array.isArray(data?.value) ? data.value : []) 
                             .sort((a, b) => a.order - b.order)
                             .map((item, index) => {
-                                const IconComponent = Icons[item.icon];
-                                return item.isDefault ? (
-                                    <Link to={item.link} key={index} className="h-full w-full inline-flex flex-col items-center justify-center px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
+                                const IconComponent = Icons[item?.icon] ?? Icons.FaQuestion;
+                                return item.link.startsWith("http") ? (
+                                     <a href={item.link} target='blank' key={index} rel="noopener noreferrer"  className="h-full w-full inline-flex flex-col items-center justify-center sm:px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
+                                        <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
+                                        <span className="text-sm text-[#226597] md:mb-2 md:text-sm md:text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
+                                            {item?.title ?? "[Judul belum diatur]"}
+                                        </span>
+                                    </a>
+                                ) : (
+                                     <Link to={item.link} key={index} className="h-full w-full inline-flex flex-col items-center justify-center sm:px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
                                         <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
                                         <span className="text-sm text-[#226597] md:mb-2 md:text-sm md:text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
                                             {item.title}
                                         </span>
                                     </Link>
-                                ) : (
-                                    <a href={item.link} target='blank' key={index}  className="h-full w-full inline-flex flex-col items-center justify-center px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
-                                        <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
-                                        <span className="text-sm text-[#226597] md:mb-2 md:text-sm md:text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
-                                            {item.title}
-                                        </span>
-                                    </a>
                                 );
                             })
                         )

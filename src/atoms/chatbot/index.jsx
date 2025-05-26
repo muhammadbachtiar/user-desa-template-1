@@ -21,11 +21,12 @@ const Chatbot = () => {
                 },
                 disclaimer: {
                     title: 'Disclaimer',
-                    message: "Dengan menggunaknan chatbot ini, kamu menyetujui<a target=\"_blank\" href=\"https://flowiseai.com/terms\">syarat dan ketentuan</a>",
+                    message: "Dengan menggunaknan chatbot ini, kamu menyetujui <a target=\"_blank\" href=\"https://flowiseai.com/terms\">syarat dan ketentuan</a>",
                     textColor: 'black',
                     buttonColor: '#3b82f6',
                     buttonText: 'Mulai percakapan',
                     buttonTextColor: 'white',
+                    denyButtonText: 'Tutup',
                     blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
                     backgroundColor: 'white'
                 },
@@ -33,13 +34,12 @@ const Chatbot = () => {
                 chatWindow: {
                     showTitle: true,
                     showAgentMessages: true,
-                    title: 'Aruna - Asisten Virtual',
+                    title: 'Aruna',
                     titleAvatarSrc: '/aruna-profile.png',
                     welcomeMessage: 'Hallo saya aruna, asisten virtual anda. Silahkan bertanya kepada saya.',
                     errorMessage: 'This is a custom error message',
                     backgroundColor: '#ffffff',
                     backgroundImage: 'enter image path or link',
-                    height: 600,
                     width: 400,
                     fontSize: 16,
                     starterPrompts: [

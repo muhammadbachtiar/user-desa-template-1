@@ -1,4 +1,5 @@
 import {
+  FaQuestion,
   FaGoogle,
   FaHouse,
   FaUser,
@@ -60,6 +61,7 @@ import {
 } from "react-icons/fa6";
 
 const Icons = {
+  FaQuestion: FaQuestion,
   FaGoogle: FaGoogle,
   FaHouse: FaHouse,
   FaUser: FaUser,

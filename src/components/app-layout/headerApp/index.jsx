@@ -10,7 +10,7 @@ const AppMenu = () => {
   return (
        <>
         <nav className="bg-[#113F67] dark:bg-gray-900 w-full z-20 top-0 start-0">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+            <div className=" flex flex-wrap items-center justify-between lg:mx-16 p-2">
                 <Logo/>
                 {   
                     isLoading ? (

@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import PropTypes from "prop-types";
 import ArticleCard from "../ArticleCard";
+import { Link } from "react-router-dom";
 
 const SliderCard = ({data  = [{src:"", alt:""}]})=> {
 
@@ -93,9 +94,9 @@ return (
         <>
           <Slider {...settings}>
             {data.map((card) => 
-              <div tabIndex={1} key={card.slug}>
+              <Link to={`/article/${card.slug}`}  key={card.slug}>
                   <ArticleCard thumbnail={card.thumbnail} title={card.title} description={card.description} category={card.category.name} published_at={card.published_at} /> 
-              </div>    
+              </Link>    
             )}
           </Slider>
         </>
