@@ -9,7 +9,7 @@ import { findMenuItemByPath } from "../../services/utils/findMenuItemByPath";
 const Container = () => {
   const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(segment => segment);
-  const { data: menu } = useSettings('menu', {});
+  const { data: menu } = useSettings(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
   const path = pathSegments || [];
   const menuItem = Array.isArray(menu?.value) ? findMenuItemByPath(menu.value, path) : null;
 

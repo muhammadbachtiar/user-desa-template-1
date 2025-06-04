@@ -3,8 +3,9 @@ import { useState } from "react";
 import useSetting from "../../hooks/settings/useSettings";
 import Refetch from "../../atoms/refetch";
 const Hero = () => {
+
      const [searchValue, setSearchValue] = useState('');
-     const { data, isLoading, isFetching, refetch, isError } = useSetting('hero', {});
+     const { data, isLoading, isFetching, refetch, isError } = useSetting(`hero-${import.meta.env.VITE_VILLAGE_ID}`, {});
      const handleChange = (e) => {
         setSearchValue(e.target.value);
      };
@@ -36,7 +37,7 @@ const Hero = () => {
                         <div className="flex flex-col justify-center items-center px-6 sm:gap-2 space-y-4 sm:justify-center sm:space-y-0 lg:px-36 md:gap-6">
                             <div className="flex w-full">
                                 <div className="relative w-full">
-                                    <input type="search" id="search-dropdown" onChange={handleChange} className="block py-3 px-5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-3xl rounded-s-3xl border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Apa yang Anda cari?" required />
+                                    <input type="search" id="search-dropdown" onChange={handleChange} className="block py-3 px-3 sm:px-5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-3xl rounded-s-3xl border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Apa yang Anda cari?" required />
                                     {searchValue ? (
                                         <Link to={`/search/${searchValue}`}> 
                                             <span className="absolute top-0 end-0 py-3 px-5 sm:ms-4 text-sm font-medium h-full text-white bg-blue-700 rounded-e-3xl border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

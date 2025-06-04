@@ -8,7 +8,7 @@ import useTour from "../../hooks/contens/tour/useList";
 const TourList = () => {
 
     const [search, setSearch] = useState('');
-    const {data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting('tour', {});
+    const {data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting(`tour-${import.meta.env.VITE_VILLAGE_ID}`, {});
     const {data: tours, isLoading, isError, fetchNextPage, hasNextPage, isFetching, refetch } =  useTour({"search": search, 'page_size': 6});
 
     const handleChange = (e) => {
@@ -33,7 +33,7 @@ const TourList = () => {
                 <section style={backgroundStyle} className={`relative p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end`}>
                     <div className="absolute inset-0 bg-black/50 rounded-s-md"></div>
                     <div className="relative px-8 text-start">
-                        <h2 className="mb-4 text-5xl font-bold text-white lg:text-6xl">{setting?.value?.title  ?? "[Judul wisata belum diatur]"}</h2>
+                        <h2 className="mb-4 text-4xl sm:text-5xl font-bold text-white lg:text-6xl">{setting?.value?.title  ?? "[Judul wisata belum diatur]"}</h2>
                     </div>
                 </section>
             )

@@ -15,7 +15,6 @@ const dataSlice = createSlice({
     },
     setDetailArticle: (state, action) => {
       const { slug, data } = action.payload;
-      console.log(slug, data)
       if (!state.detailArticle[slug]){
         state.detailArticle[slug] = {};
       }

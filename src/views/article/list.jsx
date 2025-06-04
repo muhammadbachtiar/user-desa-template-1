@@ -13,7 +13,7 @@ const ArticleList = () => {
     const [search, setSearch] = useState('');
 
     const { data: articles, isLoading, isError, fetchNextPage, hasNextPage, isFetching, refetch } = useArticle({"search": search, "page_size": 6}, categoryId);
-    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting("article", {});
+    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`article-${import.meta.env.VITE_VILLAGE_ID}`, {});
 
     const backgroundStyle = setting?.value?.imageUrl
         ? { backgroundImage: `url(${setting.value.imageUrl})` }
@@ -38,7 +38,7 @@ const ArticleList = () => {
                  <section style={backgroundStyle} className={`relative p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end`}>
                     <div className="absolute inset-0 bg-black/50 rounded-s-md"></div>
                     <div className="relative px-8 text-start">
-                        <h2 className="mb-4 text-5xl font-bold text-white lg:text-6xl">{setting?.value?.title ?? "[Judul artikel belum diatur]"}</h2>
+                        <h2 className="mb-4 text-4xl sm:text-5xl font-bold text-white lg:text-6xl">{setting?.value?.title ?? "[Judul artikel belum diatur]"}</h2>
                     </div>
                 </section>
             )

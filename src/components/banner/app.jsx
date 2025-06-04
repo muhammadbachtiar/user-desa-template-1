@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import useSetting from '../../hooks/settings/useSettings';
 import Refetch from '../../atoms/refetch';
 
-export default function App() {
+const App = () => {
 
-  const { data, isLoading, isError, isFetching, refetch } = useSetting('service', {});
-  const { data: appSetting,  isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting('app', {});
+  const { data, isLoading, isError, isFetching, refetch } = useSetting(`service-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data: appSetting,  isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`app-${import.meta.env.VITE_VILLAGE_ID}`, {});
  
   return (
         <section className="fixed block bottom-0 left-0 z-20 max-w-full w-full h-16 bg-white border-t dark:bg-gray-700 dark:border-gray-600 md:static md:grid md:grid-cols-8 md:gap-2 md:p-6 md:max-w-none md:w-auto md:h-auto md:bg-transparent md:border-0">
@@ -70,3 +70,5 @@ export default function App() {
         </section>
   );
 }
+
+export default App;

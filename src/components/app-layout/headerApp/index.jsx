@@ -5,7 +5,7 @@ import { MainNav } from '../../navigation/main-nav';
 
 const AppMenu = () => {
 
-  const { data: menu, isLoading, refetch, isFetching, isError } = useSetting('menu', {});
+  const { data: menu, isLoading, refetch, isFetching, isError } = useSetting(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
  
   return (
        <>

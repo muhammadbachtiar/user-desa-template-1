@@ -5,7 +5,7 @@ import Refetch from "../refetch";
 
 const Logo = ({textColor="text-[#F3F9FB]", hoverBgColor="bg-[#226597]"}) => {
 
-  const { data: logo, isLoading, isError, isFetching, refetch } = useSetting('logo', {});
+  const { data: logo, isLoading, isError, isFetching, refetch } = useSetting(`logo-${import.meta.env.VITE_VILLAGE_ID}`, {});
 
   return (
     <>

@@ -5,7 +5,7 @@ import { generateRoutes } from "../services/utils/generateRoutes";
 import NotFound from "../views/notfound";
 
 const Routers = () => {
-  const { data: menu } = useSetting('menu', {});
+  const { data: menu } = useSetting(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
  
   return (
     <Router>

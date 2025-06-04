@@ -6,7 +6,7 @@ import Refetch from "../../../atoms/refetch";
 import sosmed from "../../../atoms/icons/sosmed.js"
 
 const FooterApp = () => {
-  const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting("footer", {});
+  const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`footer-${import.meta.env.VITE_VILLAGE_ID}`, {});
   return (
        <>
         <footer className="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">

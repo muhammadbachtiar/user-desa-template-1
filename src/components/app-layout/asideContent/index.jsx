@@ -56,7 +56,7 @@ export default function AsideContent({ children }) {
                                 />
                             <div className="absolute w-40 md:w-32 inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
                         </div>
-                        <p className="text-md line-clamp-4 lg:line-clamp-3 font-semibold hover:text-[#DDA853] ">
+                        <p className="text-md line-clamp-4 font-semibold hover:text-[#DDA853] ">
                           {article.title}
                         </p>
                       </li>

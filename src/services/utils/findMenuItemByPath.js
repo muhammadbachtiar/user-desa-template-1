@@ -5,8 +5,6 @@ export function findMenuItemByPath(
 ) {
   for (const item of items) {
     const itemPath = item.route ? `${currentPath}${item.route}` : currentPath;
-    console.log("itemPath", itemPath);
-    console.log("path", path);
     if (itemPath === `/${path.join("/")}`) {
       return item;
     }

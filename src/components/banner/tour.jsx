@@ -3,7 +3,8 @@ import useSetting from "../../hooks/settings/useSettings";
 import Refetch from "../../atoms/refetch";
 
 const TourBanner = () => {
-  const { data, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting('tour', {});
+
+  const { data, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting(`tour-${import.meta.env.VITE_VILLAGE_ID}`, {});
 
   return (
        <>
