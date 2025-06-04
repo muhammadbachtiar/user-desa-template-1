@@ -22,7 +22,7 @@ function useTour( params = {} ) {
             );
         },
         getNextPageParam: (lastPage) => {
-            if (!lastPage || !lastPage.meta.next_page_url) {
+            if (!lastPage?.meta?.next_page_url) {
                 return undefined;
             }
              try {
