@@ -11,7 +11,7 @@ export default function Profile() {
   const TabListName = [
     {
       name: 'Kata Sambutan',
-      content: <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl min-h-[400px] max-h-screen overflow-y-scroll">
+      content: <div style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className="bg-slate-100 dark:bg-gray-700 rounded-2xl min-h-[400px] max-h-screen overflow-y-scroll">
                   {isWellcomeMessageLoading || (!welcomeMessage || Object.keys(welcomeMessage || {}).length === 0) && isWellcomeMessageFetching ? (
                         <div className="w-full max-w-md p-4">
                           <div className="flex flex-col gap-4 p-4 dark:bg-gray-600 rounded-md animate-pulse">
@@ -41,7 +41,7 @@ export default function Profile() {
     },
     {
       name: 'Program Desa',
-      content: <div className="bg-gray-50 dark:bg-gray-700 rounded-2xl min-h-[400px] max-h-screen overflow-y-scroll">
+      content: <div style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className="bg-slate-100 dark:bg-gray-700 rounded-2xl min-h-[400px] max-h-screen overflow-y-scroll">
                     {isvillageProgramLoading || isvillageProgramFetching ? (
                         <div className="w-full max-w-md p-4">
                           <div className="flex flex-col gap-4 p-4 dark:bg-gray-600 rounded-md animate-pulse">

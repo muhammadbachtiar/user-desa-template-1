@@ -43,7 +43,7 @@ const ArticleBanner = () => {
                 </div>
                 <div className="col-span-6 justify-items-center">
                     {   
-                        isLoading || (!articles || !articles.pages[0] || articles.pages[0]?.data.length === 0) && isFetching ? (
+                        isLoading || (!Array.isArray(articles?.pages?.[0]?.data) || articles.pages[0].data.length === 0) && isFetching ? (
                             <div className="h-auto w-full grid grid-cols-6 gap-4 px-2 md:px-8">
                                 {Array.from({ length: window.innerWidth > 1024 ? 3 : window.innerWidth > 640 ? 2 : 1 }).map((_, index) => (
                                     <div key={index} className="col-span-6 md:col-span-3 lg:col-span-2 px-6 md:px-3 w-full">
@@ -58,7 +58,7 @@ const ArticleBanner = () => {
                                     </div>
                                 ))}
                             </div>
-                        ) : !isError && !isFetching && (!articles || !articles.pages[0] || articles.pages[0]?.data?.length === 0) ? (
+                        ) : !isError && !isFetching && (!Array.isArray(articles?.pages?.[0]?.data) || articles.pages[0].data.length === 0) ? (
                             <div className="flex col-span-6 w-full h-full justify-center">
                                 <div className="flex flex-col items-center justify-top gap-2">
                                     <p className="text-black text-2xl dark:text-gray-400">Artikel tidak tersedia</p>
