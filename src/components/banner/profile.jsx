@@ -40,7 +40,7 @@ export default function Profile() {
               </div>
     },
     {
-      name: 'Program Desa',
+      name: 'Program',
       content: <div style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className="bg-slate-100 dark:bg-gray-700 rounded-2xl min-h-[400px] max-h-screen overflow-y-scroll">
                     {isvillageProgramLoading || isvillageProgramFetching ? (
                         <div className="w-full max-w-md p-4">
@@ -54,7 +54,7 @@ export default function Profile() {
                     ) : !isvillageProgramError && !isvillageProgramFetching && (!villageProgram || Object.keys(villageProgram || {}).length === 0) ? (
                         <div className="flex col-span-6 w-full min-h-[400px] justify-center">
                             <div className="flex flex-col items-center justify-center gap-2">
-                                <p className="text-black text-center text-2xl dark:text-gray-400">Program desa tidak tersedia</p>
+                                <p className="text-black text-center text-2xl dark:text-gray-400">Program tidak tersedia</p>
                             </div>
                         </div>
                     ) : isvillageProgramError && !isvillageProgramFetching  ? (
@@ -63,7 +63,7 @@ export default function Profile() {
                         </div>
                     ) : (
                       <RichTextContent 
-                        content={villageProgram?.content ?? 'Program desa tidak tersedia'} 
+                        content={villageProgram?.content ?? 'Program tidak tersedia'} 
                         className="px-4 py-4 md:px-16" 
                        />
                     )}

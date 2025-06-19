@@ -10,7 +10,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
   const fullPath = item.route ? `${basePath}${item.route}` : basePath
   const isActive = pathname === fullPath
   const hasChildren = item.child && item.child.length > 0
-  const isClickable = (item.route && item.staticPage !== null) || (item.route !== null && item.child === null && item.staticPage === null)
+  const isClickable = (item.route && item.staticPage !== null)
   
   const sortedChildren = item.child ? [...item.child].sort((a, b) => a.order - b.order) : []
   
@@ -54,7 +54,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
           {isClickable ? (
             <Link to={fullPath}>
               <MenuButton 
-                className={` flex
+                className={`flex whitespace-nowrap overflow-hidden max-w-[10rem]
                   "inline-flex items-center bg-[#113F67] text-[#F3F9FB] border-[#113F67] px-4 py-2  hover:border-[#DDA853] font-bold transition-all duration-200",
                   "focus:outline-none",
                   ${isActive ? "border-b-2 border-[#DDA853]" 
@@ -76,7 +76,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
             </Link>
           ) : (
             <MenuButton 
-              className={` flex
+              className={`flex whitespace-nowrap overflow-hidden max-w-[10rem]
                   "inline-flex items-center bg-[#113F67] text-[#F3F9FB] border-[#113F67] px-4 py-2  hover:border-[#DDA853] font-bold transition-all duration-200",
                   "focus:outline-none",
                   ${isActive ? "border-b-2 border-[#DDA853]" 
@@ -109,7 +109,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
             >
               <MenuItems 
                 className={
-                  "absolute left-0 z-50 mt-1 w-56 origin-top-left rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-t-2 border-black"}
+                  "absolute right-0 z-50 mt-1 w-60 max-h-[70vh] overflow-y-auto overflow-hidden origin-top-right rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border-t-2 border-black"}
               >
                 <div className="py-1">
                   {sortedChildren.map((child) => (

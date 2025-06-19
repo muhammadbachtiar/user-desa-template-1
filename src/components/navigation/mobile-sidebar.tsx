@@ -10,8 +10,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export function MobileSidebar({ menuData }) {
-  const [isOpen, setIsOpen] = useState(false)
+export function MobileSidebar({ menuData, isOpen, setIsOpen }) {
   const pathname = String(useLocation())
 
   const sortedMenuItems = [...menuData].sort((a, b) => a.order - b.order)
@@ -44,10 +43,10 @@ export function MobileSidebar({ menuData }) {
   }, [isOpen])
 
   return (
-    <div className="block lg:hidden">
+    <div className="block z-30">
       <button
         onClick={() => setIsOpen(true)}
-        className="p-2 bg-[#113F67] text-white focus:text-gray-200 rounded-md"
+        className="p-2 block lg:hidden bg-[#113F67] text-white focus:text-gray-200 rounded-md"
         aria-label="Open menu"
       >
         <GiHamburgerMenu className="h-6 w-6" />
@@ -100,7 +99,7 @@ export function MobileSidebar({ menuData }) {
                       <>
                         <DisclosureButton
                           className={classNames(
-                            "flex bg-white justify-between items-center w-full py-2 px-3 font-semibold rounded-md transition-all duration-200",
+                            "flex bg-white justify-between text-start items-center w-full py-2 px-3 font-semibold rounded-md transition-all duration-200",
                             pathname.startsWith(menu.route || "")
                               ? " text-black"
                               : "text-black hover:bg-gray-50",
@@ -109,7 +108,7 @@ export function MobileSidebar({ menuData }) {
                           <span>{menu.title}</span>
                           <svg
                             className={classNames(
-                              "w-2.5 h-2.5 transition-transform duration-300",
+                              "min-w-2 min-h-2 w-2 h-2 transition-transform duration-300",
                               open ? "rotate-180" : "rotate-0",
                             )}
                             aria-hidden="true"
@@ -185,7 +184,7 @@ function NestedSubmenu({ submenu, parentPath, level }) {
                 <Link to={parentPath}>
                     <DisclosureButton
                         className={classNames(
-                        "flex justify-between bg-white items-center w-full py-1.5 px-3 text-sm font-medium rounded-md transition-all duration-200",
+                        "flex justify-between bg-white text-start items-center w-full py-1.5 px-3 text-sm font-medium rounded-md transition-all duration-200",
                         "ml-2", 
                         pathname.startsWith(parentPath)
                             ? " text-black"
@@ -194,7 +193,7 @@ function NestedSubmenu({ submenu, parentPath, level }) {
                     >
                         <span>{submenu.title}</span>
                         <svg
-                        className={classNames("w-2 h-2 transition-transform duration-300", open ? "rotate-180" : "rotate-0")}
+                        className={classNames("min-w-2 min-h-2 w-2 h-2 transition-transform duration-300", open ? "rotate-180" : "rotate-0")}
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -213,7 +212,7 @@ function NestedSubmenu({ submenu, parentPath, level }) {
             ) : (
                 <DisclosureButton
                     className={classNames(
-                    "flex justify-between bg-white items-center w-full py-1.5 px-3 text-sm font-medium rounded-md transition-all duration-200",
+                    "flex justify-between text-start bg-white items-center w-full py-1.5 px-3 text-sm font-medium rounded-md transition-all duration-200",
                     "ml-2", 
                     pathname.startsWith(parentPath)
                         ? "text-black"
@@ -222,7 +221,7 @@ function NestedSubmenu({ submenu, parentPath, level }) {
                 >
                     <span>{submenu.title}</span>
                     <svg
-                    className={classNames("w-2 h-2 transition-transform duration-300", open ? "rotate-180" : "rotate-0")}
+                    className={classNames("min-w-2 min-h-2 w-2 h-2 transition-transform duration-300", open ? "rotate-180" : "rotate-0")}
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

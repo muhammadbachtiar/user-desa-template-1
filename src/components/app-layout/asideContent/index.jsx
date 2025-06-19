@@ -69,7 +69,7 @@ export default function AsideContent({ children }) {
           <div>
             <h2 className="text-xl font-bold text-[#DDA853] mb-4 pb-2 border-gray-300 border-b">Infografis</h2>
             <div className="relative min-h-[24rem] flex justify-center items-center">
-              <div className="max-w-xs px-2 md:px-6 rounded-lg dark:bg-gray-800">
+              <div className="max-w-xs px-2 rounded-lg dark:bg-gray-800">
                     <SliderInfografis useButton={false} useDots={false} />
                 </div>
             </div>

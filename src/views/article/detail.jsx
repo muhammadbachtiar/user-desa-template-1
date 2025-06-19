@@ -79,7 +79,7 @@ const ArticleDetail = () => {
                                     <span className="self-center align-baseline text-xs font-medium text-black">{article.published_at}</span>
                                 </div>
                             </div>
-                            <RichTextContent className="px-4 md:px-12 mt-14"  content={article.content} />
+                            <RichTextContent className="px-4 mt-14"  content={article.content} />
                             <div className='flex flex-row w-full my-3 px-8 gap-1 justify-items-start justify-end'>
                                 <div className="flex flex-row">
                                     <p className="text-gray-500 dark:text-gray-400">Dilihat <strong className="font-semibold text-gray-900 dark:text-white">{article.views}</strong> kali</p>

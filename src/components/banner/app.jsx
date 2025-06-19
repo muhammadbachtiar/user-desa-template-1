@@ -9,7 +9,7 @@ const App = () => {
   const { data: appSetting,  isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`app-${import.meta.env.VITE_VILLAGE_ID}`, {});
  
   return (
-        <section className="fixed block bottom-0 left-0 z-20 max-w-full w-full h-16 bg-white border-t dark:bg-gray-700 dark:border-gray-600 md:static md:grid md:grid-cols-8 md:gap-2 md:p-6 md:max-w-none md:w-auto md:h-auto md:bg-transparent md:border-0">
+        <section className="fixed block bottom-0 left-0 z-10 md:z-0 max-w-full w-full h-16 bg-white border-t dark:bg-gray-700 dark:border-gray-600 md:static md:grid md:grid-cols-8 md:gap-2 md:p-6 md:max-w-none md:w-auto md:h-auto md:bg-transparent md:border-0">
             <div className='hidden md:flex flex-col col-span-8 gap-2 mb-4 justify-items-center items-center '>
                  {
                     isSettingLoading ? (
@@ -29,7 +29,7 @@ const App = () => {
                     )
                 }
             </div>
-            <div className="flex col-span-8 flex-row justify-center items-center h-full w-full font-medium md:gap-x-4">
+            <div className="overflow-x-auto flex col-span-8 flex-row md:flex-wrap md:justify-center items-center h-full w-full font-medium md:gap-4">
                  {
                     isLoading || (!data || !(Array.isArray(data?.value) && data?.value.length > 0)) && isFetching ? (
                         <div className="flex w-full col-span-4 animate-pulse space-x-3">
@@ -44,27 +44,27 @@ const App = () => {
                     ) : isError && !isFetching  ? (
                         <Refetch refetch={refetch} />
                     ) : 
-                        ((Array.isArray(data?.value) ? data.value : []) 
-                            .sort((a, b) => a.order - b.order)
-                            .map((item, index) => {
-                                const IconComponent = Icons[item?.icon] ?? Icons.FaQuestion;
-                                return item.link.startsWith("http") ? (
-                                     <a href={item.link} target='blank' key={index} rel="noopener noreferrer"  className="h-full w-full inline-flex flex-col items-center justify-center sm:px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
-                                        <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
-                                        <span className="text-sm text-[#226597] md:mb-2 md:text-sm md:text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
-                                            {item?.title ?? "[Judul belum diatur]"}
-                                        </span>
-                                    </a>
-                                ) : (
-                                     <Link to={item.link} key={index} className="h-full w-full inline-flex flex-col items-center justify-center sm:px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
-                                        <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
-                                        <span className="text-sm text-[#226597] md:mb-2 md:text-sm md:text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
-                                            {item.title}
-                                        </span>
-                                    </Link>
-                                );
-                            })
-                        )
+                    ((Array.isArray(data?.value) ? data.value : []) 
+                        .sort((a, b) => a.order - b.order)
+                        .map((item, index) => {
+                            const IconComponent = Icons[item?.icon] ?? Icons.FaQuestion;
+                            return item.link.startsWith("http") ? (
+                                <a href={item.link} target='blank' key={index} rel="noopener noreferrer"  className="min-w-20 h-full w-full md:h-fit md:w-fit inline-flex flex-col items-center justify-center px-2 sm:px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
+                                    <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
+                                    <span className="text-sm text-[#226597] md:max-w-32 line-clamp-2 md:mb-2 md:text-sm text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
+                                        {item?.title}
+                                    </span>
+                                </a>
+                            ) : (
+                                <Link to={item.link} key={index} className="min-w-20 h-full w-full md:h-fit md:w-fit inline-flex flex-col items-center justify-center px-2 sm:px-5 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
+                                    <IconComponent className="w-6 h-6 mb-1 text-[#226597] md:w-32 md:h-32 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
+                                    <span className="text-sm text-[#226597] md:max-w-32 line-clamp-2 md:mb-2 md:text-sm text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
+                                        {item.title}
+                                    </span>
+                                </Link>
+                            );
+                        })
+                    )
                 }
             </div>
         </section>
