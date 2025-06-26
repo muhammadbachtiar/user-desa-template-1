@@ -2,11 +2,38 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import useSetting from "../../hooks/settings/useSettings";
 import Refetch from "../refetch";
+import { useEffect } from "react";
 
 const Logo = ({textColor="text-[#F3F9FB]", hoverBgColor="bg-[#226597]"}) => {
 
   const { data: logo, isLoading, isError, isFetching, refetch } = useSetting(`logo-${import.meta.env.VITE_VILLAGE_ID}`, {});
+    useEffect(() => {
+        if (logo?.value?.imageUrl) {
+            const favicon = document.querySelector("link#dynamic-favicon");
 
+            if (favicon) {
+                favicon.href = logo.value.imageUrl;
+                favicon.type = "image/png"; 
+            } else {
+                const newFavicon = document.createElement("link");
+                newFavicon.rel = "icon";
+                newFavicon.type = "image/png";
+                newFavicon.href = logo.value.imageUrl;
+                newFavicon.id = "dynamic-favicon";
+                document.head.appendChild(newFavicon);
+            }
+
+            const ogImageMeta = document.querySelector('meta[property="og:image"]');
+            if (ogImageMeta) {
+                ogImageMeta.setAttribute("content", logo.value.imageUrl);
+            } else {
+                const newMeta = document.createElement("meta");
+                newMeta.setAttribute("property", "og:image");
+                newMeta.setAttribute("content", logo.value.imageUrl);
+                document.head.appendChild(newMeta);
+            }
+        }
+        }, [logo]);
   return (
     <>
         {isLoading ? (

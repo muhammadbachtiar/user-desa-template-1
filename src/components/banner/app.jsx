@@ -29,7 +29,7 @@ const App = () => {
                     )
                 }
             </div>
-            <div className="overflow-x-auto flex col-span-8 flex-row md:flex-wrap md:justify-center items-center h-full w-full font-medium md:gap-4">
+            <div style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className="overflow-x-auto flex col-span-8 flex-row md:flex-wrap md:justify-center items-center h-full w-full font-medium md:gap-4">
                  {
                     isLoading || (!data || !(Array.isArray(data?.value) && data?.value.length > 0)) && isFetching ? (
                         <div className="flex w-full col-span-4 animate-pulse space-x-3">

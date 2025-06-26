@@ -21,7 +21,7 @@ const SelectCategory = ({setCategoryId}) => {
         ...base,
         color: 'white', 
         backgroundColor: '#1a56db',
-        borderColor: state.isFocused ? 'gray' : '#ccc'
+        borderColor: state.isFocused ? 'white' : '#ccc'
       }),
       input: (base) => ({
           ...base,
