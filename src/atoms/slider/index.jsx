@@ -81,7 +81,7 @@ const settings = {
             ) : !isError && !isFetching && (!infografies || infografies.length === 0) ? (
                 <div className="flex col-span-6 w-full h-full justify-center">
                     <div className="flex flex-col items-center justify-top gap-2">
-                        <p className="text-black text-2xl dark:text-gray-400">Infografis tidak tersedia</p>
+                        <p className="text-black text-2xl text-center dark:text-gray-400">Infografis tidak tersedia</p>
                     </div>
                 </div>
             ) : isError && !isFetching  ? (

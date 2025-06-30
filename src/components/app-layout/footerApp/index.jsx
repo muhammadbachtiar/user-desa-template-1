@@ -39,7 +39,7 @@ const FooterApp = () => {
                                         href={value.profileUrl} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="flex justify-items-center w-fit items-center rounded-md bg-white p-3 hover:bg-[#113F67] border-0 hover:border-2 hover:border-white group focus:ring-2 focus:ring-white transition-all transform duration-300 ease-in-out"
+                                        className="flex justify-items-center w-fit items-center rounded-md bg-white p-3 hover:bg-[#113F67] border-0 group transition-all transform duration-300 ease-in-out"
                                     >
                                         {Icon ? (
                                             <Icon className="w-6 h-6 lg:w-4 lg:h-4 rounded-sm text-[#113F67] group-hover:text-white" />

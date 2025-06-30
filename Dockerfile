@@ -6,6 +6,8 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+# === Generate SEO file and build the app ===
+RUN npm run generate-seo
 RUN npm run build
 
 # === Stage 2: Serve with Nginx ===

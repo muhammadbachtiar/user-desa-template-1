@@ -18,18 +18,24 @@ const TourCard = ({ slug, thumbnail, title, address, map, website, email, socmed
                 <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{address}</p>
             </div>
             <div className="col-span-2 lg:col-span-1 text-start">
-                <div className="flex justify-start items-center gap-x-2">
-                    <CiMap className="w-4 h-4 rounded-sm text-[#113F67]"></CiMap>
-                    <a href={map} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold ">Lokasi</a>
-                </div>
-                <div className="flex justify-start items-center gap-x-2">
-                    <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]"></BiGlobe>
-                    <a href={website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{website}</a>
-                </div>
-                <div className="flex justify-start items-center gap-x-2">
-                    <CgMail className="w-4 h-4 rounded-sm text-[#113F67]"></CgMail>
-                    <a href={email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{email}</a>
-                </div>
+                {map && (
+                    <div className="flex justify-start items-center gap-x-2">
+                        <CiMap className="w-4 h-4 rounded-sm text-[#113F67]"></CiMap>
+                        <a href={map} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold ">Lokasi</a>
+                    </div>
+                )}
+                {website && (
+                      <div className="flex justify-start items-center gap-x-2">
+                        <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]"></BiGlobe>
+                        <a href={website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{website}</a>
+                    </div>
+                )}
+                {email && (
+                    <div className="flex justify-start items-center gap-x-2">
+                        <CgMail className="w-4 h-4 rounded-sm text-[#113F67]"></CgMail>
+                        <a href={email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{email}</a>
+                    </div>
+                )}
             </div>
         </div>
         <div className="col-span-6 flex flex-col gap-y-3 justify-center items-center dark:bg-gray-800">                  

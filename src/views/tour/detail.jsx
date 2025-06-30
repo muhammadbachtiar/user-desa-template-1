@@ -90,21 +90,49 @@ const TourDetail = () => {
                             }
                         </div>
                         <div className="flex my-3 items-center">
+                               <h5 className="text-4xl font-bold tracking-tighter text-gray-900 dark:text-white hover:text-blue-600">{tour.title}</h5>
+                        </div>
+                        <div className="flex my-3 items-center">
                             <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{tour.address}</p>
                         </div>
                         <div className="col-span-2 lg:col-span-1 text-start">
-                            <div className="flex justify-start items-center gap-x-2">
-                                <CiMap className="w-4 h-4 rounded-sm text-[#113F67]"></CiMap>
-                                <a href={tour.link.gmap} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold ">Lokasi</a>
-                            </div>
-                            <div className="flex justify-start items-center gap-x-2">
-                                <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]"></BiGlobe>
-                                <a href={tour.link.website} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{tour.link.website}</a>
-                            </div>
-                            <div className="flex justify-start items-center gap-x-2">
-                                <CgMail className="w-4 h-4 rounded-sm text-[#113F67]"></CgMail>
-                                <a href={tour.link.email} target="blank" className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold">{tour.link.email}</a>
-                            </div>
+                            {tour?.link?.gmap && (
+                                <div className="flex justify-start items-center gap-x-2">
+                                <CiMap className="w-4 h-4 rounded-sm text-[#113F67]" />
+                                <a
+                                    href={tour.link.gmap}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold"
+                                >
+                                    Lokasi
+                                </a>
+                                </div>
+                            )}
+                            {tour?.link?.website && (
+                                <div className="flex justify-start items-center gap-x-2">
+                                <BiGlobe className="w-4 h-4 rounded-sm text-[#113F67]" />
+                                <a
+                                    href={tour.link.website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold"
+                                >
+                                    {tour.link.website}
+                                </a>
+                                </div>
+                            )}
+                            {tour?.link?.email && (
+                                <div className="flex justify-start items-center gap-x-2">
+                                <CgMail className="w-4 h-4 rounded-sm text-[#113F67]" />
+                                <a
+                                    href={`mailto:${tour.link.email}`}
+                                    className="text-md font-normal mb-0 text-gray-900 dark:text-white hover:font-bold"
+                                >
+                                    {tour.link.email}
+                                </a>
+                                </div>
+                            )}
                         </div>
                         <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{tour.description}</p>
                         <div className="w-full flex flex-wrap gap-2 md:gap-6 justify-center justify-items-center items-center my-4">
