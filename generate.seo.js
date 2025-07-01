@@ -26,7 +26,7 @@ const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 </url>
 </urlset>`.trim();
 
-fs.writeFileSync('./robots.txt', robotsContent, 'utf8');
-fs.writeFileSync('./sitemap.xml', sitemapContent, 'utf8');
+fs.writeFileSync('./public/robots.txt', robotsContent, 'utf8');
+fs.writeFileSync('./public/sitemap.xml', sitemapContent, 'utf8');
 
 console.log('robots.txt and sitemap.xml generated successfully!');
