@@ -1,11 +1,17 @@
 import fs from 'fs';
 import dotenv from 'dotenv';
 import process from 'process';
+import path from 'path';
 
 dotenv.config();
 
 const domainUrl = process.env['VITE_DOMAIN_URL'] || 'https://default.site';
 const sitemapUrl = `${domainUrl}/sitemap.xml`;
+
+const distDir = './dist';
+if (!fs.existsSync(distDir)) {
+  fs.mkdirSync(distDir, { recursive: true });
+}
 
 const robotsContent = `User-agent: *
 Allow: /
@@ -26,7 +32,7 @@ const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 </url>
 </urlset>`.trim();
 
-fs.writeFileSync('./public/robots.txt', robotsContent, 'utf8');
-fs.writeFileSync('./public/sitemap.xml', sitemapContent, 'utf8');
+fs.writeFileSync(path.join(distDir, 'robots.txt'), robotsContent, 'utf8');
+fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapContent, 'utf8');
 
-console.log('robots.txt and sitemap.xml generated successfully!');
+console.log('robots.txt and sitemap.xml generated successfully in dist/!');
