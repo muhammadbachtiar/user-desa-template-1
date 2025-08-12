@@ -46,7 +46,7 @@ const Container = () => {
                     </div>
                 </div>
             ) : (
-                <RichTextContent content={staticPage.content} className="px-4 md:px-8" />
+                <RichTextContent content={staticPage.content}  />
             )}
         </AsideContent> 
     </div>

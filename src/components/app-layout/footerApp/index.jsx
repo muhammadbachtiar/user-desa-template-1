@@ -9,8 +9,8 @@ const FooterApp = () => {
   const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`footer-${import.meta.env.VITE_VILLAGE_ID}`, {});
   return (
        <>
-        <footer className="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
-            <div className="w-full max-w-screen-xl mx-auto p-4">
+        <footer className="flex w-full mt-6 justify-center bg-white rounded-lg shadow-sm dark:bg-gray-900 py-4">
+            <div className="w-full px-6 sm:px-0 max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl">
                 <div className="w-full flex flex-row gap-6 justify-center">
                      {
                         isSettingLoading || isSettingFetching ? (
@@ -52,7 +52,7 @@ const FooterApp = () => {
                      }
                 </div>
                 <hr className="my-3 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-4" />
-                <div className="grid grid-cols-2 gap-y-5 items-center justify-between mx-0 lg:mx-16">
+                <div className="grid grid-cols-2 gap-y-5 items-center justify-between">
                     <div className="col-span-2 lg:col-span-1 text-start">
                         {
                             isSettingLoading ? (

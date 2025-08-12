@@ -16,19 +16,12 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-const tittle = import.meta.env.VITE_VILLAGE_NAME || "Website Desa";
 const ogUrl = import.meta.env.VITE_DOMAIN_URL || "https://default.site";
 
-document.title = tittle
-
 const metaOgUrl = document.querySelector('meta[property="og:url"]');
-const metaOgTittle = document.querySelector('meta[property="og:title"]');
 
 if (metaOgUrl) {
   metaOgUrl.setAttribute("content", ogUrl);
 }
 
-if (metaOgTittle) {
-  metaOgTittle.setAttribute("content", tittle);
-}
 

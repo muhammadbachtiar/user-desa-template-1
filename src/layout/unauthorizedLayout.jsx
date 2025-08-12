@@ -38,9 +38,9 @@ const UnautorizedLayout = () => {
   };
   
   return (
-        <div className="min-h-screen bg-white  justify-center pb-16 md:pb-0">
+        <div className="min-h-screen bg-slate-100 justify-center pb-16 md:pb-0">
             <AppHeader />
-            <div className="w-full h-full overflow-hidden bg-slate-100 flex flex-col items-center content-center gap-6">
+            <div className="w-full h-full bg-slate-100 flex flex-col items-center content-center gap-6 md:gap-y-12">
                 {contentComponent}
             </div>
             <FooterApp/>

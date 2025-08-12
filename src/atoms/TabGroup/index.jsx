@@ -28,7 +28,7 @@ return (
                 ))}
             </div>
         </TabList>
-        <TabPanels className="w-full px-6">
+        <TabPanels className="w-full">
             {tabList.tabList.map(({ name, content }) => (
                   <TabPanel key={name} as={Fragment}>
                   {({ selected }) => (

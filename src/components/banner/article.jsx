@@ -6,7 +6,7 @@ import useSetting from "../../hooks/settings/useSettings";
 
 const ArticleBanner = () => {
     
-    const { data: articles, isLoading, isFetching, refetch, isError } = useArticle({"page_size": 6});
+    const { data: articles, isLoading, isFetching, refetch, isError } = useArticle({"page_size": 6, "order": "desc", "by": "published_at"});
     const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`article-${import.meta.env.VITE_VILLAGE_ID}`, {});
     
  const backgroundStyle = setting?.value?.imageUrl
@@ -15,7 +15,7 @@ const ArticleBanner = () => {
     
   return (
        <>
-        <div style={backgroundStyle} className={`relative min-h-[24rem] bg-none lg:bg-cover lg:bg-bottom rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-6 lg:ps-12 grid grid-cols-6`}>    
+        <div style={backgroundStyle} className={`relative min-h-[24rem] bg-none lg:bg-cover lg:bg-bottom rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-4 grid grid-cols-6`}>    
             <div className="absolute inset-0 bg-slate-100 lg:bg-white/80 rounded-s-md"></div>
             <div className="relative z-0 col-span-6 grid grid-cols-6 gap-x-8 gap-y-4">
                 <div className="col-span-6 grid grid-cols-6  gap-8 justify-between">
@@ -34,7 +34,7 @@ const ArticleBanner = () => {
                     </div>
                     <div className="col-span-3 text-end">
                         <Link to={"/article"} className="inline-flex text-sm sm:text-xl font-medium items-center text-center text-[#DDA853] hover:text-[#b48943] hover:underline focus:text-[#b48943] focus:underline">
-                            Buka Halaman Artikel
+                            Lihat selengkapnya
                             <svg className="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                 <path stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
                             </svg>

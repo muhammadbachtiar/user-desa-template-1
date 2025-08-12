@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Menu, MenuButton, MenuItems, Transition } from "@headlessui/react"
 import { BiChevronDown } from "react-icons/bi"
 import { Link, useLocation } from "react-router-dom"
@@ -13,7 +13,23 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
   const isClickable = item.route && item.staticPage !== null || !item.staticPage && !hasChildren;
   
   const sortedChildren = item.child ? [...item.child].sort((a, b) => a.order - b.order) : []
-  
+    const [isOpen, setIsOpen] = useState(false);
+   useEffect(() => {
+    const html = document.documentElement;
+    if (isOpen) {
+      html.style.overflow = "";
+      html.style.paddingRight = "";
+    } else {
+      html.style.overflow = "";
+      html.style.paddingRight = "";
+    }
+
+    return () => {
+      html.style.overflow = "";
+      html.style.paddingRight = "";
+    };
+  }, [isOpen]);
+
   if (level > 0) {
     return (
       <div className="py-1">
@@ -74,6 +90,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
                     : "hover:border-b-2 hover:border-gray-300"},
                   ${hasChildren ? "pr-1" : ""}
                 `}
+                 onClick={() => setIsOpen(!isOpen)}
             >
               {item.title}
               {hasChildren && (

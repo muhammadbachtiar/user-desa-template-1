@@ -8,9 +8,8 @@ const AppMenu = () => {
   const { data: menu, isLoading, refetch, isFetching, isError } = useSetting(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
  
   return (
-       <>
-        <nav className="bg-[#113F67] dark:bg-gray-900 w-full z-20 top-0 start-0">
-            <div className=" flex flex-wrap items-center justify-between lg:mx-16 p-2">
+        <nav className="flex justify-center bg-[#113F67] dark:bg-gray-900 w-full z-20 top-0 start-0">
+            <div className="w-full px-6 py-2 sm:px-0 max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl flex flex-wrap items-center justify-between">
                 <Logo/>
                 {   
                     isLoading ? (
@@ -58,7 +57,6 @@ const AppMenu = () => {
                 }
             </div>
         </nav>
-       </>
   );
 };
 

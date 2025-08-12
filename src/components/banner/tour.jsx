@@ -8,11 +8,11 @@ const TourBanner = () => {
 
   return (
        <>
-        <div className="col-span-4 grid grid-cols-6 my-4 px-6 lg:px-12 justify-items-center">
+        <div className="col-span-4 grid grid-cols-6 justify-items-center gap-6">
                  {
                     isSettingLoading ? (
                     <>
-                        <div className="col-span-6 lg:col-span-3 xl:col-span-4 w-full rounded-lg dark:bg-gray-800 py-4 lg:py-12 pe-12 animate-pulse">
+                        <div className="col-span-6 lg:col-span-3 xl:col-span-4 w-full rounded-lg dark:bg-gray-800 animate-pulse">
                             <div className="h-10 w-3/4 bg-gray-300 rounded mb-5"></div>
                             <div className="h-6 w-1/2 bg-gray-300 rounded mt-2"></div>
                             <div className="h-4 w-full bg-gray-300 rounded mt-2"></div>
@@ -30,22 +30,24 @@ const TourBanner = () => {
                         </div>
                     ) : (
                       <>
-                       <div className="col-span-6 md:col-span-3 xl:col-span-4 w-full rounded-lg dark:bg-gray-800 py-4 lg:py-12 pe-12">                  
+                       <div className="col-span-6 lg:col-span-3 xl:col-span-4 w-full rounded-lg flex flex-col justify-center dark:bg-gray-800">                  
                             <h5 className="text-4xl font-bold mb-5 tracking-tighter text-gray-900 dark:text-white">{ data?.value?.title ?? "[Judul wisata belum diatur]" }</h5>
                             <div className="flex items-center mt-2">
                                 <p className="my-0 text-lg font-semibold text-gray-900 dark:text-white">{ data?.value?.subTitle ?? "[Sub judul wisata belum diatur]"}</p>
                             </div>
                             <p className="text-lg font-normal text-gray-500 dark:text-gray-400 mt-2">{data?.value?.description ?? "[Deskripsi wisata belum diatur]" }</p>
-                            <Link to={'/tour'} className="inline-flex justify-center mt-8 lg:mt-12 hover:text-black items-center py-5 px-8 text-base font-medium text-center bg-[#113F67] text-white rounded-md hover:bg-white focus:ring-2 focus:ring-gray-400 transition transform duration-300 ease-in-out">
+                            <Link to={'/tour'} className="inline-flex justify-center mt-8 lg:mt-12 hover:text-black items-center w-full lg:w-48 py-3 px-6 text-base font-medium text-center bg-[#113F67] text-white rounded-md hover:bg-white focus:ring-2 focus:ring-gray-400 transition transform duration-300 ease-in-out">
                                 Lihat Selengkapnya
                             </Link>
                         </div>
-                        <div className="col-span-6 md:col-span-3 xl:col-span-2 flex justify-center items-center dark:bg-gray-800">                  
-                            <img
-                                className="h-full w-full shadow-2xl backdrop-blur-2xl"
-                                src={data?.value?.imageUrl ?? "/unavailablei-image.png" }
+                        <div className="col-span-6 lg:col-span-3 xl:col-span-2 flex justify-center items-center dark:bg-gray-800">
+                            <div className="aspect-video lg:aspect-square w-full  backdrop-blur-2xl">
+                                <img
+                                className="h-full w-full object-cover rounded"
+                                src={data?.value?.imageUrl ?? "/unavailable-image.png"}
                                 alt="image description"
-                            />
+                                />
+                            </div>
                         </div>
                       </>
                     )
