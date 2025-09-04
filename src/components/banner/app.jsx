@@ -56,7 +56,7 @@ const App = () => {
                                     </span>
                                 </a>
                             ) : (
-                                <Link to={item.link} key={index} className="min-w-20 h-fit w-full md:h-fit md:min-w-40 md:w-full max-w-60 inline-flex flex-col items-center justify-center p-2 bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
+                                <Link to={item.link} key={index} className="min-w-20 h-full w-full md:h-fit md:min-w-40 md:w-fit max-w-60 inline-flex flex-col items-center justify-center bg-[#F3F9FB] md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 group hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus:ring-2 focus:ring-gray-400 focus:bg-[#113F67] transition-all transform duration-300 ease-in-out">
                                     <IconComponent className="min-w-3 min-h-3 mb-1 text-[#226597] md:w-20 md:h-20 md:mb-2 md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
                                     <span className="text-xs text-[#226597] md:max-w-32 line-clamp-2 md:mb-2 md:text-sm text-center md:font-bold md:tracking-tight md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
                                         {item.title}

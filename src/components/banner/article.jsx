@@ -15,7 +15,7 @@ const ArticleBanner = () => {
     
   return (
        <>
-        <div style={backgroundStyle} className={`relative min-h-[24rem] bg-none lg:bg-cover lg:bg-bottom rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 px-4 grid grid-cols-6`}>    
+        <div style={backgroundStyle} className={`relative min-h-[24rem] bg-none lg:bg-cover lg:bg-bottom rounded-s-md col-span-4 lg:col-span-3 lg:pt-4 lg:px-4 grid grid-cols-6`}>    
             <div className="absolute inset-0 bg-slate-100 lg:bg-white/80 rounded-s-md"></div>
             <div className="relative z-0 col-span-6 grid grid-cols-6 gap-x-8 gap-y-4">
                 <div className="col-span-6 grid grid-cols-6  gap-8 justify-between">

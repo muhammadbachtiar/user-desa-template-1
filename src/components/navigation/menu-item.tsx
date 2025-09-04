@@ -36,13 +36,13 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
         {isClickable ? (
           <Link 
             to={fullPath}
-            className={` "w-full block px-4 py-2 text-sm font-medium hover:bg-gray-100 transition-colors",
+            className={` "w-full block px-4 py-2 text-xs font-medium hover:bg-gray-100 transition-colors",
               ${isActive ? "text-black border-l-2 border-black pl-3" : "text-gray-800"}`}
           >
             {item.title}
           </Link>
         ) : (
-          <div className="px-4 py-2 text-sm font-medium text-gray-500">
+          <div className="px-4 py-2 text-xs font-medium text-gray-500">
             {item.title}
           </div>
         )}
@@ -70,7 +70,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
           {isClickable ? (
             <Link to={fullPath}>
               <div 
-                className={`flex whitespace-nowrap overflow-hidden max-w-[10rem]
+                className={`flex text-sm whitespace-nowrap overflow-hidden max-w-[10rem]
                   "inline-flex items-center bg-[#113F67] text-[#F3F9FB] border-[#113F67] px-4 py-2  hover:border-[#DDA853] font-bold transition-all duration-200",
                   "focus:outline-none",
                   ${isActive ? "border-b-2 border-[#DDA853]" 
@@ -83,7 +83,7 @@ export function MenuItem({ item, basePath = "", level = 0 }) {
             </Link>
           ) : (
             <MenuButton 
-              className={`flex whitespace-nowrap overflow-hidden max-w-[10rem]
+              className={`flex text-sm whitespace-nowrap overflow-hidden max-w-[10rem]
                   "inline-flex items-center bg-[#113F67] text-[#F3F9FB] border-[#113F67] px-4 py-2  hover:border-[#DDA853] font-bold transition-all duration-200",
                   "focus:outline-none",
                   ${isActive ? "border-b-2 border-[#DDA853]" 

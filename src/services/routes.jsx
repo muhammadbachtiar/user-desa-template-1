@@ -3,10 +3,23 @@ import UnautorizedLayout from "../layout/unauthorizedLayout";
 import useSetting from "../hooks/settings/useSettings";
 import { generateRoutes } from "../services/utils/generateRoutes";
 import NotFound from "../views/notfound";
+import { validateAndRedirect } from "./utils/shouldRedirect";
 
 const Routers = () => {
+  
   const { data: menu } = useSetting(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
- 
+  const pathSegments = location.pathname.split('/').filter(segment => segment);
+  const path = pathSegments || [];
+  
+  if (validateAndRedirect(path)) {
+    const redirects = {
+      tour: '/tour',
+      article: '/article',
+    };
+    window.location.replace(redirects[path[0]] || '/');
+    return null;
+  }
+
   return (
     <Router>
       <Routes>
