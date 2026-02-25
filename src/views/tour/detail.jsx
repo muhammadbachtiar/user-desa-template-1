@@ -1,14 +1,26 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { CiMap } from "react-icons/ci";
 import { BiGlobe } from "react-icons/bi";
 import { CgMail } from "react-icons/cg";
 import sosmedIcons from "../../atoms/icons/sosmed";
 import useTourDetail from "../../hooks/contens/tour/useDetail";
+import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import Refetch from "../../atoms/refetch";
 import StreetViewChecker from "../../services/utils/checkStreetView";
 
 const TourDetail = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
+  const { isSectionEnabled, isLoading: isFeaturesLoading } = useFeatureFlags();
+  const isTourEnabled = isSectionEnabled("tour");
+
+  useEffect(() => {
+    if (!isFeaturesLoading && !isTourEnabled) {
+      navigate("/", { replace: true });
+    }
+  }, [isFeaturesLoading, isTourEnabled, navigate]);
+
   const gmapsApiKey = import.meta.env.VITE_GMAPS_API_KEY;
   const {
     data: tour,
@@ -25,6 +37,16 @@ const TourDetail = () => {
   if (isStreetAvailable) {
     mapsUrl = `https://www.google.com/maps/embed/v1/streetview?key=${gmapsApiKey}&location=${tour?.latitude},${tour?.longitude}&heading=0&pitch=0`;
   }
+
+  if (isFeaturesLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen w-full">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#113F67]"></div>
+      </div>
+    );
+  }
+
+  if (!isTourEnabled) return null;
 
   return (
     <>

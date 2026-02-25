@@ -4,6 +4,7 @@ import "flatpickr/dist/flatpickr.css";
 import { BiCalendar } from "react-icons/bi";
 import { FaX } from "react-icons/fa6";
 import PropTypes from "prop-types";
+
 export default function DatePicker({
   id,
   mode,
@@ -11,7 +12,8 @@ export default function DatePicker({
   defaultDate,
   placeholder,
 }) {
-  const flatpickrRef = (useRef < flatpickr.Instance) | (null > null);
+  const flatpickrRef = useRef(null);
+
   useEffect(() => {
     const flatPickr = flatpickr(`#${id}`, {
       mode,
@@ -29,7 +31,7 @@ export default function DatePicker({
         flatpickrRef.current.destroy();
       }
     };
-  }, [mode, onChange, id, defaultDate, flatpickrRef]);
+  }, [mode, onChange, id, defaultDate]);
 
   const handleClear = () => {
     if (flatpickrRef.current) {
@@ -37,11 +39,15 @@ export default function DatePicker({
       if (onChange) {
         const emptyValue = "";
         if (Array.isArray(onChange)) {
-          onChange.forEach((hook) =>
-            hook([], emptyValue, flatpickrRef.current ?? {})
-          );
+          onChange.forEach((hook) => {
+            if (flatpickrRef.current) {
+              hook([], emptyValue, flatpickrRef.current);
+            }
+          });
         } else {
-          onChange([], emptyValue, flatpickrRef.current ?? {});
+          if (flatpickrRef.current) {
+            onChange([], emptyValue, flatpickrRef.current);
+          }
         }
       }
     }
@@ -77,10 +83,11 @@ export default function DatePicker({
   );
 }
 
-
 DatePicker.propTypes = {
-  setDate: PropTypes.func.isRequired,
-  onChange: PropTypes.func,
+  onChange: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.arrayOf(PropTypes.func),
+  ]),
   id: PropTypes.string,
   placeholder: PropTypes.string,
   mode: PropTypes.string,

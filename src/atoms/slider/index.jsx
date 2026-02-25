@@ -221,7 +221,7 @@ const SliderCard = ({
                   setCurrentIndex(index);
                 }}
               >
-                <div className="flex justify-center relative group hover:scale-100 focus:scale-100 transition duration-300 ease-in-out">
+                <div className="flex mx-2 justify-center relative group hover:scale-100 focus:scale-100 transition duration-300 ease-in-out">
                   <figure className="h-full w-full max-w-md max-h-96 aspect-[4/5]">
                     <img
                       className="h-full w-full object-cover rounded-lg cursor-pointer"

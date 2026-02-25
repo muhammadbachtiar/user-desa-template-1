@@ -45,7 +45,7 @@ const Logo = ({textColor="text-[#F3F9FB]", hoverBgColor="bg-[#226597]"}) => {
             ) : (
                  <Link to={"/"} className={`flex items-center px-2 py-1 space-x-3 rtl:space-x-reverse rounded-md hover:${hoverBgColor} hover:scale-105 transition transform duration-300 ease-in-out`}>
                     <img src={logo?.value?.imageUrl ?? '/unavailable-image.png'} className="h-10" alt="App Logo"></img>
-                    <div className='flex flex-col items-end justify-between gap-x-2'>
+                    <div className='flex flex-col items-end justify-between gap-x-2 gap-y-1'>
                         <span className={`self-start align-baseline text-md leading-4 tracking-tighter font-semibold uppercase ${textColor}`}>{logo?.value?.regionEntity ?? '[Judul logo belum diatur]'} </span>
                         <span className={`self-start align-baseline text-xs leading-3 font-normal italic ${textColor}`}>{(logo?.value?.regionDescription) ??  "[Sub judul logo belum diatur]"} </span>
                     </div>

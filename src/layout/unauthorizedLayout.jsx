@@ -6,6 +6,8 @@ import ArticleList from '../views/article/list';
 import ArticleDetail from '../views/article/detail';
 import TourList from '../views/tour/list';
 import TourDetail from '../views/tour/detail';
+import PressReleaseList from '../views/press-release/list';
+import PressReleaseDetail from '../views/press-release/detail';
 import Container from '../views/container';
 import SearchPage from '../views/search';
 
@@ -30,8 +32,14 @@ const UnautorizedLayout = () => {
     case pathname.includes("/tour/"):     
       contentComponent = <TourDetail />;
       break;
-    case pathname ===  "/tour":
+    case pathname === "/tour":
       contentComponent = <TourList />;
+      break;
+    case pathname.includes("/press-release/"):
+      contentComponent = <PressReleaseDetail />;
+      break;
+    case pathname === "/press-release":
+      contentComponent = <PressReleaseList />;
       break;
     default:
         contentComponent = <Container />;

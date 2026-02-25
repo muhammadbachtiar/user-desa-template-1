@@ -1,10 +1,18 @@
 import { BubbleChat } from 'flowise-embed-react'
+import useChatbotSettings from '../../hooks/settings/useChatbotSettings'
 
 const Chatbot = () => {
+    const { chatbotId, chatbotUrl, isLoading } = useChatbotSettings();
+
+    // Don't render chatbot until settings are loaded
+    if (isLoading || !chatbotId || !chatbotUrl) {
+        return null;
+    }
+
     return (
         <BubbleChat
-            chatflowid={import.meta.env.VITE_CHATBOT_ID}
-            apiHost={import.meta.env.VITE_CHATBOT_BASE_URL}
+            chatflowid={chatbotId}
+            apiHost={chatbotUrl}
              theme={{    
                 button: {
                     backgroundColor: '#3B81F6',

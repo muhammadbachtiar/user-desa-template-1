@@ -62,16 +62,16 @@ export default function AsideContent({ children }) {
                 ) : (
                   articles?.pages[0].data.map((article) => (
                     <Link key={article.id} to={`/article/${article.slug}`}>
-                      <li className="flex my-2">
-                        <div className="mr-3 max-w-40 min-w-40 md:max-w-28 md:min-w-28 w-full relative group">
+                      <li className="flex my-2 justify-center items-center gap-3">
+                        <div className="flex-shrink-0 items-center justify-center w-24 md:w-28 relative group">
                           <img
-                            className="aspect-video max-w-40 md:max-w-28 max-h-24 h-full w-full rounded-sm shadow-lg object-cover"
+                            className="aspect-video w-full h-auto max-h-24 rounded-sm shadow-lg object-cover"
                             src={article.thumbnail || ""}
                             alt="Article Thumbnail"
                           />
-                          <div className="absolute w-40 md:w-28 inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
+                          <div className="absolute w-full inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
                         </div>
-                        <p className="text-md line-clamp-3 font-semibold hover:text-[#DDA853] ">
+                        <p className="flex-grow text-sm line-clamp-4 leading-5 font-semibold hover:text-[#DDA853]">
                           {article.title}
                         </p>
                       </li>
@@ -81,9 +81,6 @@ export default function AsideContent({ children }) {
               </ul>
             </div>
             <div>
-              <h2 className="text-xl font-bold text-[#DDA853] mb-4 pb-2 border-gray-300 border-b">
-                Infografis
-              </h2>
               <div className="relative min-h-[24rem] flex justify-center items-center">
                 <section className="relative w-full flex justify-center items-center">
                   <div className="max-w-full w-full grid grid-cols-9 gap-2 dark:bg-gray-700 dark:border-gray-600">

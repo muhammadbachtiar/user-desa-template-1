@@ -1,11 +1,16 @@
 import { BiPlus } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TourCard from "../../atoms/TourCard";
 import useSetting from "../../hooks/settings/useSettings";
+import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import Refetch from "../../atoms/refetch";
 import useTour from "../../hooks/contens/tour/useList";
 
 const TourList = () => {
+  const navigate = useNavigate();
+  const { isSectionEnabled, isLoading: isFeaturesLoading } = useFeatureFlags();
+  const isTourEnabled = isSectionEnabled("tour");
   const [search, setSearch] = useState("");
   const {
     data: setting,
@@ -23,6 +28,22 @@ const TourList = () => {
     isFetching,
     refetch,
   } = useTour({ search: search, page_size: 6 });
+
+  useEffect(() => {
+    if (!isFeaturesLoading && !isTourEnabled) {
+      navigate("/", { replace: true });
+    }
+  }, [isFeaturesLoading, isTourEnabled, navigate]);
+
+  if (isFeaturesLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen w-full">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#113F67]"></div>
+      </div>
+    );
+  }
+
+  if (!isTourEnabled) return null;
 
   const handleChange = (e) => {
     setSearch(e.target.value);

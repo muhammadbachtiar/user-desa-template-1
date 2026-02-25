@@ -1,80 +1,72 @@
-import ArticleCard from "../../atoms/ArticleCard";
-import SelectCategory from "../../atoms/form/selectCategory";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import moment from "moment";
+import "moment/locale/id";
 import { BiPlus } from "react-icons/bi";
-import useArticle from "../../hooks/contens/article/useList";
-import Refetch from "../../atoms/refetch";
-import useSetting from "../../hooks/settings/useSettings";
+import usePressRelease from "../../hooks/contens/press-release/useList";
+import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import DatePicker from "../../components/shared/form/DatePicker";
+import Refetch from "../../atoms/refetch";
 
-const ArticleList = () => {
-  const [categoryId, setCategoryId] = useState(0);
+const PressReleaseList = () => {
+  const navigate = useNavigate();
+  const { pressRelease, isLoading: isFeaturesLoading } = useFeatureFlags();
+
   const [search, setSearch] = useState("");
   const [dateRange, setRangeDate] = useState("");
 
   const {
-    data: articles,
+    data,
     isLoading,
     isError,
     fetchNextPage,
     hasNextPage,
     isFetching,
     refetch,
-  } = useArticle(
-    { search: search, page_size: 6, order: "desc", by: "published_at", date: dateRange },
-    categoryId
+  } = usePressRelease(
+    {
+      page: 1,
+      page_size: 9,
+      search: search,
+      date: dateRange,
+      by: "published_at",
+    },
+    0
   );
-  const {
-    data: setting,
-    isLoading: isSettingLoading,
-    isFetching: isSettingFetching,
-    refetch: refetchSetting,
-    isError: isSettingError,
-  } = useSetting(`article-${import.meta.env.VITE_VILLAGE_ID}`, {});
-
-  const backgroundStyle = setting?.value?.imageUrl
-    ? { backgroundImage: `url(${setting.value.imageUrl})` }
-    : { backgroundImage: `url(/unavailable-image.png)` };
 
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
-  const allArticles =
-    articles?.pages.filter((page) => page?.data).flatMap((page) => page.data) ||
+  const allPressReleases =
+    data?.pages.filter((page) => page?.data).flatMap((page) => page.data) ||
     [];
+
+  // Feature handling
+  useEffect(() => {
+    if (!isFeaturesLoading && !pressRelease) {
+      navigate("/", { replace: true });
+    }
+  }, [isFeaturesLoading, pressRelease, navigate]);
+
+  if (!isFeaturesLoading && !pressRelease) return null;
+
+  if (isFeaturesLoading) {
+    return (
+       <div className="flex justify-center items-center min-h-screen w-full">
+         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#113F67]"></div>
+       </div>
+    );
+  }
 
   return (
     <>
-      {isSettingLoading ? (
-        <div className="flex animate-pulse space-x-3 w-full min-h-min ">
-          <div className="h-44 md:h-60 lg:h-80 w-full flex-1 bg-gray-300"></div>
-        </div>
-      ) : isSettingError && !isSettingFetching ? (
-        <Refetch refetch={refetchSetting} />
-      ) : (
-        <section
-          style={backgroundStyle}
-          className={`relative p-4 lg:p-14 bg-cover bg-bottom w-full h-44 md:h-60 lg:h-80 flex justify-start items-end`}
-        >
-          <div className="absolute inset-0 bg-black/50 rounded-s-md"></div>
-          <div className="relative px-8 text-start">
-            <h2 className="mb-4 text-4xl sm:text-5xl font-bold text-white lg:text-6xl">
-              {setting?.value?.title ?? "[Judul artikel belum diatur]"}
-            </h2>
-          </div>
-        </section>
-      )}
-      <div className="w-full flex justify-center">
+      <div className="w-full my-4 flex justify-center">
         <div className="w-full px-6 sm:px-0 max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl grid grid-cols-3 lg:grid-cols-4 gap-y-6 bg-gradient-to-b from-slate-100 via-blue-[#F3F9FB] to-blue-[#F3F9FB]">
           <div className="bg-transparent rounded-s-md col-span-4 grid grid-cols-6">
             <div className="col-span-6 grid grid-cols-6 gap-8">
               <div className="col-span-6 grid grid-cols-6 gap-1 px-6 md:px-0 justify-between">
-                <div className="col-span-6 md:col-span-2 lg:col-span-1">
-                  <SelectCategory setCategoryId={setCategoryId} />
-                </div>
-                <div className="col-span-6 md:col-span-4 lg:col-span-5 text-end">
+                <div className="col-span-6  text-end">
                   <div className="relative w-full">
                     <input
                       type="search"
@@ -82,10 +74,9 @@ const ArticleList = () => {
                       value={search}
                       onChange={handleChange}
                       className="block px-5 pe-12 w-full rounded-sm text-sm text-gray-900 bg-gray-50 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                      placeholder="Cari judul ..."
+                      placeholder="Cari siaran pers..."
                     />
                     <span
-                      type="submit"
                       className="absolute top-0 end-0 py-3 px-5 sm:ms-4 text-sm font-medium h-full text-white focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       <svg
@@ -107,14 +98,14 @@ const ArticleList = () => {
                   </div>
                 </div>
                 <div className="col-span-6 mt-2">
-                     <DatePicker setDate={setRangeDate} dateRange={dateRange} />
+                  <DatePicker setDate={setRangeDate} dateRange={dateRange} />
                 </div>
               </div>
               <div className="col-span-6 grid grid-cols-6 gap-y-6 justify-items-center">
                 {isLoading ||
-                ((!articles ||
-                  !articles.pages[0] ||
-                  articles.pages[0]?.data.length === 0) &&
+                ((!data ||
+                  !data.pages[0] ||
+                  data.pages[0]?.data.length === 0) &&
                   isFetching) ? (
                   <div className="col-span-6 w-full grid grid-cols-6 px-8 md:px-0 gap-6 justify-items-center">
                     {Array.from({ length: 6 }).map((_, index) => (
@@ -135,13 +126,13 @@ const ArticleList = () => {
                   </div>
                 ) : !isError &&
                   !isFetching &&
-                  (!articles ||
-                    !articles.pages[0] ||
-                    articles.pages[0]?.data.length === 0) ? (
+                  (!data ||
+                    !data.pages[0] ||
+                    data.pages[0]?.data.length === 0) ? (
                   <div className="flex col-span-6 w-full h-full justify-center">
                     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2">
                       <p className="text-black text-2xl dark:text-gray-400">
-                        Artikel tidak tersedia
+                        Siaran pers tidak tersedia
                       </p>
                     </div>
                   </div>
@@ -153,19 +144,20 @@ const ArticleList = () => {
                   </div>
                 ) : (
                   <>
-                    {allArticles.map((card) => (
+                    {allPressReleases.map((card) => (
                       <Link
-                        to={`/article/${card.slug}`}
+                        to={`/press-release/${card.slug}`}
                         tabIndex={1}
-                        key={card.slug}
+                        key={card.id}
                         className="col-span-6 md:col-span-3 px-3 md:px-0 lg:col-span-2 w-full"
                       >
-                        <ArticleCard
+                        <PressReleaseCard
                           thumbnail={card.thumbnail}
                           title={card.title}
                           description={card.description}
-                          category={card.category.name}
+                          category={card.category?.name}
                           published_at={card.published_at}
+                          author={card.user?.name}
                         />
                       </Link>
                     ))}
@@ -190,4 +182,39 @@ const ArticleList = () => {
   );
 };
 
-export default ArticleList;
+/** Press Release Card — same pattern as ArticleCard */
+function PressReleaseCard({ thumbnail, title, description, category, published_at, author }) {
+  return (
+    <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
+      <div className="relative w-full aspect-video overflow-hidden">
+        <img
+          className="w-full h-full object-cover"
+          src={thumbnail || "/unavailable-image.png"}
+          alt={title}
+          loading="lazy"
+        />
+        {category && (
+          <span className="absolute top-2 left-2 bg-[#113F67] text-white text-xs font-semibold px-2 py-1 rounded">
+            {category}
+          </span>
+        )}
+      </div>
+      <div className="flex flex-col flex-1 p-4">
+        <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">
+          {title}
+        </h5>
+        <p className="mb-3 text-sm font-normal text-gray-500 dark:text-gray-400 line-clamp-3">
+          {description}
+        </p>
+        <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
+           <span>{moment(published_at ?? "")
+                                    .locale("id")
+                                    .format("dddd, D MMMM YYYY")}</span>
+          {author && <span className="font-medium text-gray-500">{author}</span>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default PressReleaseList;
