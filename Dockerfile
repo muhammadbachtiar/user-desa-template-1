@@ -7,8 +7,8 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 # === Generate SEO file and build the app ===
-RUN npm run generate-seo
 RUN npm run build
+RUN npm run generate-seo
 
 # === Stage 2: Serve with Nginx ===
 FROM nginx:alpine AS runner

@@ -40,7 +40,8 @@
     "react-slick": "^0.30.2",
     "react-spring-lightbox": "^1.8.0",
     "redux": "^5.0.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
@@ -67,6 +68,9 @@
       "react-dom": "^19.2.4"
     },
     "react-query": {
+      "react": "^19.2.4"
+    },
+    "styled-components": {
       "react": "^19.2.4"
     }
   }
