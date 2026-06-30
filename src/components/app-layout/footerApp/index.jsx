@@ -5,8 +5,7 @@ import Logo from "../../../atoms/logo";
 import useSetting from "../../../hooks/settings/useSettings";
 import Refetch from "../../../atoms/refetch";
 import sosmed from "../../../atoms/icons/sosmed.js";
-
-const GMAPS_API_KEY = import.meta.env.VITE_GMAPS_API_KEY;
+import GoogleMapsEmbed from "@/components/shared/GoogleMapsEmbed";
 
 const FooterApp = () => {
   const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`footer-${import.meta.env.VITE_VILLAGE_ID}`, {});
@@ -20,11 +19,6 @@ const FooterApp = () => {
   const googleMapsUrl = hasCoordinates
     ? `https://www.google.com/maps?q=${lat},${lon}`
     : null;
-  const mapsEmbedUrl = hasCoordinates && GMAPS_API_KEY
-    ? `https://www.google.com/maps/embed/v1/place?key=${GMAPS_API_KEY}&q=${lat},${lon}&zoom=15`
-    : hasCoordinates
-      ? `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`
-      : null;
 
   return (
     <footer className="w-full mt-8 bg-white border-t border-gray-200">
@@ -150,31 +144,27 @@ const FooterApp = () => {
                 <div className="w-full h-40 sm:h-48 lg:h-full lg:min-h-[220px] bg-gray-50 rounded-xl flex items-center justify-center">
                   <Refetch refetch={refetchSetting} />
                 </div>
-              ) : mapsEmbedUrl ? (
+              ) : (
                 <div className="w-full h-40 sm:h-48 lg:h-full lg:min-h-[220px] rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
-                  <iframe
-                    src={mapsEmbedUrl}
+                  <GoogleMapsEmbed
+                    latitude={lat}
+                    longitude={lon}
+                    title="Lokasi Kantor"
                     className="w-full h-full border-0"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                    title="Lokasi di Google Maps"
+                    fallbackClassName="!bg-gray-50 !border-0 text-gray-500"
                   />
                   {/* Open in Google Maps overlay */}
-                  <a
-                    href={googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-lg shadow-md text-xs font-medium text-gray-700 hover:bg-white hover:text-[#113F67] transition-all opacity-0 group-hover:opacity-100"
-                  >
-                    <FaLocationDot className="w-3 h-3" />
-                    Buka di Google Maps
-                  </a>
-                </div>
-              ) : (
-                <div className="w-full h-40 sm:h-48 lg:h-full lg:min-h-[220px] bg-gray-50 rounded-xl flex flex-col items-center justify-center gap-2 border border-gray-200">
-                  <FaLocationDot className="w-8 h-8 text-gray-300" />
-                  <p className="text-sm text-gray-400 italic">[Koordinat lokasi belum diatur]</p>
+                  {googleMapsUrl && (
+                    <a
+                      href={googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-lg shadow-md text-xs font-medium text-gray-700 hover:bg-white hover:text-[#113F67] transition-all opacity-0 group-hover:opacity-100 z-10"
+                    >
+                      <FaLocationDot className="w-3 h-3" />
+                      Buka di Google Maps
+                    </a>
+                  )}
                 </div>
               )}
             </div>

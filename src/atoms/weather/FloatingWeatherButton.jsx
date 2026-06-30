@@ -133,7 +133,7 @@ export default function FloatingWeatherButton() {
               >
                 <Leaf size={16} className={aqiLevel.color} />
                 <span className={`font-semibold text-sm ${aqiLevel.color}`}>
-                  AQI {airQualityData.current.us_aqi}
+                  IKU {airQualityData.current.us_aqi}
                 </span>
               </motion.div>
             ) : (
@@ -172,7 +172,7 @@ export default function FloatingWeatherButton() {
         <>
           <Leaf size={18} className={aqiLevel.color} />
           <span className={`font-semibold text-sm ${aqiLevel.color}`}>
-            AQI {airQualityData.current.us_aqi}
+            IKU {airQualityData.current.us_aqi}
           </span>
         </>
       );
@@ -267,11 +267,10 @@ export default function FloatingWeatherButton() {
                           <button
                             key={kec.adm4}
                             onClick={() => handleSelectKecamatan(kec)}
-                            className={`w-full bg-white hover:bg-blue-100 text-left px-4 py-2.5 text-sm transition-colors first:rounded-t-xl last:rounded-b-xl ${
-                              selectedKecamatan?.adm4 === kec.adm4
-                                ? "bg-blue-100 text-blue-700 font-medium"
-                                : "text-gray-700"
-                            }`}
+                            className={`w-full bg-white hover:bg-blue-100 text-left px-4 py-2.5 text-sm transition-colors first:rounded-t-xl last:rounded-b-xl ${selectedKecamatan?.adm4 === kec.adm4
+                              ? "bg-blue-100 text-blue-700 font-medium"
+                              : "text-gray-700"
+                              }`}
                           >
                             <div className="font-medium">{kec.kecamatan}</div>
                             <div className="text-xs text-gray-500">{kec.kelurahan_desa}</div>
@@ -353,7 +352,7 @@ export default function FloatingWeatherButton() {
                       <div className={`rounded-xl p-3 mb-4 border ${aqiLevel.bgColor} ${aqiLevel.borderColor}`}>
                         <div className="flex items-center gap-2 mb-2">
                           <Leaf size={16} className={aqiLevel.color} />
-                          <span className="text-gray-700 text-sm font-medium">Kualitas Udara</span>
+                          <span className="text-gray-700 text-sm font-medium">Indeks Kualitas Udara</span>
                           <span className={`ml-auto text-xs font-semibold px-2 py-0.5 rounded-full ${aqiLevel.bgColor} ${aqiLevel.color}`}>
                             {aqiLevel.label}
                           </span>
@@ -363,7 +362,7 @@ export default function FloatingWeatherButton() {
                             <div className={`text-lg font-bold ${aqiLevel.color}`}>
                               {airQualityData.current.us_aqi}
                             </div>
-                            <div className="text-gray-500 text-xs">AQI</div>
+                            <div className="text-gray-500 text-xs">IKU</div>
                           </div>
                           <div className="text-center border-l border-r border-gray-200">
                             <div className="text-lg font-bold text-gray-700">

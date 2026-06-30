@@ -50,9 +50,9 @@ function DesktopServiceCard({ item, onClick, index = 0 }) {
   const linkUrl = item.link || '/';
 
   const cardContent = (
-    <div className="group min-w-20 w-full md:min-w-40 md:w-fit max-w-60 inline-flex flex-col items-center justify-center md:py-4 md:rounded-lg md:bg-white dark:hover:bg-gray-800 hover:bg-[#113F67] hover:scale-105 hover:-translate-y-1 focus-within:ring-2 focus-within:ring-gray-400 focus-within:bg-[#113F67] transition-all transform duration-300 ease-in-out">
+    <div className="w-full h-full flex flex-col items-center justify-start flex-1 p-3 md:py-6 md:px-4 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm group-hover:bg-[#113F67] group-hover:text-white group-focus:bg-[#113F67] group-focus:text-white group-hover:scale-105 group-hover:-translate-y-1 transition-all transform duration-300 ease-in-out">
       {/* Icon / Image */}
-      <div className="flex items-center justify-center mb-1 md:mb-2">
+      <div className="flex items-center justify-center mb-2 h-10 w-10 md:h-16 md:w-16 flex-shrink-0">
         {hasImage ? (
           <div className="w-10 h-10 md:w-16 md:h-16 rounded-full overflow-hidden flex-shrink-0">
             <img
@@ -63,19 +63,29 @@ function DesktopServiceCard({ item, onClick, index = 0 }) {
             />
           </div>
         ) : (
-          <IconComponent className="min-w-3 min-h-3 md:w-16 md:h-16 text-[#226597] md:text-gray-800 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500" />
+          <IconComponent className="w-6 h-6 md:w-14 md:h-14 text-[#226597] group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500 transition-colors" />
         )}
       </div>
 
       {/* Title */}
-      <span className="text-xs text-[#226597] md:max-w-32 line-clamp-2 md:mb-1 md:text-sm text-center md:font-bold md:tracking-tighter md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500">
+      <span className="text-xs text-[#226597] md:max-w-36 line-clamp-2 mb-1 md:text-sm text-center md:font-bold md:tracking-tighter md:text-gray-900 group-hover:text-white group-focus:text-white dark:text-gray-400 dark:group-hover:text-blue-500 transition-colors">
         {item?.title}
       </span>
 
       {/* Description (desktop only) */}
-      <span className="hidden md:block text-[11px] text-gray-500 text-center line-clamp-3 truncate max-w-36 leading-snug group-hover:text-white/70 group-focus:text-white/70 transition-colors">
-        {item.description || `Informasi tentang ${item.title}`}
-      </span>
+      <div className="hidden md:block w-full px-1 mt-1">
+        <p
+          className="text-[11px] text-gray-500 text-center leading-snug group-hover:text-white/70 group-focus:text-white/70 transition-colors"
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}
+        >
+          {item.description || `Informasi tentang ${item.title}`}
+        </p>
+      </div>
     </div>
   );
 
@@ -85,6 +95,7 @@ function DesktopServiceCard({ item, onClick, index = 0 }) {
       variants={cardVariants}
       initial="hidden"
       animate="visible"
+      className="w-full md:w-48 flex"
     >
       {children}
     </motion.div>
@@ -96,7 +107,7 @@ function DesktopServiceCard({ item, onClick, index = 0 }) {
       <button
         type="button"
         onClick={() => onClick?.(item)}
-        className="focus:outline-none bg-white  rounded-xl"
+        className="group focus:outline-none w-full h-full flex flex-col bg-transparent text-left"
       >
         {cardContent}
       </button>
@@ -106,7 +117,7 @@ function DesktopServiceCard({ item, onClick, index = 0 }) {
   // External link
   if (linkUrl.startsWith('http')) {
     return wrapper(
-      <a href={linkUrl} target="_blank" rel="noopener noreferrer">
+      <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="group w-full h-full flex flex-col">
         {cardContent}
       </a>
     );
@@ -114,7 +125,7 @@ function DesktopServiceCard({ item, onClick, index = 0 }) {
 
   // Internal link
   return wrapper(
-    <Link to={linkUrl}>
+    <Link to={linkUrl} className="group w-full h-full flex flex-col">
       {cardContent}
     </Link>
   );
@@ -243,7 +254,7 @@ const App = () => {
 
   return (
     <>
-      <section className="fixed block bottom-0 left-0 z-10 md:z-0 max-w-full w-full h-16 bg-white border-t dark:bg-gray-700 dark:border-gray-600 md:static md:grid md:grid-cols-8 md:gap-2 md:max-w-none md:w-auto md:h-auto md:bg-transparent md:border-0">
+      <section className="fixed block bottom-0 left-0 z-10 md:z-0 max-w-full w-full h-20 bg-white border-t dark:bg-gray-700 dark:border-gray-600 md:static md:grid md:grid-cols-8 md:gap-2 md:max-w-none md:w-auto md:h-auto md:bg-transparent md:border-0">
 
         {/* ─── Header (desktop only) ─── */}
         <div className="hidden md:flex flex-col col-span-8 gap-2 mb-4 justify-items-center items-center">
@@ -276,33 +287,35 @@ const App = () => {
         {/* ─── Mobile Bottom Bar ─── */}
         <div
           style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          className="flex md:hidden overflow-x-auto items-center h-full w-full font-medium"
+          className="flex md:hidden overflow-x-auto h-full w-full font-medium"
         >
-          <div className="flex flex-row items-center justify-center min-w-full w-fit px-3">
-            {showSkeleton ? (
-              <div className="flex w-full justify-center animate-pulse space-x-2 py-1">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="w-14 h-11 rounded-md flex-shrink-0"></div>
-                ))}
-              </div>
-            ) : showError ? (
-              <Refetch refetch={refetch} />
-            ) : showEmpty ? (
-              <p className="text-gray-500 text-center text-xs w-full py-2">Layanan tidak tersedia</p>
-            ) : (
-              services.map((item) => (
-                <MobileBarItem
-                  key={item.id ?? item.title}
-                  item={item}
-                  onClick={handleOpenModal}
-                />
-              ))
-            )}
+          <div className="flex flex-col min-w-full w-fit h-full justify-between">
+            <div className="flex flex-row items-center justify-start xs:justify-center min-w-full w-fit gap-3 px-10 pb-1 flex-1">
+              {showSkeleton ? (
+                <div className="flex w-full justify-center animate-pulse space-x-2 py-1">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="w-14 h-11 rounded-md flex-shrink-0"></div>
+                  ))}
+                </div>
+              ) : showError ? (
+                <Refetch refetch={refetch} />
+              ) : showEmpty ? (
+                <p className="text-gray-500 text-center text-xs w-full py-2">Layanan tidak tersedia</p>
+              ) : (
+                services.map((item) => (
+                  <MobileBarItem
+                    key={item.id ?? item.title}
+                    item={item}
+                    onClick={handleOpenModal}
+                  />
+                ))
+              )}
+            </div>
           </div>
         </div>
 
         {/* ─── Desktop Grid ─── */}
-        <div className="hidden md:flex col-span-8 pt-2 px-1 flex-wrap justify-center items-center w-full font-medium gap-4">
+        <div className="hidden h-fit md:flex col-span-8 pt-2 px-1 flex-wrap justify-center items-stretch w-full font-medium gap-4">
           {showSkeleton ? (
             <div className="flex w-full animate-pulse space-x-3">
               {Array.from({ length: 4 }).map((_, i) => (

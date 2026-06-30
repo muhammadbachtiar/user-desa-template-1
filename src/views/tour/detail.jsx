@@ -8,6 +8,7 @@ import useTourDetail from "../../hooks/contens/tour/useDetail";
 import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import Refetch from "../../atoms/refetch";
 import StreetViewChecker from "../../services/utils/checkStreetView";
+import GoogleMapsEmbed from "@/components/shared/GoogleMapsEmbed";
 
 const TourDetail = () => {
   const { slug } = useParams();
@@ -21,7 +22,6 @@ const TourDetail = () => {
     }
   }, [isFeaturesLoading, isTourEnabled, navigate]);
 
-  const gmapsApiKey = import.meta.env.VITE_GMAPS_API_KEY;
   const {
     data: tour,
     isLoading,
@@ -33,10 +33,6 @@ const TourDetail = () => {
     lat: Number(tour?.latitude),
     lng: Number(tour?.longitude),
   });
-  let mapsUrl = `https://www.google.com/maps/embed/v1/place?key=${gmapsApiKey}&q=${tour?.latitude},${tour?.longitude}`;
-  if (isStreetAvailable) {
-    mapsUrl = `https://www.google.com/maps/embed/v1/streetview?key=${gmapsApiKey}&location=${tour?.latitude},${tour?.longitude}&heading=0&pitch=0`;
-  }
 
   if (isFeaturesLoading) {
     return (
@@ -106,24 +102,15 @@ const TourDetail = () => {
           </div>
         ) : (
           <div className="w-full px-6 sm:px-0 max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl">
-            <div className="relative flex justify-center my-4 items-start w-full h-full min-h-[300px] lg:min-h-[500px] rounded-xl overflow-hidden">
-              {!tour?.latitude && !tour?.longitude && !gmapsApiKey ? (
-                <p className="text-gray-500 dark:text-gray-400">
-                  Map location not available
-                </p>
-              ) : (
-                <iframe
-                  src={mapsUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={`Map of ${tour?.title}`}
-                  className="absolute inset-0"
-                />
-              )}
+            <div className="relative flex justify-center my-4 items-start w-full h-full min-h-[300px] lg:min-h-[500px] rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-800 border border-gray-200">
+              <GoogleMapsEmbed
+                latitude={tour?.latitude}
+                longitude={tour?.longitude}
+                mode={isStreetAvailable ? "streetview" : "place"}
+                title={`Map of ${tour?.title}`}
+                className="absolute inset-0 w-full h-full border-0"
+                fallbackClassName="bg-gray-50 dark:bg-gray-800"
+              />
             </div>
           
            <div className="flex flex-col lg:flex-row gap-4">
