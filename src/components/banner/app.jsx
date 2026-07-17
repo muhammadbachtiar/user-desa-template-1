@@ -162,17 +162,17 @@ function MobileBarItem({ item, onClick }) {
 
   if (hasChildren) {
     return (
-      <button type="button" onClick={() => onClick?.(item)} className="focus:outline-none bg-white">
+      <button type="button" onClick={() => onClick?.(item)} className="focus:outline-none bg-white flex-shrink-0">
         {content}
       </button>
     );
   }
 
   if (linkUrl.startsWith('http')) {
-    return <a href={linkUrl} target="_blank" rel="noopener noreferrer">{content}</a>;
+    return <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="flex-shrink-0">{content}</a>;
   }
 
-  return <Link to={linkUrl}>{content}</Link>;
+  return <Link to={linkUrl} className="flex-shrink-0">{content}</Link>;
 }
 
 // ─── Modal Child Card ───
@@ -212,7 +212,7 @@ function ModalChildCard({ item, index = 0 }) {
       variants={cardVariants}
       initial="hidden"
       animate="visible"
-      className="w-full"
+      className="w-full max-w-[180px] mx-auto"
     >
       {children}
     </motion.div>
@@ -220,12 +220,12 @@ function ModalChildCard({ item, index = 0 }) {
 
   if (linkUrl.startsWith('http')) {
     return wrapper(
-      <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="w-full">{cardContent}</a>
+      <a href={linkUrl} target="_blank" rel="noopener noreferrer" className="w-full flex justify-center">{cardContent}</a>
     );
   }
 
   return wrapper(
-    <Link to={linkUrl} className="w-full">{cardContent}</Link>
+    <Link to={linkUrl} className="w-full flex justify-center">{cardContent}</Link>
   );
 }
 
@@ -290,7 +290,7 @@ const App = () => {
           className="flex md:hidden overflow-x-auto h-full w-full font-medium"
         >
           <div className="flex flex-col min-w-full w-fit h-full justify-between">
-            <div className="flex flex-row items-center justify-start xs:justify-center min-w-full w-fit gap-3 px-10 pb-1 flex-1">
+            <div className="flex flex-row items-center justify-center min-w-full w-fit gap-3 px-6 pb-1 flex-1">
               {showSkeleton ? (
                 <div className="flex w-full justify-center animate-pulse space-x-2 py-1">
                   {Array.from({ length: 4 }).map((_, i) => (
@@ -381,7 +381,11 @@ const App = () => {
           </div>
         </ModalHeader>
         <ModalBody>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div className={
+            selectedService?.child?.length === 1
+              ? "flex justify-center"
+              : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 justify-center justify-items-center"
+          }>
             <AnimatePresence>
               {selectedService?.child?.map((child, i) => (
                 <ModalChildCard key={child.id ?? child.title} item={child} index={i} />
