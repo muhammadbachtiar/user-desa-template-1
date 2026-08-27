@@ -19,8 +19,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy build output ke nginx folder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# (opsional) Copy .env ke nginx folder sebagai fallback jika ada
-COPY --from=builder /app/.env /usr/share/nginx/html/.env
+# (opsional) Copy .env ke nginx folder sebagai fallback jika ada (menggunakan wildcard * agar opsional)
+COPY --from=builder /app/.env* /usr/share/nginx/html/
 
 # Custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
