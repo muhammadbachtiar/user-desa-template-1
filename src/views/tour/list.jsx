@@ -6,6 +6,7 @@ import useSetting from "../../hooks/settings/useSettings";
 import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import Refetch from "../../atoms/refetch";
 import useTour from "../../hooks/contens/tour/useList";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const TourList = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const TourList = () => {
     isFetching: isSettingFetching,
     refetch: refetchSetting,
     isError: isSettingError,
-  } = useSetting(`tour-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  } = useSetting(`tour-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
   const {
     data: tours,
     isLoading,

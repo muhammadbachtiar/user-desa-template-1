@@ -6,9 +6,10 @@ import useSetting from "../../../hooks/settings/useSettings";
 import Refetch from "../../../atoms/refetch";
 import sosmed from "../../../atoms/icons/sosmed.js";
 import GoogleMapsEmbed from "@/components/shared/GoogleMapsEmbed";
+import { getRuntimeEnv } from "../../../services/config/get-runtime-env";
 
 const FooterApp = () => {
-  const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`footer-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`footer-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
 
   const contactUs = setting?.value?.contactUs;
   const socialMedia = setting?.value?.socialMedia;

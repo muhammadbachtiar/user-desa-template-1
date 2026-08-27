@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import SettingsService from "../../services/controllers/setting/setting.service";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const CHATBOT_VILLAGE_ID = 21;
 
@@ -20,8 +21,8 @@ function useChatbotSettings() {
 
     const settingData = data?.data;
 
-    const chatbotId = settingData?.value?.id ?? import.meta.env.VITE_CHATBOT_ID ?? '';
-    const chatbotUrl = settingData?.value?.url ?? import.meta.env.VITE_CHATBOT_BASE_URL ?? '';
+    const chatbotId = settingData?.value?.id ?? getRuntimeEnv("VITE_CHATBOT_ID");
+    const chatbotUrl = settingData?.value?.url ?? getRuntimeEnv("VITE_CHATBOT_BASE_URL");
 
     return {
         chatbotId,

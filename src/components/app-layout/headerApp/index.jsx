@@ -3,6 +3,7 @@ import useSetting from '../../../hooks/settings/useSettings';
 import useFeatureFlags from '../../../hooks/settings/useFeatureFlags';
 import Refetch from '../../../atoms/refetch';
 import { MainNav } from '../../navigation/main-nav';
+import { getRuntimeEnv } from '../../../services/config/get-runtime-env';
 
 function filterMenusByFeatures(menus, features) {
   const isRouteMatch = (route, target) => {
@@ -30,7 +31,7 @@ function filterMenusByFeatures(menus, features) {
 }
 
 const AppMenu = () => {
-  const { data: menu, isLoading, refetch, isFetching, isError } = useSetting(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data: menu, isLoading, refetch, isFetching, isError } = useSetting(`menu-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
   const { isSectionEnabled, pressRelease } = useFeatureFlags();
 
   const featureFlags = {

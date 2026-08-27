@@ -3,11 +3,12 @@ import SliderCard from "../../atoms/slider/sliderCard";
 import Refetch from "../../atoms/refetch";
 import useArticle from "../../hooks/contens/article/useList";
 import useSetting from "../../hooks/settings/useSettings";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const ArticleBanner = () => {
     
     const { data: articles, isLoading, isFetching, refetch, isError } = useArticle({"page_size": 6, "order": "desc", "by": "published_at"});
-    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`article-${import.meta.env.VITE_VILLAGE_ID}`, {});
+    const { data: setting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`article-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
     
  const backgroundStyle = setting?.value?.imageUrl
   ? { backgroundImage: `url(${setting.value.imageUrl})` }

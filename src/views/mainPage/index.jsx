@@ -8,6 +8,7 @@ import DynamicInstagramFeed from "../../components/banner/DynamicInstagramFeed";
 import useSetting from "../../hooks/settings/useSettings";
 import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import { useEffect } from "react";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const SECTION_COMPONENTS = {
   service: App,
@@ -29,7 +30,7 @@ const FALLBACK_ORDER = [
 
 const MainPage = () => {
   const { data: logo } = useSetting(
-    `logo-${import.meta.env.VITE_VILLAGE_ID}`,
+    `logo-${getRuntimeEnv("VITE_VILLAGE_ID")}`,
     {}
   );
 

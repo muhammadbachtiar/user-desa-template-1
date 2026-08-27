@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useSetting from "../../hooks/settings/useSettings";
 import Refetch from "../../atoms/refetch";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const Hero = () => {
   const [searchValue, setSearchValue] = useState("");
   const { data, isLoading, isFetching, refetch, isError } = useSetting(
-    `hero-${import.meta.env.VITE_VILLAGE_ID}`,
+    `hero-${getRuntimeEnv("VITE_VILLAGE_ID")}`,
     {}
   );
 

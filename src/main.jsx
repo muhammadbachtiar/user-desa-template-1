@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -7,6 +7,9 @@ import './services/styles/index.css'
 import App from './App.jsx'
 import Chatbot from './atoms/chatbot/index.jsx'
 import FloatingWeatherButton from './atoms/weather/FloatingWeatherButton.jsx'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { getRuntimeEnv } from './services/config/get-runtime-env.js'
 
 // Load Sienna Accessibility script
 function loadSiennaAccessibility() {
@@ -23,7 +26,17 @@ if (document.readyState === 'complete') {
   window.addEventListener('load', loadSiennaAccessibility);
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+      refetchOnReconnect: false,
+      retry: false,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+})
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -37,7 +50,7 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-const ogUrl = import.meta.env.VITE_DOMAIN_URL || "https://default.site";
+const ogUrl = getRuntimeEnv("VITE_DOMAIN_URL", "https://default.site");
 
 const metaOgUrl = document.querySelector('meta[property="og:url"]');
 

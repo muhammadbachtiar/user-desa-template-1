@@ -1,4 +1,5 @@
 import useSetting from "./useSettings";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const DEFAULT_SECTIONS_ORDER = [
     { key: "dynamic_section", enabled: true, order: 1 },
@@ -12,7 +13,7 @@ const DEFAULT_SECTIONS_ORDER = [
 const NON_OPTIONAL_SECTIONS = ["news", "infografis"];
 
 export function useFeatureFlags() {
-    const villageId = import.meta.env.VITE_VILLAGE_ID;
+    const villageId = getRuntimeEnv("VITE_VILLAGE_ID");
 
     const { data: settingData, isLoading, isError } = useSetting(`features-${villageId}`, {});
 

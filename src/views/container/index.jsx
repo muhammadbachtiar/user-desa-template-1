@@ -5,11 +5,12 @@ import useStaticPage from "../../hooks/settings/useStaticPage";
 import useSettings from "../../hooks/settings/useSettings";
 import Refetch from "../../atoms/refetch";
 import { findMenuItemByPath } from "../../services/utils/findMenuItemByPath";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const Container = () => {
   const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(segment => segment);
-  const { data: menu } = useSettings(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data: menu } = useSettings(`menu-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
   const path = pathSegments || [];
   const menuItem = Array.isArray(menu?.value) ? findMenuItemByPath(menu.value, path) : null;
 

@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import { jsPDF } from 'jspdf';
 import SettingsService from "../../services/controllers/setting/setting.service";
 import { Document, Packer, Paragraph, TextRun, ImageRun } from 'docx';
+import { getRuntimeEnv } from '../config/get-runtime-env';
 
 export default function DownloadButton({ article, paragraphs, contentImageUrl }) {
   const handleDownloadZip = async () => {
@@ -15,7 +16,7 @@ export default function DownloadButton({ article, paragraphs, contentImageUrl })
       format: 'a4'
     });
 
-    const logoURL = await SettingsService.getOneSetting(`logo-${import.meta.env.VITE_VILLAGE_ID}`);
+    const logoURL = await SettingsService.getOneSetting(`logo-${getRuntimeEnv("VITE_VILLAGE_ID")}`);
     const logoResponse = await fetch(logoURL?.data?.value?.imageUrl);
     const logoBlob = await logoResponse.blob();
     const logoArrayBuffer = await logoBlob.arrayBuffer();

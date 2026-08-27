@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import useSetting from "../../hooks/settings/useSettings";
 import Refetch from "../refetch";
 import { useEffect } from "react";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const Logo = ({textColor="text-[#F3F9FB]", hoverBgColor="bg-[#226597]"}) => {
 
-  const { data: logo, isLoading, isError, isFetching, refetch } = useSetting(`logo-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data: logo, isLoading, isError, isFetching, refetch } = useSetting(`logo-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
     useEffect(() => {
         if (logo?.value?.imageUrl) {
             const favicon = document.querySelector("link#dynamic-favicon");

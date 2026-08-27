@@ -5,10 +5,11 @@ import { generateRoutes } from "../services/utils/generateRoutes";
 import NotFound from "../views/notfound";
 import { validateAndRedirect } from "./utils/shouldRedirect";
 import GoogleAnalytics from "../components/shared/GoogleAnalytics";
+import { getRuntimeEnv } from "./config/get-runtime-env";
 
 const Routers = () => {
   
-  const { data: menu } = useSetting(`menu-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data: menu } = useSetting(`menu-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
   const pathSegments = location.pathname.split('/').filter(segment => segment);
   const path = pathSegments || [];
   

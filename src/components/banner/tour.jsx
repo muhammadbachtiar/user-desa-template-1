@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import useSetting from "../../hooks/settings/useSettings";
 import Refetch from "../../atoms/refetch";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const TourBanner = () => {
 
-  const { data, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting(`tour-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError:isSettingError } = useSetting(`tour-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
 
   return (
        <>

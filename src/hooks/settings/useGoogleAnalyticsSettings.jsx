@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import SettingsService from "../../services/controllers/setting/setting.service";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 function useGoogleAnalyticsSettings() {
-    const villageId = import.meta.env.VITE_VILLAGE_ID;
+    const villageId = getRuntimeEnv("VITE_VILLAGE_ID");
 
     const {
         data,
@@ -18,7 +19,7 @@ function useGoogleAnalyticsSettings() {
     });
 
     const settingData = data?.data;
-    const gaId = settingData?.value?.id ?? import.meta.env.VITE_GOOGLE_ANALYTICS_ID ?? '';
+    const gaId = settingData?.value?.id ?? getRuntimeEnv("VITE_GOOGLE_ANALYTICS_ID");
 
     return {
         gaId,

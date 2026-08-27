@@ -7,6 +7,7 @@ import useArticle from "../../hooks/contens/article/useList";
 import Refetch from "../../atoms/refetch";
 import useSetting from "../../hooks/settings/useSettings";
 import DatePicker from "../../components/shared/form/DatePicker";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const ArticleList = () => {
   const [categoryId, setCategoryId] = useState(0);
@@ -31,7 +32,7 @@ const ArticleList = () => {
     isFetching: isSettingFetching,
     refetch: refetchSetting,
     isError: isSettingError,
-  } = useSetting(`article-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  } = useSetting(`article-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
 
   const backgroundStyle = setting?.value?.imageUrl
     ? { backgroundImage: `url(${setting.value.imageUrl})` }

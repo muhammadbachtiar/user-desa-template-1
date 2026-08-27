@@ -6,6 +6,7 @@ import useFeatureFlags from '../../hooks/settings/useFeatureFlags';
 import Refetch from '../../atoms/refetch';
 import { Modal, ModalHeader, ModalBody } from 'flowbite-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getRuntimeEnv } from '../../services/config/get-runtime-env';
 
 function filterServicesByFeatures(services, features) {
   const isLinkMatch = (link, target) => {
@@ -233,8 +234,8 @@ function ModalChildCard({ item, index = 0 }) {
 const App = () => {
   const [selectedService, setSelectedService] = useState(null);
 
-  const { data, isLoading, isError, isFetching, refetch } = useSetting(`service-${import.meta.env.VITE_VILLAGE_ID}`, {});
-  const { data: appSetting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`app-${import.meta.env.VITE_VILLAGE_ID}`, {});
+  const { data, isLoading, isError, isFetching, refetch } = useSetting(`service-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
+  const { data: appSetting, isLoading: isSettingLoading, isFetching: isSettingFetching, refetch: refetchSetting, isError: isSettingError } = useSetting(`app-${getRuntimeEnv("VITE_VILLAGE_ID")}`, {});
   const { isSectionEnabled, pressRelease } = useFeatureFlags();
 
   const featureFlags = {

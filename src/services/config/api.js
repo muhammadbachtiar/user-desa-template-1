@@ -1,6 +1,7 @@
 import axios from "axios";
+import { getRuntimeEnv } from "./get-runtime-env";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = getRuntimeEnv("VITE_API_URL");
 const API_PUBLIC_VERSION = "/api/v1/public";
 const API_PRIVATE_VERSION = "/api/v1";
 
@@ -8,7 +9,7 @@ const axiosConfig = axios.create({
     baseURL: API_URL + API_PUBLIC_VERSION,
     headers: {
       Accept: "application/json",
-     "x-village-id": import.meta.env.VITE_VILLAGE_ID,
+     "x-village-id": getRuntimeEnv("VITE_VILLAGE_ID"),
     },
     timeout: 15000
   });
@@ -37,7 +38,7 @@ export const axiosConfigPrivate = axios.create({
   baseURL: API_URL + API_PRIVATE_VERSION,
   headers: {
     Accept: "application/json",
-     'x-village-id': import.meta.env.VITE_VILLAGE_ID,
+     'x-village-id': getRuntimeEnv("VITE_VILLAGE_ID"),
   },
 });
 
@@ -61,3 +62,4 @@ axiosConfigPrivate.interceptors.response.use(
 );
 
 export default axiosConfig;
+

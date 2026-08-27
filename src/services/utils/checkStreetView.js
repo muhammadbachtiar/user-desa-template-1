@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import useGmapsSettings from '../../hooks/settings/useGmapsSettings';
+import { getRuntimeEnv } from '../config/get-runtime-env';
 
 const StreetViewChecker = ({ lat, lng }) => {
   const { gmapsApiKey } = useGmapsSettings();
   const [isAvailable, setIsAvailable] = useState(null);
 
   useEffect(() => {
-    const resolvedKey = gmapsApiKey || import.meta.env.VITE_GMAPS_API_KEY;
+    const resolvedKey = gmapsApiKey || getRuntimeEnv("VITE_GMAPS_API_KEY");
     if (!resolvedKey) {
       setIsAvailable(false);
       return;

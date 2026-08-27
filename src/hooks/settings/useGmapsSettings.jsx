@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import SettingsService from "../../services/controllers/setting/setting.service";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 const GMAPS_VILLAGE_ID = 21;
 
@@ -20,7 +21,7 @@ function useGmapsSettings() {
 
     const settingData = data?.data;
 
-    const gmapsApiKey = settingData?.value?.token ?? import.meta.env.VITE_GMAPS_API_KEY ?? '';
+    const gmapsApiKey = settingData?.value?.token ?? getRuntimeEnv("VITE_GMAPS_API_KEY");
 
     return {
         gmapsApiKey,

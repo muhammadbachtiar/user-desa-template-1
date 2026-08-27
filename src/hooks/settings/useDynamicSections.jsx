@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useSetting from "./useSettings";
 import SettingsService from "../../services/controllers/setting/setting.service";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
-const villageId = import.meta.env.VITE_VILLAGE_ID;
+const villageId = getRuntimeEnv("VITE_VILLAGE_ID");
 
 const DEFAULT_SECTIONS = [
     {

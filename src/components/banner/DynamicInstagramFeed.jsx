@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useSetting from "../../hooks/settings/useSettings";
 import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
+import { getRuntimeEnv } from "../../services/config/get-runtime-env";
 
 async function fetchInstagramUser(token) {
   try {
@@ -99,7 +100,7 @@ function formatDate(isoString) {
 }
 
 export default function DynamicInstagramFeed() {
-  const villageId = import.meta.env.VITE_VILLAGE_ID;
+  const villageId = getRuntimeEnv("VITE_VILLAGE_ID");
 
   const { isSectionEnabled, isLoading: isFeaturesLoading } = useFeatureFlags();
 
