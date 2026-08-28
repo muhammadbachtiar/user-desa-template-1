@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-TARGET_FILE="/usr/share/nginx/html/env-config.js"
+TARGET_FILE="/tmp/env-config.js"
 
 echo "==> Preparing runtime environment variables for Vite + Nginx..."
 
@@ -46,7 +46,8 @@ window.__ENV = {
 };
 EOF
 
-echo "==> env-config.js successfully created."
+echo "==> env-config.js successfully created at /tmp/env-config.js."
+ln -sf /tmp/env-config.js /usr/share/nginx/html/env-config.js 2>/dev/null || true
 echo "==> Starting Nginx..."
 
 # ============================================================
