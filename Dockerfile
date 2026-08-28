@@ -26,6 +26,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
+# Give user nginx ownership & write permissions to /usr/share/nginx/html so docker-entrypoint.sh can create env-config.js
+RUN chown -R 101:101 /usr/share/nginx/html && chmod -R 777 /usr/share/nginx/html
+
 EXPOSE 80
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
