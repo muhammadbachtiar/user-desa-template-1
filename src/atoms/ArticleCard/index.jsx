@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { truncateWords } from "../../services/utils/truncateWords";
 
 const ArticleCard = ({
   thumbnail,
@@ -7,6 +8,9 @@ const ArticleCard = ({
   category,
   published_at,
 }) => {
+  const rawCategory = category || "Berita";
+  const categoryText = truncateWords(rawCategory, 2);
+
   return (
     <>
       <div className="px-0 sm:pe-3 group hover:scale-100 focus:scale-100 transition duration-300 ease-in-out">
@@ -19,12 +23,12 @@ const ArticleCard = ({
           />
         </div>
         <div className="p-1">
-          <div className="flex flex-row col-span-8 my-2 gap-1 justify-items-start items-start">
-            <span className="self-center align-baseline text-base font-semibold uppercase text-[#DDA853]">
-              {category}
+          <div className="flex flex-wrap items-center my-2 gap-x-2 gap-y-1 min-w-0">
+            <span className="self-center align-baseline text-sm font-semibold uppercase text-[#DDA853] shrink-0" title={rawCategory}>
+              {categoryText}
             </span>
-            <div className="self-center w-px h-4 bg-gray-400"></div>
-            <span className="self-center align-baseline text-xs font-medium text-black">
+            <div className="self-center w-px h-3.5 bg-gray-400 shrink-0"></div>
+            <span className="self-center align-baseline text-xs font-medium text-black shrink-0">
               {published_at}
             </span>
           </div>

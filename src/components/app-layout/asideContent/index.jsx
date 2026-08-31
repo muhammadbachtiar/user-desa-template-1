@@ -15,33 +15,39 @@ export default function AsideContent({ children }) {
 
   return (
     <div className="flex w-full justify-center py-4">
-      <div className="w-full px-6 sm:px-0 max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl flex flex-col items-stretch md:flex-row">
-        <main className="flex-1 min-w-0 md:pe-2">
+      <div className="w-full px-4 sm:px-6 md:px-0 max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl flex flex-col items-stretch md:flex-row gap-6 md:gap-0">
+        {/* ─── Main Content ─── */}
+        <main className="flex-1 min-w-0 md:pe-6">
           <div className="space-y-6">
             <div className="mb-8">{children}</div>
           </div>
         </main>
-        <aside className="w-full md:w-72 lg:w-80 md:ps-2 lg:sticky lg:top-0 border-gray-300 md:border-l">
-          <div className="space-y-6 sticky top-4 self-start h-fit">
+
+        {/* ─── Sidebar ─── */}
+        <aside className="w-full md:w-72 lg:w-80 xl:w-[340px] flex-shrink-0 md:ps-6 lg:sticky lg:top-0 border-t md:border-t-0 md:border-l border-gray-200">
+          <div className="space-y-8 sticky top-4 self-start h-fit pt-4 md:pt-0">
+
+            {/* ── Artikel Populer ── */}
             <div>
-              <h2 className="text-xl font-bold text-[#DDA853] mb-4 pb-2 border-gray-300 border-b">
-                Artikel Populer
-              </h2>
-              <ul className="space-y-4">
+              <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-[#113F67]">
+                <div className="w-1 h-5 bg-[#DDA853] rounded-full" />
+                <h2 className="text-base sm:text-lg font-bold text-[#113F67] uppercase tracking-wide">
+                  Artikel Populer
+                </h2>
+              </div>
+              <ul className="space-y-0 divide-y divide-gray-100">
                 {isLoading ||
-                ((!articles ||
-                  !articles.pages[0] ||
-                  articles.pages[0]?.data.length === 0) &&
-                  isFetching) ? (
+                  ((!articles ||
+                    !articles.pages[0] ||
+                    articles.pages[0]?.data.length === 0) &&
+                    isFetching) ? (
                   Array.from({ length: 4 }).map((_, index) => (
-                    <li key={index} className="flex animate-pulse">
-                      <div className="mr-3 min-w-32 relative group mb-3">
-                        <div className="w-40 md:w-30 rounded-sm shadow-lg bg-gray-200 h-20"></div>
-                        <div className="absolute w-40 md:w-30 inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <div className="h-4 w-32 bg-gray-200 rounded"></div>
-                        <div className="h-4 w-40 bg-gray-200 rounded"></div>
+                    <li key={index} className="flex animate-pulse py-3 gap-3">
+                      <div className="flex-shrink-0 w-20 h-14 sm:w-24 sm:h-16 rounded-md bg-gray-200" />
+                      <div className="flex-1 flex flex-col gap-2 justify-center">
+                        <div className="h-3 w-full bg-gray-200 rounded" />
+                        <div className="h-3 w-3/4 bg-gray-200 rounded" />
+                        <div className="h-2.5 w-16 bg-gray-100 rounded" />
                       </div>
                     </li>
                   ))
@@ -50,47 +56,61 @@ export default function AsideContent({ children }) {
                   (!articles ||
                     !articles.pages[0] ||
                     articles.pages[0]?.data.length === 0) ? (
-                  <div className="flex min-h-52 mb-4 justify-center items-center col-span-8 w-full">
-                    <p className="text-black text-center text-md dark:text-gray-400">
+                  <div className="flex min-h-40 justify-center items-center w-full">
+                    <p className="text-gray-400 text-center text-sm">
                       Artikel tidak tersedia
                     </p>
                   </div>
                 ) : isError && !isFetching ? (
-                  <div className="flex min-h-52 justify-center items-center mb-4 col-span-8 w-full">
+                  <div className="flex min-h-40 justify-center items-center w-full">
                     <Refetch refetch={refetch} />
                   </div>
                 ) : (
-                  articles?.pages[0].data.map((article) => (
+                  articles?.pages[0].data.map((article, index) => (
                     <Link key={article.id} to={`/article/${article.slug}`}>
-                      <li className="flex my-2 justify-center items-center gap-3">
-                        <div className="flex-shrink-0 items-center justify-center w-24 md:w-28 relative group">
+                      <li className="flex py-3 gap-3 group cursor-pointer hover:bg-gray-50/60 transition-colors duration-200 rounded-md -mx-1 px-1">
+
+                        {/* Thumbnail */}
+                        <div className="flex-shrink-0 w-20 h-14 sm:w-24 sm:h-16 relative rounded-md overflow-hidden bg-gray-100">
                           <img
-                            className="aspect-video w-full h-auto max-h-24 rounded-sm shadow-lg object-cover"
-                            src={article.thumbnail || ""}
-                            alt="Article Thumbnail"
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            src={article.thumbnail || "/unavailable-image.png"}
+                            alt={article.title}
+                            loading="lazy"
                           />
-                          <div className="absolute w-full inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out" />
                         </div>
-                        <p className="flex-grow text-sm line-clamp-4 leading-5 font-semibold hover:text-[#DDA853]">
-                          {article.title}
-                        </p>
+
+                        {/* Text content */}
+                        <div className="flex-1 flex flex-col justify-center min-w-0 gap-0.5">
+                          <p className="text-xs sm:text-sm font-semibold text-gray-800 line-clamp-2 leading-snug group-hover:text-[#113F67] transition-colors duration-200">
+                            {article.title}
+                          </p>
+                          {article.published_at && (
+                            <span className="text-[10px] sm:text-xs text-gray-400 leading-tight">
+                              {article.published_at}
+                            </span>
+                          )}
+                        </div>
                       </li>
                     </Link>
                   ))
                 )}
               </ul>
             </div>
+
+            {/* ── Infografis ── */}
             <div>
-              <div className="relative min-h-[24rem] flex justify-center items-center">
-                <section className="relative w-full flex justify-center items-center">
-                  <div className="max-w-full w-full grid grid-cols-9 gap-2 dark:bg-gray-700 dark:border-gray-600">
-                    <div className="col-span-9 max-w-full w-full justify-center overflow-hidden dark:bg-gray-800 dark:border-gray-700">
-                      <SliderInfografis useButton={false} useDots={false} />
-                    </div>
-                  </div>
-                </section>
+              <div className="flex items-center gap-2 mb-4 pb-2 border-b-2 border-[#113F67]">
+                <div className="w-1 h-5 bg-[#DDA853] rounded-full" />
+                <h2 className="text-base sm:text-lg font-bold text-[#113F67] uppercase tracking-wide">
+                  Infografis
+                </h2>
+              </div>
+              <div className="rounded-lg overflow-hidden">
+                <SliderInfografis useButton={false} useDots={false} />
               </div>
             </div>
+
           </div>
         </aside>
       </div>

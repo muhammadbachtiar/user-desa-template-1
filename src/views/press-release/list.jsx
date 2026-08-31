@@ -8,6 +8,8 @@ import useFeatureFlags from "../../hooks/settings/useFeatureFlags";
 import DatePicker from "../../components/shared/form/DatePicker";
 import Refetch from "../../atoms/refetch";
 
+import { truncateWords } from "../../services/utils/truncateWords";
+
 const PressReleaseList = () => {
   const navigate = useNavigate();
   const { pressRelease, isLoading: isFeaturesLoading } = useFeatureFlags();
@@ -194,8 +196,8 @@ function PressReleaseCard({ thumbnail, title, description, category, published_a
           loading="lazy"
         />
         {category && (
-          <span className="absolute top-2 left-2 bg-[#113F67] text-white text-xs font-semibold px-2 py-1 rounded">
-            {category}
+          <span className="absolute top-2 left-2 bg-[#113F67] text-white text-xs font-semibold px-2 py-1 rounded max-w-[85%] truncate" title={category}>
+            {truncateWords(category, 2)}
           </span>
         )}
       </div>

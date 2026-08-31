@@ -16,7 +16,8 @@ FROM nginx:alpine AS runner
 # Hapus default config
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy build output ke nginx folder
+# Copy build output & .env (opsional jika ada) ke nginx folder
+COPY --from=builder /app/package*.json /app/.env* /usr/share/nginx/html/
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Custom nginx config

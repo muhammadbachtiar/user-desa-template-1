@@ -16,6 +16,8 @@ import ThumbnailBanner from "../../atoms/ThumbnailBanner";
 import LightboxImage from "../../atoms/Lightbox";
 import Refetch from "../../atoms/refetch";
 
+import { truncateWords } from "../../services/utils/truncateWords";
+
 const PressReleaseDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ const PressReleaseDetail = () => {
     isError,
     isFetching,
     refetch,
-  } = usePressReleaseDetail({ with: "category,attachments,user" }, slug, true, {});
+  } = usePressReleaseDetail({ with: "category,attachments,user" }, slug, true);
 
   useEffect(() => {
     if (!isFeaturesLoading && !isPressReleaseEnabled) {
@@ -155,24 +157,26 @@ const PressReleaseDetail = () => {
                 <hr className="h-px my-3 bg-gray-200 border-1 dark:bg-gray-700" />
 
                 {/* Meta info */}
-                <div className="flex flex-row w-full my-2 gap-1 justify-items-start justify-center">
-                  <div className="flex flex-row items-center">
-                    <span className="self-center align-baseline text-base font-semibold uppercase text-[#DDA853]">
-                      {pressRelease.category?.name ?? "Siaran Pers"}
-                    </span>
-                    <div className="self-center w-px h-4 mx-2 bg-gray-400"></div>
-                    <span className="self-center align-baseline text-xs font-medium text-black">
-                      {pressRelease.user?.name ?? ""}
-                    </span>
-                    <div className="self-center w-px h-4 mx-2 bg-gray-400"></div>
-                    <div className="flex items-center gap-1">
-                      <BiCalendar className="h-3.5 w-3.5 text-gray-500" />
-                      <span className="self-center align-baseline text-xs font-medium text-black">
-                        {moment(pressRelease.published_at ?? "")
-                          .locale("id")
-                          .format("dddd, D MMMM YYYY")}
+                <div className="flex flex-wrap items-center justify-center w-full my-2 gap-x-2 gap-y-1 min-w-0">
+                  <span className="self-center align-baseline text-sm font-semibold uppercase text-[#DDA853] shrink-0" title={pressRelease.category?.name}>
+                    {truncateWords(pressRelease.category?.name || "Siaran Pers", 2)}
+                  </span>
+                  <div className="self-center w-px h-3.5 mx-1 bg-gray-400 shrink-0"></div>
+                  {pressRelease.user?.name && (
+                    <>
+                      <span className="self-center align-baseline text-xs font-medium text-black shrink-0">
+                        {pressRelease.user.name}
                       </span>
-                    </div>
+                      <div className="self-center w-px h-3.5 mx-1 bg-gray-400 shrink-0"></div>
+                    </>
+                  )}
+                  <div className="flex items-center gap-1 shrink-0">
+                    <BiCalendar className="h-3.5 w-3.5 text-gray-500" />
+                    <span className="self-center align-baseline text-xs font-medium text-black">
+                      {moment(pressRelease.published_at ?? "")
+                        .locale("id")
+                        .format("dddd, D MMMM YYYY")}
+                    </span>
                   </div>
                 </div>
 

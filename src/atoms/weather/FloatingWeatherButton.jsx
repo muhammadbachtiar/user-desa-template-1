@@ -119,6 +119,9 @@ export default function FloatingWeatherButton() {
     const hasAQI = !!airQualityData?.current && !!aqiLevel;
 
     if (hasWeather && hasAQI) {
+      const aqiValue = airQualityData.current.us_aqi;
+      const isThreeDigits = aqiValue >= 100;
+
       return (
         <div className="relative w-[70px] h-5 overflow-hidden">
           <AnimatePresence mode="wait">
@@ -129,11 +132,11 @@ export default function FloatingWeatherButton() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-center gap-1.5"
+                className={`absolute inset-0 flex items-center justify-center ${isThreeDigits ? "gap-0.5" : "gap-1"} shrink-0`}
               >
-                <Leaf size={16} className={aqiLevel.color} />
-                <span className={`font-semibold text-sm ${aqiLevel.color}`}>
-                  IKU {airQualityData.current.us_aqi}
+                <Leaf size={isThreeDigits ? 12 : 15} className={`shrink-0 ${aqiLevel.color}`} />
+                <span className={`font-semibold ${isThreeDigits ? "text-[11px] tracking-tighter" : "text-xs"} whitespace-nowrap ${aqiLevel.color}`}>
+                  IKU {aqiValue}
                 </span>
               </motion.div>
             ) : (
@@ -143,10 +146,10 @@ export default function FloatingWeatherButton() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-center gap-1.5"
+                className="absolute inset-0 flex items-center justify-center gap-1.5 shrink-0"
               >
                 {getWeatherIcon(currentWeather.weather, 16, true)}
-                <span className="text-gray-700 font-semibold text-sm">
+                <span className="text-gray-700 font-semibold text-sm whitespace-nowrap">
                   {currentWeather.t}°C
                 </span>
               </motion.div>
@@ -168,11 +171,13 @@ export default function FloatingWeatherButton() {
     }
 
     if (hasAQI) {
+      const aqiValue = airQualityData.current.us_aqi;
+      const isThreeDigits = aqiValue >= 100;
       return (
         <>
-          <Leaf size={18} className={aqiLevel.color} />
-          <span className={`font-semibold text-sm ${aqiLevel.color}`}>
-            IKU {airQualityData.current.us_aqi}
+          <Leaf size={isThreeDigits ? 15 : 18} className={aqiLevel.color} />
+          <span className={`font-semibold ${isThreeDigits ? "text-xs" : "text-sm"} whitespace-nowrap ${aqiLevel.color}`}>
+            IKU {aqiValue}
           </span>
         </>
       );
@@ -359,7 +364,7 @@ export default function FloatingWeatherButton() {
                         </div>
                         <div className="grid grid-cols-3 gap-2">
                           <div className="text-center">
-                            <div className={`text-lg font-bold ${aqiLevel.color}`}>
+                            <div className={`text-base sm:text-lg font-bold truncate ${aqiLevel.color}`}>
                               {airQualityData.current.us_aqi}
                             </div>
                             <div className="text-gray-500 text-xs">IKU</div>
