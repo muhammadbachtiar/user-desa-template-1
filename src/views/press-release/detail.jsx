@@ -85,7 +85,7 @@ const PressReleaseDetail = () => {
       <div className="min-h-screen w-full">
         <AsideContent>
           {isLoading ||
-          (!pressRelease || Object.keys(pressRelease || {}).length === 0) &&
+            (!pressRelease || Object.keys(pressRelease || {}).length === 0) &&
             isFetching ? (
             <div className="pt-12 px-4 md:px-32 w-full min-h-screen bg-[#F3F9FB]">
               <div className="h-72 w-full bg-gray-400 dark:bg-gray-600 rounded animate-pulse"></div>
@@ -156,29 +156,6 @@ const PressReleaseDetail = () => {
 
                 <hr className="h-px my-3 bg-gray-200 border-1 dark:bg-gray-700" />
 
-                {/* Meta info */}
-                <div className="flex flex-wrap items-center justify-center w-full my-2 gap-x-2 gap-y-1 min-w-0">
-                  <span className="self-center align-baseline text-sm font-semibold uppercase text-[#DDA853] shrink-0" title={pressRelease.category?.name}>
-                    {truncateWords(pressRelease.category?.name || "Siaran Pers", 2)}
-                  </span>
-                  <div className="self-center w-px h-3.5 mx-1 bg-gray-400 shrink-0"></div>
-                  {pressRelease.user?.name && (
-                    <>
-                      <span className="self-center align-baseline text-xs font-medium text-black shrink-0">
-                        {pressRelease.user.name}
-                      </span>
-                      <div className="self-center w-px h-3.5 mx-1 bg-gray-400 shrink-0"></div>
-                    </>
-                  )}
-                  <div className="flex items-center gap-1 shrink-0">
-                    <BiCalendar className="h-3.5 w-3.5 text-gray-500" />
-                    <span className="self-center align-baseline text-xs font-medium text-black">
-                      {moment(pressRelease.published_at ?? "")
-                        .locale("id")
-                        .format("dddd, D MMMM YYYY")}
-                    </span>
-                  </div>
-                </div>
 
                 {/* Content */}
                 <RichTextContent content={pressRelease.content || ""} />

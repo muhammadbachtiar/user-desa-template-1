@@ -55,9 +55,9 @@ const PressReleaseList = () => {
 
   if (isFeaturesLoading) {
     return (
-       <div className="flex justify-center items-center min-h-screen w-full">
-         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#113F67]"></div>
-       </div>
+      <div className="flex justify-center items-center min-h-screen w-full">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#113F67]"></div>
+      </div>
     );
   }
 
@@ -105,10 +105,10 @@ const PressReleaseList = () => {
               </div>
               <div className="col-span-6 grid grid-cols-6 gap-y-6 justify-items-center">
                 {isLoading ||
-                ((!data ||
-                  !data.pages[0] ||
-                  data.pages[0]?.data.length === 0) &&
-                  isFetching) ? (
+                  ((!data ||
+                    !data.pages[0] ||
+                    data.pages[0]?.data.length === 0) &&
+                    isFetching) ? (
                   <div className="col-span-6 w-full grid grid-cols-6 px-8 md:px-0 gap-6 justify-items-center">
                     {Array.from({ length: 6 }).map((_, index) => (
                       <div
@@ -209,9 +209,9 @@ function PressReleaseCard({ thumbnail, title, description, category, published_a
           {description}
         </p>
         <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
-           <span>{moment(published_at ?? "")
-                                    .locale("id")
-                                    .format("dddd, D MMMM YYYY")}</span>
+          <span>{moment(published_at ?? "")
+            .locale("id")
+            .format("dddd, D MMMM YYYY")}</span>
           {author && <span className="font-medium text-gray-500">{author}</span>}
         </div>
       </div>
